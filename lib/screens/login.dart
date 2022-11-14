@@ -140,6 +140,7 @@ class _logState extends State<LogInPage> {
                                   child: Text(
                                     "Forget Password ?",
                                     style: TextStyle(
+                                      fontSize: 16.0,
                                       color: Colors.blue,
                                     ),
                                   ),
@@ -169,7 +170,7 @@ class _logState extends State<LogInPage> {
                                           "LOGIN",
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 15,
+                                            fontSize: 18,
                                           ),
                                         ),
                                       ),
@@ -201,7 +202,7 @@ class _logState extends State<LogInPage> {
                                           "REGISTER",
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 15,
+                                            fontSize: 18,
                                           ),
                                         ),
                                       ),
