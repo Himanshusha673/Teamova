@@ -4,6 +4,10 @@ import 'package:team_builder/screens/post_screen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:team_builder/utils/constant.dart';
 
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout.dart';
+import '../responsive/web_screen_layout.dart';
+
 class Aboutyourself extends StatefulWidget {
   Aboutyourself({Key? key}) : super(key: key);
 
@@ -68,8 +72,12 @@ class _AboutyourselfState extends State<Aboutyourself> {
                 child: ElevatedButton(
                   child: Text('Submit'),
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => PostPage()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ResponsiveLayout(
+                        mobileScreenLayout: MobileScreenLayout(),
+                        webScreenLayout: WebScreenLayout(),
+                      ),
+                    ));
                   },
                 ))
           ],
@@ -100,12 +108,11 @@ class _AboutyourselfState extends State<Aboutyourself> {
               labelText: 'Objective',
             ),
           ),
-           ChipTags(
-              list: _myList,
-              createTagOnSubmit: true,
-              chipColor: Colors.black,
-            ),
-         
+          ChipTags(
+            list: _myList,
+            createTagOnSubmit: true,
+            chipColor: Colors.black,
+          ),
           TextFormField(
             decoration: const InputDecoration(
               icon: const Icon(Icons.calendar_today),
@@ -132,11 +139,11 @@ class _AboutyourselfState extends State<Aboutyourself> {
             ),
           ),
           const SizedBox(height: 10),
-           ChipTags(
-              list: _myList,
-              createTagOnSubmit: true,
-              chipColor: Colors.black,
-            ),
+          ChipTags(
+            list: _myList,
+            createTagOnSubmit: true,
+            chipColor: Colors.black,
+          ),
           TextFormField(
             decoration: const InputDecoration(
               icon: const Icon(Icons.lightbulb_circle_outlined),

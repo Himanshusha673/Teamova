@@ -7,8 +7,6 @@ class AboutYourModel {
   final String objective ;
    final String link ;
 
-
-
   const AboutYourModel({
     required this.isLeader,
     required this.skills,
@@ -39,4 +37,5 @@ class AboutYourModel {
         "objective": objective,
          "link": link,
       };
+    
 }

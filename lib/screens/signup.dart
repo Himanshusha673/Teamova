@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:team_builder/screens/aboutyourself.dart';
 import '../resources/auth_methods.dart';
 import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout.dart';
@@ -51,10 +52,11 @@ class _RegistrationState extends State<Registration> {
       // navigate to the home screen
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
-          ),
+          builder: (context) => Aboutyourself(),
+          // const ResponsiveLayout(
+          //   mobileScreenLayout: MobileScreenLayout(),
+          //   webScreenLayout: WebScreenLayout(),
+          // ),
         ),
       );
     } else {
