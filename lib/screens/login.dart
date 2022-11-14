@@ -8,6 +8,7 @@ import '../responsive/responsive_layout.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
 import 'aboutyourself.dart';
+import 'package:sign_button/sign_button.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -21,8 +22,8 @@ class _logState extends State<LogInPage> {
   TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
-void loginUser() async {
-    setState(() { 
+  void loginUser() async {
+    setState(() {
       _isLoading = true;
     });
     String res = await AuthMethods().loginUser(
@@ -48,10 +49,6 @@ void loginUser() async {
     }
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,143 +62,181 @@ void loginUser() async {
               ),
             )
           : SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Column(children: [
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Image.asset(
-                    'images/TeamovaLogo.png',
-                    // height: MediaQuery.of(context).size.height*0.1,
-                    // width: MediaQuery.of(context).size.width*0.3,
-                  ),
-                  SizedBox(
-                    height: 80,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Facebook",
-                            style: TextStyle(color: Colors.blue, fontSize: 20),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            primary: Colors.white,
-                          )),
-                      ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Google",
-                              style: TextStyle(
-                                  color: Colors.redAccent, fontSize: 20)),
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              primary: Colors.white))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Text("SignIn",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold)),
-                  Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: _emailController ,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                labelText: 'Email', hintText: 'Email'),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                                labelText: 'Password', hintText: 'Password'),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 310, top: 10),
-                          child: GestureDetector(
-                            child: Text("Forget Password?",
-                                style: TextStyle(color: Colors.black)),
-                          ),
-                        )
-                      ],
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 50,
                     ),
-                  ),
-                  ElevatedButton(
-                      child: Text("Login",
-                          style: TextStyle(color: Colors.white, fontSize: 15)),
-                      onPressed: () {
-                       loginUser();
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: ((context) => Aboutyourself())));
-                        // if (!_emailController.text.contains("@")) {
-                        //   Fluttertoast.showToast(
-                        //       msg: "PLEASE WRITE A VALID EMAIL ADDRESS");
-                        // } else if (_passwordController.text.length < 8) {
-                        //   Fluttertoast.showToast(
-                        //       msg: "PASSWORD SHOULD BE GREATER THAN 8 WORDS");
-                        // } else {
-                        //   setState(() {
-                        //     _isLoading = true;
-                        //   });
-                          // login(email.text, password.text).then((user) {
-                          //   if (user != null) {
-                          //     setState(() {
-                          //       isloading = false;
-                          //     });
-                          //     Fluttertoast.showToast(msg: "LOGIN SUCCESSFUL");
-                          //     // Navigator.push(context, MaterialPageRoute(builder: ((context) => homepage())));
-                          //   } else {
-                          //     Fluttertoast.showToast(
-                          //         msg: "LOGIN Failed try again");
-                          //   }
-                          // });
-                       // }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          primary: Colors.black)),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 90),
-                    child: Row(
+                    Stack(
                       children: [
-                        Text("Don't have any account?",
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 16)),
-                        GestureDetector(
-                            child: Text(
-                              "Register Here!.",
-                              style:
-                                  TextStyle(color: Colors.blue, fontSize: 16),
+                        const Image(
+                          image: AssetImage('images/login.png'),
+                        ),
+                        Column(
+                          children: [
+                            const SizedBox(
+                              height: 10,
                             ),
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: ((context) => Registration())));
-                            }),
+                            Container(
+                              alignment: Alignment.topCenter,
+                              child: CircleAvatar(
+                                radius: 55,
+                                backgroundColor: Colors.transparent,
+                                child: SizedBox(
+                                  // width: MediaQuery.of(context).size.width,
+                                  // height: MediaQuery.of(context).size.height,
+                                  child: ClipOval(
+                                    child: Image.asset(
+                                      "images/TeamovaLogo.png",
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                  ),
-                ]),
+                    Form(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: TextFormField(
+                                controller: _emailController,
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: const InputDecoration(
+                                  prefixIcon:
+                                      Icon(Icons.person_outline_outlined),
+                                  labelText: 'Email',
+                                  hintText: 'Email',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: TextField(
+                                controller: _passwordController,
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.fingerprint_outlined),
+                                  labelText: 'Password',
+                                  hintText: 'Password',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                child: const Padding(
+                                  padding: EdgeInsets.all(12.0),
+                                  child: Text(
+                                    "Forget Password ?",
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 7.0),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        loginUser();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        backgroundColor: Colors.black,
+                                      ),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(15.0),
+                                        child: Text(
+                                          "LOGIN",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 7.0),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: ((context) =>
+                                                Registration()),
+                                          ),
+                                        );
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        backgroundColor: Colors.black,
+                                      ),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(15.0),
+                                        child: Text(
+                                          "REGISTER",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              child: Padding(
+                                padding: EdgeInsets.all(20.0),
+                                child: Center(
+                                  child: Text(
+                                    "OR",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Center(
+                              child: SignInButton(
+                                buttonType: ButtonType.google,
+                                buttonSize: ButtonSize.large,
+                                onPressed: () {}, // !TODO : Google sign in
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
     );
