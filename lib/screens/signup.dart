@@ -82,142 +82,191 @@ class _RegistrationState extends State<Registration> {
             )
           : SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Column(children: [
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 17,
-                      ),
-                      Icon(
-                        Icons.arrow_back,
-                        size: 40,
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text("Registeration",
-                          style: TextStyle(color: Colors.black, fontSize: 40)),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: _nameController,
-                            keyboardType: TextInputType.name,
-                            decoration: InputDecoration(
-                                labelText: 'Name',
-                                labelStyle: TextStyle(
-                                    fontSize: 14.0, color: Colors.black),
-                                hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 14.0)),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                labelText: 'Email',
-                                hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 14.0)),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: _phoneNoController,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                                labelText: 'Phone',
-                                hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 14.0)),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                                labelText: 'Password',
-                                hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 14.0)),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: _passwordConfirmController,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                                labelText: 'Confirm Password',
-                                hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 14.0)),
-                          ),
-                        ),
-                      ],
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 30,
                     ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: Text(
-                      'By registering you agree to Term & Conditions and Privacy Policy of the TeamBuilder ',
-                      style: TextStyle(fontSize: 13),
-                      softWrap: false,
-                      maxLines: 2,
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          "Register Yourself",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Center(
-                    child: Text(
-                      'Policy of the TeamBuilder ',
-                      style: TextStyle(fontSize: 13),
-                      softWrap: false,
-                      maxLines: 2,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                      child: Text("Create Account",
-                          style: TextStyle(color: Colors.white)),
-                      onPressed: () {
-                        signUpUser();
-                      }),
-                  SizedBox(
-                    height: 18,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 90),
-                    child: Row(
-                      children: [
-                        Text("Already have an Account!",
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 16)),
-                        GestureDetector(
-                            child: Text(
-                              "Login Here",
-                              style:
-                                  TextStyle(color: Colors.blue, fontSize: 16),
+                    Form(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: TextFormField(
+                                controller: _nameController,
+                                keyboardType: TextInputType.name,
+                                decoration: const InputDecoration(
+                                  prefixIcon:
+                                      Icon(Icons.person_outline_outlined),
+                                  labelText: 'Full Name',
+                                  hintText: 'Enter Name',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
                             ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            }),
-                      ],
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: TextFormField(
+                                controller: _emailController,
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.email_outlined),
+                                  labelText: 'Email',
+                                  hintText: 'Enter Email',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: TextFormField(
+                                controller: _phoneNoController,
+                                keyboardType: TextInputType.phone,
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(Icons.phone_outlined),
+                                  labelText: 'Mobile Number',
+                                  hintText: 'Enter Mobile Number',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: TextFormField(
+                                obscureText: true,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                controller: _passwordController,
+                                decoration: const InputDecoration(
+                                  prefixIcon:
+                                      Icon(Icons.person_outline_outlined),
+                                  labelText: 'Password',
+                                  hintText: 'Enter Password',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: TextFormField(
+                                obscureText: true,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                controller: _passwordConfirmController,
+                                decoration: const InputDecoration(
+                                  prefixIcon:
+                                      Icon(Icons.person_outline_outlined),
+                                  labelText: 'Confirm Password',
+                                  hintText: 'Enter Password',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Text(
+                                'By registering you agree to Term & Conditions and Privacy Policy of Teamova',
+                                style: TextStyle(fontSize: 14),
+                                softWrap: true,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ]),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 7.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            signUpUser();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            backgroundColor: Colors.black,
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Text(
+                              "CREATE ACCOUNT",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // ElevatedButton(
+                    //     child: Text("Create Account",
+                    //         style: TextStyle(color: Colors.white)),
+                    //     onPressed: () {
+                    //       signUpUser();
+                    //     }),
+                    // SizedBox(
+                    //   height: 18,
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 90),
+                    //   child: Row(
+                    //     children: [
+                    //       Text("Already have an Account!",
+                    //           style:
+                    //               TextStyle(color: Colors.black, fontSize: 16)),
+                    //       GestureDetector(
+                    //           child: Text(
+                    //             "Login Here",
+                    //             style:
+                    //                 TextStyle(color: Colors.blue, fontSize: 16),
+                    //           ),
+                    //           onTap: () {
+                    //             Navigator.pop(context);
+                    //           }),
+                    //     ],
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
             ),
     );
