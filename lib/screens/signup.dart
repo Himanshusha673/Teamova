@@ -24,6 +24,7 @@ class _RegistrationState extends State<Registration> {
 
   bool _isLoading = false;
 
+  @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
