@@ -68,7 +68,7 @@ class _logState extends State<LogInPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 50,
+                      height: 25,
                     ),
                     Stack(
                       children: [
@@ -78,7 +78,7 @@ class _logState extends State<LogInPage> {
                         Column(
                           children: [
                             const SizedBox(
-                              height: 10,
+                              height: 14,
                             ),
                             Container(
                               alignment: Alignment.topCenter,
@@ -136,7 +136,7 @@ class _logState extends State<LogInPage> {
                               alignment: Alignment.centerRight,
                               child: GestureDetector(
                                 child: const Padding(
-                                  padding: EdgeInsets.all(12.0),
+                                  padding: EdgeInsets.all(10.0),
                                   child: Text(
                                     "Forget Password ?",
                                     style: TextStyle(
@@ -147,7 +147,7 @@ class _logState extends State<LogInPage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 10),
                             Row(
                               children: [
                                 Expanded(
@@ -213,7 +213,7 @@ class _logState extends State<LogInPage> {
                             ),
                             const SizedBox(
                               child: Padding(
-                                padding: EdgeInsets.all(20.0),
+                                padding: EdgeInsets.symmetric(vertical: 15.0),
                                 child: Center(
                                   child: Text(
                                     "OR",
