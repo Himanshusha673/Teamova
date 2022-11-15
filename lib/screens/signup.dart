@@ -85,7 +85,6 @@ class _RegistrationState extends State<Registration> {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       height: 30,
@@ -167,8 +166,7 @@ class _RegistrationState extends State<Registration> {
                                 autocorrect: false,
                                 controller: _passwordController,
                                 decoration: const InputDecoration(
-                                  prefixIcon:
-                                      Icon(Icons.person_outline_outlined),
+                                  prefixIcon: Icon(Icons.password_outlined),
                                   labelText: 'Password',
                                   hintText: 'Enter Password',
                                   border: OutlineInputBorder(),
@@ -186,8 +184,7 @@ class _RegistrationState extends State<Registration> {
                                 autocorrect: false,
                                 controller: _passwordConfirmController,
                                 decoration: const InputDecoration(
-                                  prefixIcon:
-                                      Icon(Icons.person_outline_outlined),
+                                  prefixIcon: Icon(Icons.password_outlined),
                                   labelText: 'Confirm Password',
                                   hintText: 'Enter Password',
                                   border: OutlineInputBorder(),
