@@ -138,7 +138,7 @@ class _logState extends State<LogInPage> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Text(
-                                    "Forget Password ?",
+                                    "Forget Password ?", // TODO : Fix feature
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       color: Colors.blue,
