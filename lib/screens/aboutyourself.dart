@@ -18,7 +18,7 @@ class Aboutyourself extends StatefulWidget {
 class _AboutyourselfState extends State<Aboutyourself> {
   final _leaderFormKey = GlobalKey<FormState>();
   final _memberFormKey = GlobalKey<FormState>();
-  List<String> _myList = ["Pre-Written"];
+  List<String> _myList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -29,25 +29,32 @@ class _AboutyourselfState extends State<Aboutyourself> {
         child: ListView(
           children: [
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             Center(
                 child: Text(
-              "ABOUT YOURSELF",
+              "ABOUT YOURSELF",style:TextStyle(fontSize: 35,fontWeight:FontWeight.bold)
             )),
             SizedBox(
               height: 20,
+            ),
+            Center(child: Text("CHOOSE WHO YOU ARE?",style: TextStyle(fontSize: 15,fontWeight:FontWeight.bold,color:Colors.blue))),
+             SizedBox(
+              height: 10,
             ),
             Center(
               child: ToggleSwitch(
                 minWidth: 90.0,
                 cornerRadius: 20.0,
-                activeBgColor: isLeader ? [Colors.green] : [Colors.grey],
+                borderWidth: 2.0,
+                borderColor: [Colors.blueGrey],
+                activeBgColor: isLeader ? [Colors.green] : [Colors.black],
                 activeFgColor: Colors.white,
-                inactiveBgColor: isLeader ? Colors.grey : Colors.green,
+                inactiveBgColor: isLeader ? Colors.black54 : Colors.green,
                 inactiveFgColor: Colors.white,
                 initialLabelIndex: 0,
                 totalSwitches: 2,
+                 animate: true,
                 labels: ['LEADER', 'MEMBER'],
                 // radiusStyle: true,
                 onToggle: (index) {
@@ -95,12 +102,11 @@ class _AboutyourselfState extends State<Aboutyourself> {
           Padding(
             padding: const EdgeInsets.only(top: 18),
             child: Center(
-              child: Text(isLeader
-                  ? 'Enter The fields as a Leader'
-                  : 'Enter Field as a Member '),
+              child: Text('Enter The fields as a Leader',style:TextStyle(fontSize: 20)
+                  ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 18),
           TextFormField(
             decoration: const InputDecoration(
               icon: const Icon(Icons.person),
@@ -108,11 +114,15 @@ class _AboutyourselfState extends State<Aboutyourself> {
               labelText: 'Objective',
             ),
           ),
+           const SizedBox(height: 15),
+          Text("SKILL SETS",style: TextStyle(fontSize:15)),
+          const SizedBox(height: 5),
           ChipTags(
             list: _myList,
             createTagOnSubmit: true,
             chipColor: Colors.black,
           ),
+           const SizedBox(height: 10),
           TextFormField(
             decoration: const InputDecoration(
               icon: const Icon(Icons.calendar_today),
@@ -133,24 +143,26 @@ class _AboutyourselfState extends State<Aboutyourself> {
           Padding(
             padding: const EdgeInsets.only(top: 18),
             child: Center(
-              child: Text(isLeader
-                  ? 'Enter The fields as a Leader'
-                  : 'Enter Field as a Member '),
+              child: Text('Enter Field as a Member ',style:TextStyle(fontSize: 20)),
             ),
           ),
-          const SizedBox(height: 10),
-          ChipTags(
-            list: _myList,
-            createTagOnSubmit: true,
-            chipColor: Colors.black,
-          ),
-          TextFormField(
+          const SizedBox(height: 18),
+            TextFormField(
             decoration: const InputDecoration(
               icon: const Icon(Icons.lightbulb_circle_outlined),
               hintText: 'Enter your Ojective./ title  ',
               labelText: 'Objective',
             ),
           ),
+           const SizedBox(height: 15),
+            Text("SKILL SETS",style: TextStyle(fontSize:15)),
+            const SizedBox(height: 5),
+           ChipTags(
+            list: _myList,
+            createTagOnSubmit: true,
+            chipColor: Colors.black,
+          ),
+           const SizedBox(height: 10),
           TextFormField(
             decoration: const InputDecoration(
               icon: const Icon(Icons.calendar_today),

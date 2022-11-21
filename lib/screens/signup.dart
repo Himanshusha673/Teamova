@@ -241,28 +241,28 @@ class _RegistrationState extends State<Registration> {
                     //     onPressed: () {
                     //       signUpUser();
                     //     }),
-                    // SizedBox(
-                    //   height: 18,
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 90),
-                    //   child: Row(
-                    //     children: [
-                    //       Text("Already have an Account!",
-                    //           style:
-                    //               TextStyle(color: Colors.black, fontSize: 16)),
-                    //       GestureDetector(
-                    //           child: Text(
-                    //             "Login Here",
-                    //             style:
-                    //                 TextStyle(color: Colors.blue, fontSize: 16),
-                    //           ),
-                    //           onTap: () {
-                    //             Navigator.pop(context);
-                    //           }),
-                    //     ],
-                    //   ),
-                    // ),
+                    SizedBox(
+                      height: 18,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 90),
+                      child: Row(
+                        children: [
+                          Text("Already have an Account!",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 16)),
+                          GestureDetector(
+                              child: Text(
+                                "Login Here",
+                                style:
+                                    TextStyle(color: Colors.blue, fontSize: 16),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+                              }),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
