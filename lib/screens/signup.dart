@@ -33,42 +33,6 @@ class _RegistrationState extends State<Registration> {
     _phoneNoController.dispose();
   }
 
-  void signUpUser() async {
-    // set loading to true
-    setState(() {
-      _isLoading = true;
-    });
-    // signup user using our authmethodds
-    String res = await AuthMethods().signUpUser(
-      name: _nameController.text,
-      email: _emailController.text,
-      password: _passwordController.text,
-      phoneNo: _phoneNoController.text,
-    );
-    // if string returned is sucess, user has been created
-    if (res == "success") {
-      setState(() {
-        _isLoading = false;
-      });
-      // navigate to the home screen
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => Aboutyourself(),
-          // const ResponsiveLayout(
-          //   mobileScreenLayout: MobileScreenLayout(),
-          //   webScreenLayout: WebScreenLayout(),
-          // ),
-        ),
-      );
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-      // show the error
-      showSnackBar(context, res);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,12 +179,20 @@ class _RegistrationState extends State<Registration> {
                         padding: const EdgeInsets.symmetric(horizontal: 7.0),
                         child: ElevatedButton(
                           onPressed: () {
-                            signUpUser();
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => Aboutyourself(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                    name: _nameController.text,
+                                    phoneNo: _phoneNoController.text),
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
-                            backgroundColor: Colors.black,
+                            //backgroundColor: Colors.black,
                           ),
                           child: const Padding(
                             padding: EdgeInsets.all(15.0),
@@ -235,12 +207,20 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                     ),
-                    // ElevatedButton(
-                    //     child: Text("Create Account",
-                    //         style: TextStyle(color: Colors.white)),
-                    //     onPressed: () {
-                    //       signUpUser();
-                    //     }),
+                    ElevatedButton(
+                        child: Text("Create Account",
+                            style: TextStyle(color: Colors.white)),
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => Aboutyourself(
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                  name: _nameController.text,
+                                  phoneNo: _phoneNoController.text),
+                            ),
+                          );
+                        }),
                     SizedBox(
                       height: 18,
                     ),

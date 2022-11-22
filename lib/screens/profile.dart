@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:team_builder/providers/user_provider.dart';
+
+import '../models/user_model.dart' as model;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -10,9 +14,12 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    final model.User userProvider = Provider.of<UserProvider>(context).getUser;
+
+    final List<String> list = ["fluttter", "dart"];
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile Page"),
+        title: const Text("Profile Page"),
         leading: const BackButton(),
         // elevation: 0,
         // backgroundColor: Colors.transparent,
@@ -32,17 +39,17 @@ class _ProfilePageState extends State<ProfilePage> {
             height: 24,
           ),
           buildName(
-            'Sexy Lady',
-            'sexy_username',
-            'sexylady69@gmail.com',
-            '+91-6969696969',
+            userProvider.name,
+            userProvider.email,
+            userProvider.objective,
+            userProvider.phoneNo,
           ),
           const SizedBox(
             height: 20,
           ),
           Center(
             child: ButtonWidget(
-              text: true
+              text: userProvider.isLeader
                   ? 'LEADER'
                   : 'MEMBER', // Should change depending on whether leader or member
               onClicked:
@@ -58,21 +65,11 @@ class _ProfilePageState extends State<ProfilePage> {
           //     onClicked: () {}, // Add function - Add tags
           //   ),
           // ),
-          buildTags([
-            "DSA",
-            "Pulkit",
-            "Sexy",
-            "Loda",
-            "Lassan",
-            "Maths",
-            "Triology",
-            "Khoob Saraa Sex",
-          ]),
+          buildTags(userProvider.skills),
           const SizedBox(
             height: 24,
           ),
-          buildAbout(
-              "LODA LASSAN\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."), // Add about details
+          buildAbout(userProvider.description), // Add about details
           const SizedBox(
             height: 24,
           ),
@@ -206,7 +203,7 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ElevatedButton(
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
+          //foregroundColor: Colors.white,
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
         ),
@@ -272,7 +269,7 @@ Widget buildChip(String label, Color color) {
   );
 }
 
-Widget chipList(List<String> tags) {
+Widget chipList(List<dynamic> tags) {
   return Wrap(
     spacing: 6.0,
     runSpacing: 6.0,
@@ -284,7 +281,7 @@ Widget chipList(List<String> tags) {
   );
 }
 
-Widget buildTags(List<String> tags) {
+Widget buildTags(List<dynamic> tags) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 35),
     child: Column(

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:team_builder/models/user_model.dart';
+import 'package:team_builder/providers/user_provider.dart';
 
 import '../resources/auth_methods.dart';
 
@@ -7,12 +10,13 @@ class NavigationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final User _user = Provider.of<UserProvider>(context).getUser;
     return Drawer(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            buildHeader(context),
+            buildHeader(context, _user.name, _user.email),
             buildMenuItems(context),
           ],
         ),
@@ -20,7 +24,7 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
 
-  Widget buildHeader(BuildContext context) {
+  Widget buildHeader(BuildContext context, String name, String email) {
     return Container(
       color: Colors.blue.shade700,
       padding: EdgeInsets.only(
@@ -28,23 +32,23 @@ class NavigationDrawer extends StatelessWidget {
         bottom: 15,
       ),
       child: Column(
-        children: const [
-          CircleAvatar(
+        children: [
+          const CircleAvatar(
             radius: 45,
             backgroundImage: NetworkImage(
                 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2574&q=80'),
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           Text(
-            'Sexy Lady',
-            style: TextStyle(
+            name,
+            style: const TextStyle(
                 fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
           ),
           Text(
-            'sexy_username',
-            style: TextStyle(
+            email,
+            style: const TextStyle(
               fontSize: 12,
               color: Colors.white,
             ),
@@ -88,7 +92,7 @@ class NavigationDrawer extends StatelessWidget {
             leading: const Icon(Icons.lock_outlined),
             title: const Text("Log Out"),
             onTap: () async {
-               await AuthMethods().signOut();
+              await AuthMethods().signOut();
             }, // Add Function
           ),
         ],

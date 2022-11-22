@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:team_builder/models/user_model.dart' as model;
 import 'package:team_builder/resources/storage_methods.dart';
 
@@ -12,45 +13,52 @@ class AuthMethods {
   // get user details
   Future<model.User> getUserDetails() async {
     User currentUser = _auth.currentUser!;
-
     DocumentSnapshot documentSnapshot =
         await _firestore.collection('users').doc(currentUser.uid).get();
+    var data = model.User.fromSnap(documentSnapshot);
+    //debugPrint(data.description);
 
     return model.User.fromSnap(documentSnapshot);
   }
 
-  // Signing Up User
-
+  // Signing Up Use
   Future<String> signUpUser({
     required String name,
     required String email,
     required String password,
     required String phoneNo,
+    required List skills,
+    required bool isLeader,
+    required String objective,
+    required String description,
   }) async {
     String res = "Some error Occurred";
     try {
       if (email.isNotEmpty ||
           password.isNotEmpty ||
           name.isNotEmpty ||
-          phoneNo.isNotEmpty) {
-        // registering user in auth with email and password
-
+          phoneNo.isNotEmpty ||
+          skills.isNotEmpty ||
+          objective.isNotEmpty) {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
-        print(cred);
-        // String photoUrl = await StorageMethods()
-        //     .uploadImageToStorage('profilePics', file, false);
-
-        model.User _user = model.User(
-            name: name, email: email, uid: cred.user!.uid, phoneNo: phoneNo);
+        model.User user = model.User(
+            isLeader: isLeader,
+            skills: skills,
+            objective: objective,
+            name: name,
+            email: email,
+            uid: cred.user!.uid,
+            phoneNo: phoneNo,
+            description: description);
 
         // adding user in our firestore database
         await _firestore
             .collection("users")
             .doc(cred.user!.uid)
-            .set(_user.toJson());
+            .set(user.toJson());
 
         res = "success";
       } else {

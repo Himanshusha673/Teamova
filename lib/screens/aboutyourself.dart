@@ -4,12 +4,25 @@ import 'package:team_builder/screens/post_screen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:team_builder/utils/constant.dart';
 
+import '../resources/auth_methods.dart';
 import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout.dart';
 import '../responsive/web_screen_layout.dart';
+import '../utils/utils.dart';
 
 class Aboutyourself extends StatefulWidget {
-  Aboutyourself({Key? key}) : super(key: key);
+  final String name;
+  final String email;
+  final String password;
+  final String phoneNo;
+
+  Aboutyourself(
+      {Key? key,
+      required this.name,
+      required this.email,
+      required this.password,
+      required this.phoneNo})
+      : super(key: key);
 
   @override
   State<Aboutyourself> createState() => _AboutyourselfState();
@@ -18,7 +31,54 @@ class Aboutyourself extends StatefulWidget {
 class _AboutyourselfState extends State<Aboutyourself> {
   final _leaderFormKey = GlobalKey<FormState>();
   final _memberFormKey = GlobalKey<FormState>();
-  List<String> _myList = [];
+  bool _isLoading = false;
+  final List<String> _myList = [];
+  final TextEditingController _objectiveController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  void dispose() {
+    super.dispose();
+    _objectiveController.dispose();
+    _descriptionController.dispose();
+  }
+
+  void signUpUser() async {
+    // set loading to true
+    setState(() {
+      _isLoading = true;
+    });
+    // signup user using our authmethodds
+    String res = await AuthMethods().signUpUser(
+      name: widget.name,
+      email: widget.email,
+      password: widget.password,
+      phoneNo: widget.phoneNo,
+      description: _descriptionController.text,
+      isLeader: isLeader,
+      objective: _objectiveController.text,
+      skills: _myList,
+    );
+    // if string returned is sucess, user has been created
+    if (res == "success") {
+      setState(() {
+        _isLoading = false;
+      });
+      // navigate to the home screen
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      // show the error
+      showSnackBar(context, res);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +92,19 @@ class _AboutyourselfState extends State<Aboutyourself> {
               height: 10,
             ),
             Center(
-                child: Text(
-              "ABOUT YOURSELF",style:TextStyle(fontSize: 35,fontWeight:FontWeight.bold)
-            )),
+                child: Text("ABOUT YOURSELF",
+                    style:
+                        TextStyle(fontSize: 35, fontWeight: FontWeight.bold))),
             SizedBox(
               height: 20,
             ),
-            Center(child: Text("CHOOSE WHO YOU ARE?",style: TextStyle(fontSize: 15,fontWeight:FontWeight.bold,color:Colors.blue))),
-             SizedBox(
+            Center(
+                child: Text("CHOOSE WHO YOU ARE?",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue))),
+            SizedBox(
               height: 10,
             ),
             Center(
@@ -54,7 +119,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
                 inactiveFgColor: Colors.white,
                 initialLabelIndex: 0,
                 totalSwitches: 2,
-                 animate: true,
+                animate: true,
                 labels: ['LEADER', 'MEMBER'],
                 // radiusStyle: true,
                 onToggle: (index) {
@@ -79,12 +144,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
                 child: ElevatedButton(
                   child: Text('Submit'),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ResponsiveLayout(
-                        mobileScreenLayout: MobileScreenLayout(),
-                        webScreenLayout: WebScreenLayout(),
-                      ),
-                    ));
+                    signUpUser();
                   },
                 ))
           ],
@@ -102,28 +162,30 @@ class _AboutyourselfState extends State<Aboutyourself> {
           Padding(
             padding: const EdgeInsets.only(top: 18),
             child: Center(
-              child: Text('Enter The fields as a Leader',style:TextStyle(fontSize: 20)
-                  ),
+              child: Text('Enter The fields as a Leader',
+                  style: TextStyle(fontSize: 20)),
             ),
           ),
           const SizedBox(height: 18),
           TextFormField(
+            controller: _objectiveController,
             decoration: const InputDecoration(
               icon: const Icon(Icons.person),
               hintText: 'Enter your Title Or Objective',
               labelText: 'Objective',
             ),
           ),
-           const SizedBox(height: 15),
-          Text("SKILL SETS",style: TextStyle(fontSize:15)),
+          const SizedBox(height: 15),
+          Text("SKILL SETS", style: TextStyle(fontSize: 15)),
           const SizedBox(height: 5),
           ChipTags(
             list: _myList,
             createTagOnSubmit: true,
             chipColor: Colors.black,
           ),
-           const SizedBox(height: 10),
+          const SizedBox(height: 10),
           TextFormField(
+            controller: _descriptionController,
             decoration: const InputDecoration(
               icon: const Icon(Icons.calendar_today),
               hintText: 'Description (around 20 words atleast)',
@@ -143,26 +205,27 @@ class _AboutyourselfState extends State<Aboutyourself> {
           Padding(
             padding: const EdgeInsets.only(top: 18),
             child: Center(
-              child: Text('Enter Field as a Member ',style:TextStyle(fontSize: 20)),
+              child: Text('Enter Field as a Member ',
+                  style: TextStyle(fontSize: 20)),
             ),
           ),
           const SizedBox(height: 18),
-            TextFormField(
+          TextFormField(
             decoration: const InputDecoration(
               icon: const Icon(Icons.lightbulb_circle_outlined),
               hintText: 'Enter your Ojective./ title  ',
               labelText: 'Objective',
             ),
           ),
-           const SizedBox(height: 15),
-            Text("SKILL SETS",style: TextStyle(fontSize:15)),
-            const SizedBox(height: 5),
-           ChipTags(
+          const SizedBox(height: 15),
+          Text("SKILL SETS", style: TextStyle(fontSize: 15)),
+          const SizedBox(height: 5),
+          ChipTags(
             list: _myList,
             createTagOnSubmit: true,
             chipColor: Colors.black,
           ),
-           const SizedBox(height: 10),
+          const SizedBox(height: 10),
           TextFormField(
             decoration: const InputDecoration(
               icon: const Icon(Icons.calendar_today),

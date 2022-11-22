@@ -162,7 +162,7 @@ class _logState extends State<LogInPage> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10.0)),
-                                        backgroundColor: Colors.black,
+                                        //backgroundColor: Colors.black,
                                       ),
                                       child: const Padding(
                                         padding: EdgeInsets.all(15.0),
@@ -194,7 +194,7 @@ class _logState extends State<LogInPage> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10.0)),
-                                        backgroundColor: Colors.black,
+                                        //  backgroundColor: Colors.black,
                                       ),
                                       child: const Padding(
                                         padding: EdgeInsets.all(15.0),
