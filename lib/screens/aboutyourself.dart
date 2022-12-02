@@ -162,16 +162,16 @@ class _AboutyourselfState extends State<Aboutyourself> {
           Padding(
             padding: const EdgeInsets.only(top: 18),
             child: Center(
-              child: Text('Enter The fields as a Leader',
-                  style: TextStyle(fontSize: 20)),
+              child: Text('Fill the information as Leader',
+                  style: TextStyle(fontSize: 18)),
             ),
           ),
           const SizedBox(height: 18),
           TextFormField(
             controller: _objectiveController,
             decoration: const InputDecoration(
-              icon: const Icon(Icons.person),
-              hintText: 'Enter your Title Or Objective',
+              icon: const Icon(Icons.lightbulb_circle_outlined),
+              hintText: 'Enter the objective for your team',
               labelText: 'Objective',
             ),
           ),
@@ -187,9 +187,9 @@ class _AboutyourselfState extends State<Aboutyourself> {
           TextFormField(
             controller: _descriptionController,
             decoration: const InputDecoration(
-              icon: const Icon(Icons.calendar_today),
+              icon: const Icon(Icons.description_outlined),
               hintText: 'Description (around 20 words atleast)',
-              labelText: 'description',
+              labelText: 'Description',
             ),
           ),
         ],
@@ -205,12 +205,13 @@ class _AboutyourselfState extends State<Aboutyourself> {
           Padding(
             padding: const EdgeInsets.only(top: 18),
             child: Center(
-              child: Text('Enter Field as a Member ',
+              child: Text('Fill the information as Member',
                   style: TextStyle(fontSize: 20)),
             ),
           ),
           const SizedBox(height: 18),
           TextFormField(
+            controller: _objectiveController,
             decoration: const InputDecoration(
               icon: const Icon(Icons.lightbulb_circle_outlined),
               hintText: 'Enter your Ojective./ title  ',
@@ -227,10 +228,11 @@ class _AboutyourselfState extends State<Aboutyourself> {
           ),
           const SizedBox(height: 10),
           TextFormField(
+            controller: _descriptionController,
             decoration: const InputDecoration(
-              icon: const Icon(Icons.calendar_today),
-              hintText: 'Enter your date of birth',
-              labelText: 'Dob',
+              icon: const Icon(Icons.description_outlined),
+              hintText: 'Description (around 20 words atleast)',
+              labelText: 'Description',
             ),
           ),
         ],

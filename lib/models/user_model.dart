@@ -5,12 +5,20 @@ class User {
   final String email;
   final String uid;
   final String phoneNo;
+  final String description;
+  final bool isLeader;
+  final List skills;
+  final String objective;
 
   const User({
     required this.name,
     required this.email,
     required this.uid,
     required this.phoneNo,
+    required this.skills,
+    required this.isLeader,
+    required this.objective,
+    required this.description,
   });
 
   static User fromSnap(snap) {
@@ -23,6 +31,10 @@ class User {
       email: snapshot["email"],
       uid: snapshot["uid"],
       phoneNo: snapshot["phoneNo"],
+      skills: snapshot["skills"],
+      isLeader: snapshot["isLeader"],
+      objective: snapshot["objective"],
+      description: snapshot["description"],
     );
   }
 
@@ -32,5 +44,9 @@ class User {
         "email": email,
         "uid": uid,
         "phoneNo": phoneNo,
+        "skills": skills,
+        "isLeader": isLeader,
+        "objective": objective,
+        "description": description,
       };
 }

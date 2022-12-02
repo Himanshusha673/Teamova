@@ -192,7 +192,7 @@ class _RegistrationState extends State<Registration> {
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
-                            //backgroundColor: Colors.black,
+                            backgroundColor: Colors.black,
                           ),
                           child: const Padding(
                             padding: EdgeInsets.all(15.0),
@@ -207,42 +207,42 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                        child: Text("Create Account",
-                            style: TextStyle(color: Colors.white)),
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => Aboutyourself(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                  name: _nameController.text,
-                                  phoneNo: _phoneNoController.text),
-                            ),
-                          );
-                        }),
-                    SizedBox(
-                      height: 18,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 90),
-                      child: Row(
-                        children: [
-                          Text("Already have an Account!",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16)),
-                          GestureDetector(
-                              child: Text(
-                                "Login Here",
-                                style:
-                                    TextStyle(color: Colors.blue, fontSize: 16),
-                              ),
-                              onTap: () {
-                                Navigator.pop(context);
-                              }),
-                        ],
-                      ),
-                    ),
+                    // ElevatedButton(
+                    //     child: Text("Create Account",
+                    //         style: TextStyle(color: Colors.white)),
+                    //     onPressed: () {
+                    //       Navigator.of(context).pushReplacement(
+                    //         MaterialPageRoute(
+                    //           builder: (context) => Aboutyourself(
+                    //               email: _emailController.text,
+                    //               password: _passwordController.text,
+                    //               name: _nameController.text,
+                    //               phoneNo: _phoneNoController.text),
+                    //         ),
+                    //       );
+                    //     }),
+                    // SizedBox(
+                    //   height: 18,
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 90),
+                    //   child: Row(
+                    //     children: [
+                    //       Text("Already have an Account!",
+                    //           style:
+                    //               TextStyle(color: Colors.black, fontSize: 16)),
+                    //       GestureDetector(
+                    //           child: Text(
+                    //             "Login Here",
+                    //             style:
+                    //                 TextStyle(color: Colors.blue, fontSize: 16),
+                    //           ),
+                    //           onTap: () {
+                    //             Navigator.pop(context);
+                    //           }),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
