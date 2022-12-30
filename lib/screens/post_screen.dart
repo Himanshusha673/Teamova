@@ -23,14 +23,19 @@ class _postState extends State<PostPage> {
   Uint8List? _file;
   bool isLoading = false;
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController  _titleController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
   final TextEditingController _link_1_Controller = TextEditingController();
   final TextEditingController _link_2_Controller = TextEditingController();
+  @override
+  void dispose() {
+    _descriptionController.dispose();
+    _titleController.dispose();
+    _link_1_Controller.dispose();
+    _link_2_Controller.dispose();
+    super.dispose();
+  }
 
-
- 
-
-   void postImage(String uid, String username, String profImage) async {
+  void postImage(String uid, String username, String profImage) async {
     setState(() {
       isLoading = true;
     });
@@ -66,15 +71,12 @@ class _postState extends State<PostPage> {
       );
     }
   }
-  
-    void clearImage() {
+
+  void clearImage() {
     setState(() {
       _file = null;
     });
   }
-
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -84,204 +86,195 @@ class _postState extends State<PostPage> {
         appBar: AppBar(
             title: Text('Share Post'),
             //leading: Icon(Icons.cancel),
-          actions: <Widget>[
-                TextButton(
-                  onPressed: (){},
-                  // postImage(
-                  //   userProvider.getUser.uid,
-                  //   userProvider.getUser.username,
-                  //   userProvider.getUser.photoUrl,
-                  // ),
-                  child: const Text(
-                    "Post",
-                    style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0),
-                  ),
-                )
-              ],
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {},
+                // postImage(
+                //   userProvider.getUser.uid,
+                //   userProvider.getUser.username,
+                //   userProvider.getUser.photoUrl,
+                // ),
+                child: const Text(
+                  "Post",
+                  style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0),
+                ),
+              )
+            ],
             centerTitle: true,
             backgroundColor: Colors.black),
         body: SnappingSheet(
-          grabbingHeight: 75,
-          // TODO: Add your grabbing widget here,
-          grabbing: GrabbingWidget(),
-          /////////////////
-          // Part forSnipingSheet
-          /////////////////////
-          sheetBelow: SnappingSheetContent(
-            draggable: true,
-            // childScrollController: listViewController,
-            child:Container(
-              color:Colors.white,
-              child: ListView(
-              
-                children: [
-                Container(height: 50, color:Colors.white,   
-                child:Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.camera, size: 42,),
-                          onPressed: () async {
-                            Uint8List file = await pickImage(ImageSource.camera);
-                    setState(() {
-                      _file = file;
-                    });
-                          },
+            grabbingHeight: 75,
+            // TODO: Add your grabbing widget here,
+            grabbing: GrabbingWidget(),
+            /////////////////
+            // Part forSnipingSheet
+            /////////////////////
+            sheetBelow: SnappingSheetContent(
+                draggable: true,
+                // childScrollController: listViewController,
+                child: Container(
+                  color: Colors.white,
+                  child: ListView(
+                    children: [
+                      Container(
+                        height: 50,
+                        color: Colors.white,
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.camera,
+                                size: 42,
+                              ),
+                              onPressed: () async {
+                                Uint8List file =
+                                    await pickImage(ImageSource.camera);
+                                setState(() {
+                                  _file = file;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 20),
+                            const Text(
+                              "Capture a Image",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 28),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 20),
-                         const Text(
-                          "Capture a Image",
-                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 28),
+                      ),
+                      Divider(thickness: 1, color: Colors.grey),
+                      Container(
+                        height: 50,
+                        color: Colors.white,
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.image,
+                                size: 42,
+                              ),
+                              onPressed: () async {
+                                Uint8List file =
+                                    await pickImage(ImageSource.gallery);
+                                setState(() {
+                                  _file = file;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 20),
+                            const Text(
+                              "Take Picture from Gallery",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 28),
+                            ),
+                          ],
                         ),
-                        
-                      ],
-                    ),),
-                    Divider(thickness: 1,color:Colors.grey),
-                     Container(height: 50, color:Colors.white,   
-                child:Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.image, size: 42,),
-                          onPressed: () async {
-                           Uint8List file = await pickImage(ImageSource.gallery);
-                    setState(() {
-                      _file = file;
-                    });
-                          },
-                        ),
-                        SizedBox(width: 20),
-                         const Text(
-                          "Take Picture from Gallery",
-                          style: TextStyle(fontWeight: FontWeight.bold,fontSize:28),
-                        ),
-                        
-                      ],
-                    ),),
-                ],
-              ),
-            ) ),
-         
-          ///////////////////////////////
-          // below code is for outside part-body of snippingSheet
-          ///////////////////////////////
-          ////////////////////////
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                const CircleAvatar(
-                    radius: 18,
-                    backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2574&q=80')
-                    //radius: 20,
-                    ),
-                const SizedBox(width: 15),
-                Text(userProvider.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold))
+                      ),
+                    ],
+                  ),
+                )),
+
+            ///////////////////////////////
+            // below code is for outside part-body of snippingSheet
+            ///////////////////////////////
+            ////////////////////////
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              child:
+                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  const CircleAvatar(
+                      radius: 18,
+                      backgroundImage: NetworkImage(
+                          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2574&q=80')
+                      //radius: 20,
+                      ),
+                  const SizedBox(width: 15),
+                  Text(userProvider.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold))
+                ]),
+                TextFormField(
+                  controller: _titleController,
+                  decoration: const InputDecoration(
+                    labelText: 'Enter Title ',
+                    border: InputBorder.none,
+                  ),
+                  // use the validator to return an error string (or null) based on the input text
+                  validator: (text) {
+                    if (text == null || text.isEmpty) {
+                      return 'Can\'t be empty';
+                    }
+                    if (text.length < 4) {
+                      return 'Too short';
+                    }
+                    return null;
+                  },
+                  // update the state variable when the text changes
+                ),
+                TextFormField(
+                  controller: _link_1_Controller,
+                  decoration: const InputDecoration(
+                    labelText: 'Enter 1st Link ',
+                    border: InputBorder.none,
+
+                    ///prefixIcon: Icon(Icons.)
+                  ),
+                  // use the validator to return an error string (or null) based on the input text
+                  validator: (text) {
+                    if (text == null || text.isEmpty) {
+                      return 'Can\'t be empty';
+                    }
+                    if (text.length < 4) {
+                      return 'Too short';
+                    }
+                    return null;
+                  },
+                  // update the state variable when the text changes
+                ),
+                TextFormField(
+                  controller: _link_2_Controller,
+                  decoration: const InputDecoration(
+                    labelText: 'Enter 2nd link ',
+                    border: InputBorder.none,
+                  ),
+                  // use the validator to return an error string (or null) based on the input text
+                  validator: (text) {
+                    if (text == null || text.isEmpty) {
+                      return 'Can\'t be empty';
+                    }
+                    if (text.length < 4) {
+                      return 'Too short';
+                    }
+                    return null;
+                  },
+                  // update the state variable when the text changes
+                ),
+                TextFormField(
+                  maxLines: 8,
+
+                  controller: _descriptionController,
+                  decoration: const InputDecoration(
+                    labelText: 'Enter description ',
+                    border: InputBorder.none,
+                  ),
+                  // use the validator to return an error string (or null) based on the input text
+                  validator: (text) {
+                    if (text == null || text.isEmpty) {
+                      return 'Can\'t be empty';
+                    }
+                    if (text.length < 4) {
+                      return 'Too short';
+                    }
+                    return null;
+                  },
+                  // update the state variable when the text changes
+                ),
               ]),
-               TextFormField(
-               
-                controller: _titleController ,
-            decoration: const InputDecoration(
-              labelText: 'Enter Title ',
-              border:InputBorder.none,
-            
-            ),
-            // use the validator to return an error string (or null) based on the input text
-            validator: (text) {
-              if (text == null || text.isEmpty) {
-                return 'Can\'t be empty';
-              }
-              if (text.length < 4) {
-                return 'Too short';
-              }
-              return null;
-            },
-            // update the state variable when the text changes
-         
-          ),
-
-
-          TextFormField(
-        
-               
-                controller: _link_1_Controller ,
-            decoration: const InputDecoration(
-              labelText: 'Enter 1st Link ',
-              border:InputBorder.none,
-              ///prefixIcon: Icon(Icons.)
-            
-            ),
-            // use the validator to return an error string (or null) based on the input text
-            validator: (text) {
-              if (text == null || text.isEmpty) {
-                return 'Can\'t be empty';
-              }
-              if (text.length < 4) {
-                return 'Too short';
-              }
-              return null;
-            },
-            // update the state variable when the text changes
-         
-          ),
-
-
-          TextFormField(
-               
-                controller: _link_2_Controller ,
-            decoration: const InputDecoration(
-              labelText: 'Enter 2nd link ',
-              border:InputBorder.none,
-              
-            
-            ),
-            // use the validator to return an error string (or null) based on the input text
-            validator: (text) {
-              if (text == null || text.isEmpty) {
-                return 'Can\'t be empty';
-              }
-              if (text.length < 4) {
-                return 'Too short';
-              }
-              return null;
-            },
-            // update the state variable when the text changes
-         
-          ),
-
-
-        TextFormField(
-          maxLines: 8,
-               
-                controller: _descriptionController ,
-            decoration: const InputDecoration(
-              labelText: 'Enter description ',
-              border:InputBorder.none,
-            
-            ),
-            // use the validator to return an error string (or null) based on the input text
-            validator: (text) {
-              if (text == null || text.isEmpty) {
-                return 'Can\'t be empty';
-              }
-              if (text.length < 4) {
-                return 'Too short';
-              }
-              return null;
-            },
-            // update the state variable when the text changes
-         
-          ),
-
-            
-            ]),
-          )
-        )
-        );
+            )));
   }
 }
 
