@@ -23,6 +23,7 @@ class FireStoreMethods {
 
       String postId = const Uuid().v1(); // creates unique id based on time
 
+
       Post post = Post(
         description: description,
         uid: uid,
@@ -101,6 +102,7 @@ class FireStoreMethods {
     }
     return res;
   }
+  
 
   // Delete Post
   Future<String> deletePost(String postId) async {
