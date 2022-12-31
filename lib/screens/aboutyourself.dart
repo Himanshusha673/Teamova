@@ -16,7 +16,7 @@ class Aboutyourself extends StatefulWidget {
   final String password;
   final String phoneNo;
 
-  Aboutyourself(
+  const Aboutyourself(
       {Key? key,
       required this.name,
       required this.email,
@@ -83,113 +83,166 @@ class _AboutyourselfState extends State<Aboutyourself> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: Container(
-        child: ListView(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-                child: Text("ABOUT YOURSELF",
-                    style:
-                        TextStyle(fontSize: 35, fontWeight: FontWeight.bold))),
-            SizedBox(
-              height: 20,
-            ),
-            Center(
-                child: Text("CHOOSE WHO YOU ARE?",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue))),
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: ToggleSwitch(
-                minWidth: 90.0,
-                cornerRadius: 20.0,
-                borderWidth: 2.0,
-                borderColor: [Colors.blueGrey],
-                activeBgColor: isLeader ? [Colors.green] : [Colors.black],
-                activeFgColor: Colors.white,
-                inactiveBgColor: isLeader ? Colors.black54 : Colors.green,
-                inactiveFgColor: Colors.white,
-                initialLabelIndex: 0,
-                totalSwitches: 2,
-                animate: true,
-                labels: ['LEADER', 'MEMBER'],
-                // radiusStyle: true,
-                onToggle: (index) {
-                  print("$index");
-                  if (index == 0) {
-                    setState(() {
-                      isLeader = true;
-                    });
-                  } else {
-                    setState(() {
-                      isLeader = false;
-                    });
-                  }
-                },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
               ),
-            ),
-            // Ui is for just Member and leader
-            isLeader ? leader() : member(),
-            SizedBox(height: 30),
-            Container(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  child: Text('Submit'),
-                  onPressed: () {
-                    signUpUser();
-                  },
-                ))
-          ],
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text(
+                    "About Yourself",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Center(
+                child: Column(
+                  children: [
+                    const Text(
+                      "CHOOSE WHO YOU ARE ?",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      child: ToggleSwitch(
+                        minWidth: 90.0,
+                        cornerRadius: 20.0,
+                        borderWidth: 2.0,
+                        activeBgColor:
+                            isLeader ? [Colors.green] : [Colors.black],
+                        activeFgColor: Colors.white,
+                        inactiveBgColor: isLeader ? Colors.black : Colors.green,
+                        inactiveFgColor: Colors.white,
+                        initialLabelIndex: 0,
+                        totalSwitches: 2,
+                        animate: true,
+                        labels: const ['LEADER', 'MEMBER'],
+                        onToggle: (index) {
+                          print("$index");
+                          if (index == 0) {
+                            setState(() {
+                              isLeader = true;
+                            });
+                          } else {
+                            setState(() {
+                              isLeader = false;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Ui is for just Member and leader
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 10.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Fill Your Information as ${isLeader ? 'Leader' : 'Member'}',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    isLeader ? leader() : member(),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 7.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      signUpUser();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      backgroundColor: Colors.black,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Text(
+                        "SUBMIT",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 
   Widget leader() {
     return Form(
       key: _leaderFormKey,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 18),
-            child: Center(
-              child: Text('Fill the information as Leader',
-                  style: TextStyle(fontSize: 18)),
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: TextFormField(
+              controller: _objectiveController,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.lightbulb_circle_outlined),
+                hintText: 'Enter the objective for your team',
+                labelText: 'Objective',
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
-          const SizedBox(height: 18),
-          TextFormField(
-            controller: _objectiveController,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.lightbulb_circle_outlined),
-              hintText: 'Enter the objective for your team',
-              labelText: 'Objective',
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: ChipTags(
+              list: _myList,
+              createTagOnSubmit: true,
+              chipColor: Colors.black,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.account_tree_outlined),
+                hintText: 'Add your skill sets',
+                labelText: 'Skills',
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
-          const SizedBox(height: 15),
-          Text("SKILL SETS", style: TextStyle(fontSize: 15)),
-          const SizedBox(height: 5),
-          ChipTags(
-            list: _myList,
-            createTagOnSubmit: true,
-            chipColor: Colors.black,
-          ),
-          const SizedBox(height: 10),
-          TextFormField(
-            controller: _descriptionController,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.description_outlined),
-              hintText: 'Description (around 20 words atleast)',
-              labelText: 'Description',
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: TextFormField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.description_outlined),
+                hintText: 'Description (around 20 words atleast)',
+                labelText: 'Description',
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
         ],
@@ -200,39 +253,44 @@ class _AboutyourselfState extends State<Aboutyourself> {
   Widget member() {
     return Form(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 18),
-            child: Center(
-              child: Text('Fill the information as Member',
-                  style: TextStyle(fontSize: 20)),
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: TextFormField(
+              controller: _objectiveController,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.lightbulb_circle_outlined),
+                hintText: 'Enter the objective for your team',
+                labelText: 'Objective',
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
-          const SizedBox(height: 18),
-          TextFormField(
-            controller: _objectiveController,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.lightbulb_circle_outlined),
-              hintText: 'Enter your Ojective./ title  ',
-              labelText: 'Objective',
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: ChipTags(
+              list: _myList,
+              createTagOnSubmit: true,
+              chipColor: Colors.black,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.account_tree_outlined),
+                hintText: 'Add your skill sets',
+                labelText: 'Skills',
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
-          const SizedBox(height: 15),
-          Text("SKILL SETS", style: TextStyle(fontSize: 15)),
-          const SizedBox(height: 5),
-          ChipTags(
-            list: _myList,
-            createTagOnSubmit: true,
-            chipColor: Colors.black,
-          ),
-          const SizedBox(height: 10),
-          TextFormField(
-            controller: _descriptionController,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.description_outlined),
-              hintText: 'Description (around 20 words atleast)',
-              labelText: 'Description',
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: TextFormField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.description_outlined),
+                hintText: 'Description (around 20 words atleast)',
+                labelText: 'Description',
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
         ],
