@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chip_tags/flutter_chip_tags.dart';
 import 'package:team_builder/screens/post_screen.dart';
+import 'package:team_builder/screens/profile.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:team_builder/utils/constant.dart';
 
@@ -105,8 +106,19 @@ class _AboutyourselfState extends State<Aboutyourself> {
                   ),
                 ),
               ),
+              // const SizedBox(
+              //   height: 5,
+              // ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: ProfileWidget(
+                  imagePath:
+                      'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-No-Background.png',
+                  onClicked: () {}, // Add function
+                ),
+              ),
               const SizedBox(
-                height: 15,
+                height: 10,
               ),
               Center(
                 child: Column(
