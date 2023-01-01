@@ -113,6 +113,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: ProfileWidget(
+                  isEdit: true,
                   imagePath:
                       'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-No-Background.png',
                   onClicked: () {}, // Add function

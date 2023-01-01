@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:team_builder/models/user_model.dart';
 import 'package:team_builder/providers/user_provider.dart';
+import 'package:team_builder/utils/colors.dart';
 
 import '../resources/auth_methods.dart';
 
@@ -26,7 +27,7 @@ class NavigationDrawer extends StatelessWidget {
 
   Widget buildHeader(BuildContext context, String name, String email) {
     return Container(
-      color: Colors.blue.shade700,
+      color: mainColor,
       padding: EdgeInsets.only(
         top: 15 + MediaQuery.of(context).padding.top,
         bottom: 15,
@@ -65,7 +66,10 @@ class NavigationDrawer extends StatelessWidget {
         runSpacing: 15,
         children: [
           ListTile(
-            leading: const Icon(Icons.home_outlined),
+            leading: const Icon(
+              Icons.home_outlined,
+              color: mainColor,
+            ),
             title: const Text("Home"),
             onTap: () => Navigator.of(context).pushReplacement(
               MaterialPageRoute(
@@ -74,7 +78,10 @@ class NavigationDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.person_outlined),
+            leading: const Icon(
+              Icons.person_outlined,
+              color: mainColor,
+            ),
             title: const Text("Profile"),
             onTap: () {
               Navigator.pop(context);
@@ -89,7 +96,10 @@ class NavigationDrawer extends StatelessWidget {
             color: Colors.black54,
           ),
           ListTile(
-            leading: const Icon(Icons.lock_outlined),
+            leading: const Icon(
+              Icons.lock_outlined,
+              color: mainColor,
+            ),
             title: const Text("Log Out"),
             onTap: () async {
               await AuthMethods().signOut();
