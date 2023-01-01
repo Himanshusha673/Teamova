@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:team_builder/providers/user_provider.dart';
+import 'package:team_builder/utils/colors.dart';
 
 import '../models/user_model.dart' as model;
 
@@ -16,11 +17,12 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final model.User userProvider = Provider.of<UserProvider>(context).getUser;
 
-    final List<String> list = ["fluttter", "dart"];
+    // final List<String> list = ["fluttter", "dart"];
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile Page"),
-        leading: const BackButton(),
+        centerTitle: false,
+        title: Text(userProvider.name),
+        // leading: const BackButton(),
         // elevation: 0,
         // backgroundColor: Colors.transparent,
       ),
@@ -57,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
           // Center(
           //   child: ButtonWidget(
@@ -93,7 +95,7 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary;
+    const color = mainColor;
 
     return Center(
       child: Stack(

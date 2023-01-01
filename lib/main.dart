@@ -44,7 +44,16 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Teamova',
-        theme: ThemeData.light().copyWith(backgroundColor: mainColor),
+        theme: ThemeData.light().copyWith(
+          appBarTheme: const AppBarTheme(
+            backgroundColor: mainColor,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+            backgroundColor: mainColor,
+            foregroundColor: primaryColor,
+          )),
+        ),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {

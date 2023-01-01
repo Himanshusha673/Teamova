@@ -44,17 +44,19 @@ class FeedScreenState extends State<FeedScreen> {
     // model.User user = Provider.of<UserProvider>(context).getUser;
 
     return Scaffold(
-        // backgroundColor: mobileBackgroundColor,
         appBar: width > webScreenSize
             ? null
             : AppBar(
-                backgroundColor: mobileBackgroundColor,
-                centerTitle: false,
-                // title: Image.asset(
-                //   "images/teamova_header.png",
-                //   color: primaryColor,
-                //   height: 32,
-                // ),
+                // centerTitle: true,
+                title: SizedBox(
+                  width: width * 0.4,
+                  child: Image.asset(
+                    "images/TeamovaHeaderStrip.png",
+                    // color: primaryColor,
+                    // height: 32,
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 actions: [
                   IconButton(
                     icon: const Icon(

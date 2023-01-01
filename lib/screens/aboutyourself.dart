@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chip_tags/flutter_chip_tags.dart';
-import 'package:team_builder/screens/post_screen.dart';
 import 'package:team_builder/screens/profile.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:team_builder/utils/constant.dart';
@@ -36,6 +35,8 @@ class _AboutyourselfState extends State<Aboutyourself> {
   final List<String> _myList = [];
   final TextEditingController _objectiveController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+
+  @override
   void dispose() {
     super.dispose();
     _objectiveController.dispose();
@@ -112,6 +113,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: ProfileWidget(
+                  isEdit: true,
                   imagePath:
                       'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-No-Background.png',
                   onClicked: () {}, // Add function
