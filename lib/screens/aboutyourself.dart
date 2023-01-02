@@ -151,29 +151,54 @@ class _AboutyourselfState extends State<Aboutyourself> {
               // const SizedBox(
               //   height: 5,
               // ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Stack(
-                  children: [
-                    ClipOval(
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Ink.image(
-                          image: const AssetImage('images/No-DP2.png'),
-                          fit: BoxFit.cover,
-                          width: 128,
-                          height: 128,
-                          child: InkWell(onTap: selectImage),
+              //https://prod.liveshare.vsengsaas.visualstudio.com/join?05DD551B050D6FA66820EF3E831DA333B9E6
+              // Padding(
+              //   padding: const EdgeInsets.all(10),
+              //   child: Stack(
+              //     children: [
+              //       ClipOval(
+              //         child: Material(
+              //           color: Colors.transparent,
+              //           child: Ink.image(
+              //             image: const AssetImage('images/No-DP2.png'),
+              //             fit: BoxFit.cover,
+              //             width: 128,
+              //             height: 128,
+              //             child: InkWell(onTap: selectImage),
+              //           ),
+              //         ),
+              //       ),
+              //       Positioned(
+              //         bottom: 0,
+              //         right: 4,
+              //         child: buildEditIcon(mainColor),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              Stack(
+                children: [
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                          backgroundColor: Colors.red,
+                        )
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage: NetworkImage(
+                              'https://i.stack.imgur.com/l60Hf.png'),
+                          backgroundColor: Colors.red,
                         ),
-                      ),
+                  Positioned(
+                    bottom: -10,
+                    left: 80,
+                    child: IconButton(
+                      onPressed: selectImage,
+                      icon: const Icon(Icons.add_a_photo),
                     ),
-                    Positioned(
-                      bottom: 0,
-                      right: 4,
-                      child: buildEditIcon(mainColor),
-                    ),
-                  ],
-                ),
+                  )
+                ],
               ),
 
               const SizedBox(

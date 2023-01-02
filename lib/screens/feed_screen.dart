@@ -88,32 +88,7 @@ class FeedScreenState extends State<FeedScreen> {
         description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       ),
-      // Center(
-      //   child: Text(name),
-      // )
-      // StreamBuilder(
-      //   stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-      //   builder: (context,
-      //       AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return const Center(
-      //         child: CircularProgressIndicator(),
-      //       );
-      //     }
-      //     return ListView.builder(
-      //       itemCount: snapshot.data!.docs.length,
-      //       itemBuilder: (ctx, index) => Container(
-      //         margin: EdgeInsets.symmetric(
-      //           horizontal: width > webScreenSize ? width * 0.3 : 0,
-      //           vertical: width > webScreenSize ? 15 : 0,
-      //         ),
-      //         child: PostCard(
-      //           snap: snapshot.data!.docs[index].data(),
-      //         ),
-      //       ),
-      //     );
-      //   },
-      //   ),
+
       // body: Center(
       //   //child: Text("hello"),
       //   child: StreamBuilder(
