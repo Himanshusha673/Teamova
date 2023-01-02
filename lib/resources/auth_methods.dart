@@ -31,6 +31,7 @@ class AuthMethods {
     required bool isLeader,
     required String objective,
     required String description,
+    required Uint8List file,
   }) async {
     String res = "Some error Occurred";
     try {
@@ -44,15 +45,24 @@ class AuthMethods {
           email: email,
           password: password,
         );
+        print('step1');
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
+        // String photoUrl = "null";
+        print('step2');
+
         model.User user = model.User(
-            isLeader: isLeader,
-            skills: skills,
-            objective: objective,
-            name: name,
-            email: email,
-            uid: cred.user!.uid,
-            phoneNo: phoneNo,
-            description: description);
+          isLeader: isLeader,
+          skills: skills,
+          objective: objective,
+          name: name,
+          email: email,
+          uid: cred.user!.uid,
+          phoneNo: phoneNo,
+          description: description,
+          photoUrl: photoUrl,
+        );
+        print('step3');
 
         // adding user in our firestore database
         await _firestore

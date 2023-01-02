@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_chip_tags/flutter_chip_tags.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:team_builder/screens/profile.dart';
 import 'package:team_builder/utils/colors.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -36,6 +39,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
   final List<String> _myList = [];
   final TextEditingController _objectiveController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  Uint8List? _image;
 
   @override
   void dispose() {
@@ -59,6 +63,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
       isLeader: isLeader,
       objective: _objectiveController.text,
       skills: _myList,
+      file: _image!,
     );
     // if string returned is sucess, user has been created
     if (res == "success") {
@@ -110,6 +115,14 @@ class _AboutyourselfState extends State<Aboutyourself> {
         ),
       );
 
+  selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    // set state because we need to display the image we selected on the circle avatar
+    setState(() {
+      _image = im;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,7 +163,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
                           fit: BoxFit.cover,
                           width: 128,
                           height: 128,
-                          child: InkWell(onTap: (() {})),
+                          child: InkWell(onTap: selectImage),
                         ),
                       ),
                     ),
@@ -162,6 +175,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
                   ],
                 ),
               ),
+
               const SizedBox(
                 height: 10,
               ),

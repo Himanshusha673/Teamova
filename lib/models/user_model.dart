@@ -7,10 +7,12 @@ class User {
   final String phoneNo;
   final String description;
   final bool isLeader;
+  final String photoUrl;
   final List skills;
   final String objective;
 
   const User({
+    required this.photoUrl,
     required this.name,
     required this.email,
     required this.uid,
@@ -35,6 +37,7 @@ class User {
       isLeader: snapshot["isLeader"],
       objective: snapshot["objective"],
       description: snapshot["description"],
+      photoUrl: snapshot["photoUrl"],
     );
   }
 
@@ -48,5 +51,6 @@ class User {
         "isLeader": isLeader,
         "objective": objective,
         "description": description,
+        "photoUrl": photoUrl,
       };
 }
