@@ -49,10 +49,11 @@ class MyApp extends StatelessWidget {
             backgroundColor: mainColor,
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-            backgroundColor: mainColor,
-            foregroundColor: primaryColor,
-          )),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: mainColor,
+              foregroundColor: primaryColor,
+            ),
+          ),
         ),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
