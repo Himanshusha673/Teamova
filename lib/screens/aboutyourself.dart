@@ -182,7 +182,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
                       ? CircleAvatar(
                           radius: 64,
                           backgroundImage: MemoryImage(_image!),
-                          backgroundColor: Colors.red,
+                          backgroundColor: Colors.white,
                         )
                       : const CircleAvatar(
                           radius: 64,
