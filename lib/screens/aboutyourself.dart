@@ -93,9 +93,9 @@ class _AboutyourselfState extends State<Aboutyourself> {
         all: 3,
         child: buildCircle(
           color: color,
-          all: 8,
+          all: 3,
           child: const Icon(
-            Icons.add_a_photo,
+            Icons.edit_outlined,
             color: Colors.white,
             size: 20,
           ),
@@ -186,16 +186,17 @@ class _AboutyourselfState extends State<Aboutyourself> {
                         )
                       : const CircleAvatar(
                           radius: 64,
-                          backgroundImage: NetworkImage(
-                              'https://i.stack.imgur.com/l60Hf.png'),
-                          backgroundColor: Colors.red,
+                          backgroundImage: AssetImage('images/No-DP2.png'),
+                          // NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
+                          backgroundColor: Colors.transparent,
                         ),
                   Positioned(
-                    bottom: -10,
+                    bottom: -8,
                     left: 80,
                     child: IconButton(
                       onPressed: selectImage,
-                      icon: const Icon(Icons.add_a_photo),
+                      icon: buildEditIcon(mainColor),
+                      // const Icon(Icons.add_a_photo),
                     ),
                   )
                 ],
@@ -231,7 +232,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
                         animate: true,
                         labels: const ['LEADER', 'MEMBER'],
                         onToggle: (index) {
-                          print("$index");
+                          // print("$index");
                           if (index == 0) {
                             setState(() {
                               isLeader = true;
