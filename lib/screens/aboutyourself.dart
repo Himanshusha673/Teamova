@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chip_tags/flutter_chip_tags.dart';
 import 'package:team_builder/screens/profile.dart';
+import 'package:team_builder/utils/colors.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:team_builder/utils/constant.dart';
 
@@ -82,6 +83,33 @@ class _AboutyourselfState extends State<Aboutyourself> {
     }
   }
 
+  Widget buildEditIcon(Color color) => buildCircle(
+        color: Colors.white,
+        all: 3,
+        child: buildCircle(
+          color: color,
+          all: 8,
+          child: const Icon(
+            Icons.add_a_photo,
+            color: Colors.white,
+            size: 20,
+          ),
+        ),
+      );
+
+  Widget buildCircle({
+    required Widget child,
+    required double all,
+    required Color color,
+  }) =>
+      ClipOval(
+        child: Container(
+          padding: EdgeInsets.all(all),
+          color: color,
+          child: child,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,11 +140,26 @@ class _AboutyourselfState extends State<Aboutyourself> {
               // ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: ProfileWidget(
-                  isEdit: true,
-                  imagePath:
-                      'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-No-Background.png',
-                  onClicked: () {}, // Add function
+                child: Stack(
+                  children: [
+                    ClipOval(
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Ink.image(
+                          image: const AssetImage('images/No-DP2.png'),
+                          fit: BoxFit.cover,
+                          width: 128,
+                          height: 128,
+                          child: InkWell(onTap: (() {})),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 4,
+                      child: buildEditIcon(mainColor),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(
