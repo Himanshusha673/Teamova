@@ -6,12 +6,18 @@ class Post {
   final String username;
   // likes to be dynamic
   final likes;
+  final String teamName;
+  final String link1;
+  final String link2;
   final String postId;
   final DateTime datePublished;
   final String postUrl;
   final String profImage;
 
   const Post({
+    required this.teamName,
+    required this.link1,
+    required this.link2,
     required this.description,
     required this.uid,
     required this.username,
@@ -26,6 +32,7 @@ class Post {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return Post(
+        teamName: snapshot['teamName'],
         description: snapshot["description"],
         uid: snapshot["uid"],
         likes: snapshot["likes"],
@@ -33,7 +40,10 @@ class Post {
         datePublished: snapshot["datePublished"],
         username: snapshot["username"],
         postUrl: snapshot['postUrl'],
-        profImage: snapshot['profImage']);
+        profImage: snapshot['profImage'],
+        link1: snapshot['link1'],
+        link2: snapshot['link2']);
+    ;
   }
 
   Map<String, dynamic> toJson() => {

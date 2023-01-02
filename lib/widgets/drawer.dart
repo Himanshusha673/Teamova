@@ -1,14 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:team_builder/models/user_model.dart';
 import 'package:team_builder/providers/user_provider.dart';
 import 'package:team_builder/utils/colors.dart';
+import '../models/user_model.dart' as model;
 
 import '../resources/auth_methods.dart';
 
-class NavigationDrawer extends StatelessWidget {
+class NavigationDrawer extends StatefulWidget {
   const NavigationDrawer({super.key});
 
+  @override
+  State<NavigationDrawer> createState() => _NavigationDrawerState();
+}
+
+class _NavigationDrawerState extends State<NavigationDrawer> {
+  bool isLoading = false;
+  @override
   @override
   Widget build(BuildContext context) {
     final User _user = Provider.of<UserProvider>(context).getUser;
@@ -26,6 +35,7 @@ class NavigationDrawer extends StatelessWidget {
   }
 
   Widget buildHeader(BuildContext context, String name, String email) {
+    final model.User userProvider = Provider.of<UserProvider>(context).getUser;
     return Container(
       color: mainColor,
       padding: EdgeInsets.only(
@@ -34,10 +44,9 @@ class NavigationDrawer extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 45,
-            backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2574&q=80'),
+            backgroundImage: NetworkImage(userProvider.photoUrl),
           ),
           const SizedBox(
             height: 12,

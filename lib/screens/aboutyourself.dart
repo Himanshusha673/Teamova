@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_chip_tags/flutter_chip_tags.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:team_builder/screens/profile.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:team_builder/utils/constant.dart';
@@ -35,6 +38,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
   final List<String> _myList = [];
   final TextEditingController _objectiveController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  Uint8List? _image;
 
   @override
   void dispose() {
@@ -58,6 +62,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
       isLeader: isLeader,
       objective: _objectiveController.text,
       skills: _myList,
+      file: _image!,
     );
     // if string returned is sucess, user has been created
     if (res == "success") {
@@ -80,6 +85,14 @@ class _AboutyourselfState extends State<Aboutyourself> {
       // show the error
       showSnackBar(context, res);
     }
+  }
+
+  selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    // set state because we need to display the image we selected on the circle avatar
+    setState(() {
+      _image = im;
+    });
   }
 
   @override
@@ -110,15 +123,32 @@ class _AboutyourselfState extends State<Aboutyourself> {
               // const SizedBox(
               //   height: 5,
               // ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: ProfileWidget(
-                  isEdit: true,
-                  imagePath:
-                      'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-No-Background.png',
-                  onClicked: () {}, // Add function
-                ),
+
+              Stack(
+                children: [
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                          backgroundColor: Colors.red,
+                        )
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage: NetworkImage(
+                              'https://i.stack.imgur.com/l60Hf.png'),
+                          backgroundColor: Colors.white,
+                        ),
+                  Positioned(
+                    bottom: -10,
+                    left: 80,
+                    child: IconButton(
+                      onPressed: selectImage,
+                      icon: const Icon(Icons.add_a_photo),
+                    ),
+                  )
+                ],
               ),
+
               const SizedBox(
                 height: 10,
               ),

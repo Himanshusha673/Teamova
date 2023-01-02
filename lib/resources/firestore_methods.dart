@@ -9,8 +9,15 @@ import '../models/post.dart';
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadPost(String description, Uint8List file, String uid,
-      String username, String profImage) async {
+  Future<String> uploadPost(
+      String description,
+      Uint8List file,
+      String uid,
+      String username,
+      String profImage,
+      String teamName,
+      String link1,
+      String link2) async {
     // asking uid here because we dont want to make extra calls
     //to firebase auth when we can just get from our state management
     String res = "Some error occurred";
@@ -23,7 +30,6 @@ class FireStoreMethods {
 
       String postId = const Uuid().v1(); // creates unique id based on time
 
-
       Post post = Post(
         description: description,
         uid: uid,
@@ -33,6 +39,9 @@ class FireStoreMethods {
         datePublished: DateTime.now(),
         postUrl: photoUrl,
         profImage: profImage,
+        link1: link1,
+        link2: link2,
+        teamName: link2,
       );
       // folder(posts)->folder(postId Uniquely byy uuid)->contasins all feilds
       _firestore.collection('posts').doc(postId).set(post.toJson());
@@ -102,7 +111,6 @@ class FireStoreMethods {
     }
     return res;
   }
-  
 
   // Delete Post
   Future<String> deletePost(String postId) async {
