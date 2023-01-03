@@ -43,10 +43,12 @@ class Post {
         profImage: snapshot['profImage'],
         link1: snapshot['link1'],
         link2: snapshot['link2']);
-    ;
   }
 
   Map<String, dynamic> toJson() => {
+        "link1": link1,
+        "link2": link2,
+        "teamName": teamName,
         "description": description,
         "uid": uid,
         "likes": likes,

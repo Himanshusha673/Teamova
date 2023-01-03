@@ -41,7 +41,7 @@ class FireStoreMethods {
         profImage: profImage,
         link1: link1,
         link2: link2,
-        teamName: link2,
+        teamName: teamName,
       );
       // folder(posts)->folder(postId Uniquely byy uuid)->contasins all feilds
       _firestore.collection('posts').doc(postId).set(post.toJson());

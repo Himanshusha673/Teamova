@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:team_builder/models/user_model.dart' as model;
 
 import 'package:team_builder/widgets/drawer.dart';
-import 'package:team_builder/widgets/postcard.dart';
+
 import '../models/user_model.dart' as model;
 import '../providers/user_provider.dart';
 
@@ -47,7 +47,7 @@ class FeedScreenState extends State<FeedScreen> {
     // model.User user = Provider.of<UserProvider>(context).getUser;
 
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: primaryColor,
       appBar: width > webScreenSize
           ? null
           : AppBar(

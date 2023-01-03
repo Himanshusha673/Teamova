@@ -44,14 +44,15 @@ class _postState extends State<PostPage> {
     try {
       // upload to storage and db
       String res = await FireStoreMethods().uploadPost(
-          _descriptionController.text,
-          _file!,
-          uid,
-          username,
-          profImage,
-          teamName,
-          link1,
-          link2);
+        _descriptionController.text,
+        _file!,
+        uid,
+        username,
+        profImage,
+        teamName,
+        link1,
+        link2,
+      );
       if (res == "success") {
         setState(() {
           isLoading = false;
@@ -132,60 +133,59 @@ class _postState extends State<PostPage> {
                           Container(
                             height: 50,
                             color: Colors.white,
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  icon: Icon(
+                            child: GestureDetector(
+                              onTap: () async {
+                                Uint8List file =
+                                    await pickImage(ImageSource.camera);
+                                setState(() {
+                                  _file = file;
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
                                     Icons.camera,
-                                    size: 42,
+                                    size: 40,
                                   ),
-                                  onPressed: () async {
-                                    Uint8List file =
-                                        await pickImage(ImageSource.camera);
-                                    setState(() {
-                                      _file = file;
-                                    });
-                                  },
-                                ),
-                                SizedBox(width: 20),
-                                const Text(
-                                  "Capture a Image",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 28),
-                                ),
-                              ],
+                                  SizedBox(width: 20),
+                                  const Text(
+                                    "Capture a Image",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           Divider(thickness: 1, color: Colors.grey),
                           Container(
-                            height: 50,
-                            color: Colors.white,
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.image,
-                                    size: 42,
-                                  ),
-                                  onPressed: () async {
-                                    Uint8List file =
-                                        await pickImage(ImageSource.gallery);
-                                    setState(() {
-                                      _file = file;
-                                    });
-                                  },
+                              height: 50,
+                              color: Colors.white,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  Uint8List file =
+                                      await pickImage(ImageSource.gallery);
+                                  setState(() {
+                                    _file = file;
+                                  });
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.image,
+                                      size: 40,
+                                    ),
+                                    SizedBox(width: 20),
+                                    const Text(
+                                      "Take Picture from Gallery",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(width: 20),
-                                const Text(
-                                  "Take Picture from Gallery",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 28),
-                                ),
-                              ],
-                            ),
-                          ),
+                              )),
                         ],
                       ),
                     )),
@@ -216,7 +216,7 @@ class _postState extends State<PostPage> {
                         TextFormField(
                           controller: _teamName,
                           decoration: const InputDecoration(
-                            labelText: 'Enter Title ',
+                            labelText: 'Enter Team Name ',
                             border: InputBorder.none,
                           ),
                           // use the validator to return an error string (or null) based on the input text
@@ -234,7 +234,7 @@ class _postState extends State<PostPage> {
                         TextFormField(
                           controller: _link_1_Controller,
                           decoration: const InputDecoration(
-                            labelText: 'Enter 1st Link ',
+                            labelText: 'Enter 1st Link of Group ',
                             border: InputBorder.none,
 
                             ///prefixIcon: Icon(Icons.)
@@ -254,7 +254,7 @@ class _postState extends State<PostPage> {
                         TextFormField(
                           controller: _link_2_Controller,
                           decoration: const InputDecoration(
-                            labelText: 'Enter 2nd link ',
+                            labelText: 'Enter 2nd link of Group ',
                             border: InputBorder.none,
                           ),
                           // use the validator to return an error string (or null) based on the input text
@@ -292,7 +292,7 @@ class _postState extends State<PostPage> {
                       ]),
                 ))
             : Center(
-                child: CircularProgressIndicator(),
+                child: const CircularProgressIndicator(color: Colors.white),
               ));
   }
 }

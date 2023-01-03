@@ -71,9 +71,10 @@ class _PostCardState extends State<PostCard> {
       // boundary needed for web
       decoration: BoxDecoration(
         border: Border.all(
-          color: const Color.fromRGBO(189, 189, 189, 1),
+          color: mainColor,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
+        color: mainColor,
       ),
       margin: EdgeInsets.symmetric(
         vertical: 8,
@@ -89,6 +90,7 @@ class _PostCardState extends State<PostCard> {
             padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0),
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+              // color: mainColor,
             ),
             child: Row(
               children: [
@@ -291,6 +293,7 @@ class _PostCardState extends State<PostCard> {
           //DESCRIPTION AND NUMBER OF COMMENTS
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
+            color: mainColor,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
