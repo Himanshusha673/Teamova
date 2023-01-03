@@ -47,6 +47,7 @@ class FeedScreenState extends State<FeedScreen> {
     // model.User user = Provider.of<UserProvider>(context).getUser;
 
     return Scaffold(
+      backgroundColor: mainColor,
       appBar: width > webScreenSize
           ? null
           : AppBar(
