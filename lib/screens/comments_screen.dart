@@ -21,10 +21,15 @@ class CommentsScreen extends StatefulWidget {
 class _CommentsScreenState extends State<CommentsScreen> {
   final TextEditingController commentEditingController =
       TextEditingController();
+  @override
+  void dispose() {
+    commentEditingController.dispose();
+    super.dispose();
+  }
 
   void postComment(String uid, String name, String profilePic) async {
     try {
-     // ..calling to  firestore method postconnent 
+      // ..calling to  firestore method postconnent
       String res = await FireStoreMethods().postComment(
         widget.postId,
         commentEditingController.text,
@@ -51,7 +56,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
   Widget build(BuildContext context) {
     //because we need only user info in this page so we are using provider
 
-    final User user = Provider.of<UserProvider>(context).getUser;//getting current user details
+    final User user = Provider.of<UserProvider>(context)
+        .getUser; //getting current user details
 
     return Scaffold(
       appBar: AppBar(
@@ -79,7 +85,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (ctx, index) => CommentCard(
               //docs is how many document will contains by this collection
-              snap: snapshot.data!.docs[index],//this will contain all the data of docs
+              snap: snapshot
+                  .data!.docs[index], //this will contain all the data of docs
               //fields respective to the commentId(indexed)
             ),
           );
@@ -95,7 +102,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage('https://imgs.search.brave.com/2IHibGKlcZaybsBBuxowBltciZqK404EB-xWPw8fKvU/rs:fit:542:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5l/R0hhM0hnSHhJbFRI/bWN2S05EczdBSGFH/ZSZwaWQ9QXBp'),
+                backgroundImage: NetworkImage(
+                    'https://imgs.search.brave.com/2IHibGKlcZaybsBBuxowBltciZqK404EB-xWPw8fKvU/rs:fit:542:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5l/R0hhM0hnSHhJbFRI/bWN2S05EczdBSGFH/ZSZwaWQ9QXBp'),
                 radius: 18,
               ),
               Expanded(

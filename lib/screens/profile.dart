@@ -1,18 +1,61 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:team_builder/providers/user_provider.dart';
 import 'package:team_builder/utils/colors.dart';
 
 import '../models/user_model.dart' as model;
+import '../utils/utils.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  final String uid;
+
+  ProfilePage({super.key, required this.uid});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool isLoading = false;
+  int postLen = 0;
+  var userData = {};
+  @override
+  void initState() {
+    super.initState();
+    getDatas();
+  }
+
+  getDatas() async {
+    setState(() {
+      var isLoading = true;
+    });
+    try {
+      var snap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.uid)
+          .get();
+      userData = snap.data()!;
+
+      // get post lENGTH
+      var postSnap = await FirebaseFirestore.instance
+          .collection('posts')
+          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get();
+
+      postLen = postSnap.docs.length;
+    } catch (e) {
+      showSnackBar(
+        context,
+        e.toString(),
+      );
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final model.User userProvider = Provider.of<UserProvider>(context).getUser;
@@ -21,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text(userProvider.name),
+        title: Text(userData['name'].toString()),
         // leading: const BackButton(),
         // elevation: 0,
         // backgroundColor: Colors.transparent,
@@ -40,10 +83,10 @@ class _ProfilePageState extends State<ProfilePage> {
             height: 24,
           ),
           buildName(
-            userProvider.name,
-            userProvider.email,
-            userProvider.objective,
-            userProvider.phoneNo,
+            userData['name'].toString(),
+            userData['email'].toString(),
+            userData['objective'].toString(),
+            userData['phoneNo'].toString(),
           ),
           const SizedBox(
             height: 20,
@@ -66,11 +109,11 @@ class _ProfilePageState extends State<ProfilePage> {
           //     onClicked: () {}, // Add function - Add tags
           //   ),
           // ),
-          buildTags(userProvider.skills),
+          buildTags(userData['skills']),
           const SizedBox(
             height: 24,
           ),
-          buildAbout(userProvider.description), // Add about details
+          buildAbout(userData['description']), // Add about details
           const SizedBox(
             height: 24,
           ),

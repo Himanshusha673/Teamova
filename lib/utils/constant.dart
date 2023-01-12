@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:team_builder/screens/post_screen.dart';
 import '../screens/feed_screen.dart';
@@ -13,5 +14,5 @@ List<Widget> homeScreenItems = [
   const FeedScreen(),
   const SearchPage(),
   const PostPage(),
-  const ProfilePage(),
+  ProfilePage(uid: FirebaseAuth.instance.currentUser!.uid),
 ];

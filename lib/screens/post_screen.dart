@@ -1,5 +1,6 @@
 import 'dart:typed_data';
-
+import 'package:team_builder/screens/feed_screen.dart';
+import 'package:team_builder/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -44,15 +45,14 @@ class _postState extends State<PostPage> {
     try {
       // upload to storage and db
       String res = await FireStoreMethods().uploadPost(
-        _descriptionController.text,
-        _file!,
-        uid,
-        username,
-        profImage,
-        teamName,
-        link1,
-        link2,
-      );
+          _descriptionController.text,
+          _file!,
+          uid,
+          username,
+          profImage,
+          teamName,
+          link1,
+          link2);
       if (res == "success") {
         setState(() {
           isLoading = false;
@@ -82,6 +82,33 @@ class _postState extends State<PostPage> {
     });
   }
 
+  Widget buildEditIcon(Color color) => buildCircle(
+        color: Colors.white,
+        all: 3,
+        child: buildCircle(
+          color: color,
+          all: 3,
+          child: const Icon(
+            Icons.cancel,
+            color: Colors.white,
+            size: 20,
+          ),
+        ),
+      );
+
+  Widget buildCircle({
+    required Widget child,
+    required double all,
+    required Color color,
+  }) =>
+      ClipOval(
+        child: Container(
+          padding: EdgeInsets.all(all),
+          color: color,
+          child: child,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     // state management
@@ -90,7 +117,14 @@ class _postState extends State<PostPage> {
     return Scaffold(
         appBar: AppBar(
             title: Text('Share Post'),
-            //leading: Icon(Icons.cancel),
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const FeedScreen()),
+                  );
+                },
+                icon: Icon(Icons.arrow_back)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -160,32 +194,64 @@ class _postState extends State<PostPage> {
                           ),
                           Divider(thickness: 1, color: Colors.grey),
                           Container(
-                              height: 50,
-                              color: Colors.white,
-                              child: GestureDetector(
-                                onTap: () async {
-                                  Uint8List file =
-                                      await pickImage(ImageSource.gallery);
-                                  setState(() {
-                                    _file = file;
-                                  });
-                                },
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.image,
-                                      size: 40,
-                                    ),
-                                    SizedBox(width: 20),
-                                    const Text(
-                                      "Take Picture from Gallery",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24),
-                                    ),
-                                  ],
-                                ),
-                              )),
+                            height: 50,
+                            color: Colors.white,
+                            child: GestureDetector(
+                              onTap: () async {
+                                Uint8List file =
+                                    await pickImage(ImageSource.gallery);
+                                setState(() {
+                                  _file = file;
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.image,
+                                    size: 40,
+                                  ),
+                                  SizedBox(width: 20),
+                                  const Text(
+                                    "Take Picture from Gallery",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Center(
+                            child: Stack(
+                              children: [
+                                _file != null
+                                    ? CircleAvatar(
+                                        radius: 64,
+                                        backgroundImage: MemoryImage(_file!),
+                                        backgroundColor: Colors.white,
+                                      )
+                                    : Container(),
+                                _file != null
+                                    ? Positioned(
+                                        top: -8,
+                                        left: 80,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _file = null;
+                                            });
+                                          },
+                                          icon: buildEditIcon(mainColor),
+                                          // const Icon(Icons.add_a_photo),
+                                        ),
+                                      )
+                                    : Container()
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     )),
@@ -202,12 +268,13 @@ class _postState extends State<PostPage> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const CircleAvatar(
-                                  radius: 18,
-                                  backgroundImage: NetworkImage(
-                                      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2574&q=80')
-                                  //radius: 20,
-                                  ),
+                              CircleAvatar(
+                                radius: 18,
+                                backgroundImage:
+                                    NetworkImage(userProvider.photoUrl),
+
+                                //radius: 20,
+                              ),
                               const SizedBox(width: 15),
                               Text(userProvider.name,
                                   style: const TextStyle(
@@ -216,9 +283,10 @@ class _postState extends State<PostPage> {
                         TextFormField(
                           controller: _teamName,
                           decoration: const InputDecoration(
-                            labelText: 'Enter Team Name ',
-                            border: InputBorder.none,
-                          ),
+                              labelText: 'Enter Team Name ',
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 3, color: Colors.black87))),
                           // use the validator to return an error string (or null) based on the input text
                           validator: (text) {
                             if (text == null || text.isEmpty) {
@@ -234,11 +302,13 @@ class _postState extends State<PostPage> {
                         TextFormField(
                           controller: _link_1_Controller,
                           decoration: const InputDecoration(
-                            labelText: 'Enter 1st Link of Group ',
-                            border: InputBorder.none,
+                              labelText: 'Enter 1st Link of Group ',
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 3, color: Colors.black87))
 
-                            ///prefixIcon: Icon(Icons.)
-                          ),
+                              ///prefixIcon: Icon(Icons.)
+                              ),
                           // use the validator to return an error string (or null) based on the input text
                           validator: (text) {
                             if (text == null || text.isEmpty) {
@@ -254,9 +324,10 @@ class _postState extends State<PostPage> {
                         TextFormField(
                           controller: _link_2_Controller,
                           decoration: const InputDecoration(
-                            labelText: 'Enter 2nd link of Group ',
-                            border: InputBorder.none,
-                          ),
+                              labelText: 'Enter 2nd link of Group ',
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 3, color: Colors.black87))),
                           // use the validator to return an error string (or null) based on the input text
                           validator: (text) {
                             if (text == null || text.isEmpty) {
@@ -269,14 +340,16 @@ class _postState extends State<PostPage> {
                           },
                           // update the state variable when the text changes
                         ),
+                        SizedBox(height: 10),
                         TextFormField(
                           maxLines: 8,
-
                           controller: _descriptionController,
                           decoration: const InputDecoration(
-                            labelText: 'Enter description ',
-                            border: InputBorder.none,
-                          ),
+                              labelText: 'Enter description ',
+                              hintText: 'Enter description ',
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 3, color: Colors.black87))),
                           // use the validator to return an error string (or null) based on the input text
                           validator: (text) {
                             if (text == null || text.isEmpty) {
@@ -292,7 +365,7 @@ class _postState extends State<PostPage> {
                       ]),
                 ))
             : Center(
-                child: const CircularProgressIndicator(color: Colors.white),
+                child: CircularProgressIndicator(),
               ));
   }
 }

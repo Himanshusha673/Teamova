@@ -126,175 +126,179 @@ class _AboutyourselfState extends State<Aboutyourself> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Text(
-                    "About Yourself",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold,
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 30,
                     ),
-                  ),
-                ),
-              ),
-              // const SizedBox(
-              //   height: 5,
-              // ),
-              //https://prod.liveshare.vsengsaas.visualstudio.com/join?05DD551B050D6FA66820EF3E831DA333B9E6
-              // Padding(
-              //   padding: const EdgeInsets.all(10),
-              //   child: Stack(
-              //     children: [
-              //       ClipOval(
-              //         child: Material(
-              //           color: Colors.transparent,
-              //           child: Ink.image(
-              //             image: const AssetImage('images/No-DP2.png'),
-              //             fit: BoxFit.cover,
-              //             width: 128,
-              //             height: 128,
-              //             child: InkWell(onTap: selectImage),
-              //           ),
-              //         ),
-              //       ),
-              //       Positioned(
-              //         bottom: 0,
-              //         right: 4,
-              //         child: buildEditIcon(mainColor),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              Stack(
-                children: [
-                  _image != null
-                      ? CircleAvatar(
-                          radius: 64,
-                          backgroundImage: MemoryImage(_image!),
-                          backgroundColor: Colors.white,
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          "About Yourself",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // const SizedBox(
+                    //   height: 5,
+                    // ),
+                    //https://prod.liveshare.vsengsaas.visualstudio.com/join?05DD551B050D6FA66820EF3E831DA333B9E6
+                    // Padding(
+                    //   padding: const EdgeInsets.all(10),
+                    //   child: Stack(
+                    //     children: [
+                    //       ClipOval(
+                    //         child: Material(
+                    //           color: Colors.transparent,
+                    //           child: Ink.image(
+                    //             image: const AssetImage('images/No-DP2.png'),
+                    //             fit: BoxFit.cover,
+                    //             width: 128,
+                    //             height: 128,
+                    //             child: InkWell(onTap: selectImage),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       Positioned(
+                    //         bottom: 0,
+                    //         right: 4,
+                    //         child: buildEditIcon(mainColor),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    Stack(
+                      children: [
+                        _image != null
+                            ? CircleAvatar(
+                                radius: 64,
+                                backgroundImage: MemoryImage(_image!),
+                                backgroundColor: Colors.white,
+                              )
+                            : const CircleAvatar(
+                                radius: 64,
+                                backgroundImage:
+                                    AssetImage('images/No-DP2.png'),
+                                // NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
+                                backgroundColor: Colors.transparent,
+                              ),
+                        Positioned(
+                          bottom: -8,
+                          left: 80,
+                          child: IconButton(
+                            onPressed: selectImage,
+                            icon: buildEditIcon(mainColor),
+                            // const Icon(Icons.add_a_photo),
+                          ),
                         )
-                      : const CircleAvatar(
-                          radius: 64,
-                          backgroundImage: AssetImage('images/No-DP2.png'),
-                          // NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
-                          backgroundColor: Colors.transparent,
-                        ),
-                  Positioned(
-                    bottom: -8,
-                    left: 80,
-                    child: IconButton(
-                      onPressed: selectImage,
-                      icon: buildEditIcon(mainColor),
-                      // const Icon(Icons.add_a_photo),
+                      ],
                     ),
-                  )
-                ],
-              ),
 
-              const SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Column(
-                  children: [
-                    const Text(
-                      "CHOOSE WHO YOU ARE ?",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: Column(
+                        children: [
+                          const Text(
+                            "CHOOSE WHO YOU ARE ?",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            child: ToggleSwitch(
+                              minWidth: 90.0,
+                              cornerRadius: 20.0,
+                              borderWidth: 2.0,
+                              activeBgColor:
+                                  isLeader ? [Colors.green] : [Colors.black],
+                              activeFgColor: Colors.white,
+                              inactiveBgColor:
+                                  isLeader ? Colors.black : Colors.green,
+                              inactiveFgColor: Colors.white,
+                              initialLabelIndex: 0,
+                              totalSwitches: 2,
+                              animate: true,
+                              labels: const ['LEADER', 'MEMBER'],
+                              onToggle: (index) {
+                                // print("$index");
+                                if (index == 0) {
+                                  setState(() {
+                                    isLeader = true;
+                                  });
+                                } else {
+                                  setState(() {
+                                    isLeader = false;
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+                    // Ui is for just Member and leader
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: ToggleSwitch(
-                        minWidth: 90.0,
-                        cornerRadius: 20.0,
-                        borderWidth: 2.0,
-                        activeBgColor:
-                            isLeader ? [Colors.green] : [Colors.black],
-                        activeFgColor: Colors.white,
-                        inactiveBgColor: isLeader ? Colors.black : Colors.green,
-                        inactiveFgColor: Colors.white,
-                        initialLabelIndex: 0,
-                        totalSwitches: 2,
-                        animate: true,
-                        labels: const ['LEADER', 'MEMBER'],
-                        onToggle: (index) {
-                          // print("$index");
-                          if (index == 0) {
-                            setState(() {
-                              isLeader = true;
-                            });
-                          } else {
-                            setState(() {
-                              isLeader = false;
-                            });
-                          }
-                        },
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0,
+                        vertical: 10.0,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Fill Your Information as ${isLeader ? 'Leader' : 'Member'}',
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          isLeader ? leader() : member(),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              // Ui is for just Member and leader
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 10.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Fill Your Information as ${isLeader ? 'Leader' : 'Member'}',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    isLeader ? leader() : member(),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 7.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      signUpUser();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      backgroundColor: Colors.black,
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: Text(
-                        "SUBMIT",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 7.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            signUpUser();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            backgroundColor: Colors.black,
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Text(
+                              "SUBMIT",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 

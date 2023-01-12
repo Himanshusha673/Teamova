@@ -61,15 +61,6 @@ class FeedScreenState extends State<FeedScreen> {
                   fit: BoxFit.cover,
                 ),
               ),
-              actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.messenger_outline,
-                    color: primaryColor,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
             ),
       drawer: const NavigationDrawer(),
       // body: PostCard(
