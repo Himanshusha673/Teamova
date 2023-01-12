@@ -21,7 +21,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool isLoading = false;
   int postLen = 0;
-  var userData = {};
+  dynamic userData = {};
   @override
   void initState() {
     super.initState();
@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   getDatas() async {
     setState(() {
-      var isLoading = true;
+      isLoading = true;
     });
     try {
       var snap = await FirebaseFirestore.instance
@@ -71,57 +71,60 @@ class _ProfilePageState extends State<ProfilePage> {
         // elevation: 0,
         // backgroundColor: Colors.transparent,
       ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: ProfileWidget(
-              imagePath: userProvider.photoUrl,
-              onClicked: () async {}, // Add function
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView(
+              physics: const BouncingScrollPhysics(),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: ProfileWidget(
+                    imagePath: userProvider.photoUrl,
+                    onClicked: () async {}, // Add function
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                buildName(
+                  userData['name'].toString(),
+                  userData['email'].toString(),
+                  userData['objective'].toString(),
+                  userData['phoneNo'].toString(),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: ButtonWidget(
+                    text: userProvider.isLeader
+                        ? 'LEADER'
+                        : 'MEMBER', // Should change depending on whether leader or member
+                    onClicked: () {},
+                    uid: widget
+                        .uid, // Add function - Add widget that shows group links
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                // Center(
+                //   child: ButtonWidget(
+                //     text: '🔥 Interests 🔥',
+                //     onClicked: () {}, // Add function - Add tags
+                //   ),
+                // ),
+                buildTags(userData['skills']),
+                const SizedBox(
+                  height: 24,
+                ),
+                buildAbout(
+                    userData['description'].toString()), // Add about details
+                const SizedBox(
+                  height: 24,
+                ),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-          buildName(
-            userData['name'].toString(),
-            userData['email'].toString(),
-            userData['objective'].toString(),
-            userData['phoneNo'].toString(),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: ButtonWidget(
-              text: userProvider.isLeader
-                  ? 'LEADER'
-                  : 'MEMBER', // Should change depending on whether leader or member
-              onClicked: () {},
-              uid: widget
-                  .uid, // Add function - Add widget that shows group links
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          // Center(
-          //   child: ButtonWidget(
-          //     text: '🔥 Interests 🔥',
-          //     onClicked: () {}, // Add function - Add tags
-          //   ),
-          // ),
-          buildTags(userData['skills']),
-          const SizedBox(
-            height: 24,
-          ),
-          buildAbout(userData['description'].toString()), // Add about details
-          const SizedBox(
-            height: 24,
-          ),
-        ],
-      ),
     );
   }
 }
