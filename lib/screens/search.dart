@@ -15,6 +15,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController searchController = TextEditingController();
   bool isShowUsers = false;
+  bool isLoading = false;
   @override
   void dispose() {
     searchController.dispose();
