@@ -12,7 +12,7 @@ import '../utils/utils.dart';
 class ProfilePage extends StatefulWidget {
   final String uid;
 
-  ProfilePage({super.key, required this.uid});
+  const ProfilePage({super.key, required this.uid});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -59,8 +59,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final model.User userProvider = Provider.of<UserProvider>(context).getUser;
-
     // final List<String> list = ["fluttter", "dart"];
     return Scaffold(
       appBar: AppBar(
