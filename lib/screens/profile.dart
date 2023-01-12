@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:team_builder/providers/user_provider.dart';
+import 'package:team_builder/screens/tems.dart';
 import 'package:team_builder/utils/colors.dart';
 
 import '../models/user_model.dart' as model;
@@ -96,8 +97,9 @@ class _ProfilePageState extends State<ProfilePage> {
               text: userProvider.isLeader
                   ? 'LEADER'
                   : 'MEMBER', // Should change depending on whether leader or member
-              onClicked:
-                  () {}, // Add function - Add widget that shows group links
+              onClicked: () {},
+              uid: widget
+                  .uid, // Add function - Add widget that shows group links
             ),
           ),
           const SizedBox(
@@ -113,7 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(
             height: 24,
           ),
-          buildAbout(userData['description']), // Add about details
+          buildAbout(userData['description'].toString()), // Add about details
           const SizedBox(
             height: 24,
           ),
@@ -237,9 +239,11 @@ Widget buildName(String name, String userName, String email, String phone) {
 class ButtonWidget extends StatelessWidget {
   final String text;
   final VoidCallback onClicked;
+  final uid;
 
   const ButtonWidget({
     Key? key,
+    required this.uid,
     required this.text,
     required this.onClicked,
   }) : super(key: key);
@@ -251,7 +255,14 @@ class ButtonWidget extends StatelessWidget {
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
         ),
-        onPressed: onClicked,
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (contex) => TeamsPost(
+                        uid: uid,
+                      )));
+        },
         child: Column(
           children: [
             Text(
