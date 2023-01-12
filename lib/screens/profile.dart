@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: ProfileWidget(
-              imagePath: userProvider.photoUrl,
+              imagePath: userData['photoUrl'], // changes
               onClicked: () async {}, // Add function
             ),
           ),
@@ -95,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           Center(
             child: ButtonWidget(
-              text: userProvider.isLeader
+              text: userData['isLeader']
                   ? 'LEADER'
                   : 'MEMBER', // Should change depending on whether leader or member
               onClicked: () {},

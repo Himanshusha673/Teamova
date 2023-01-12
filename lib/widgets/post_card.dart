@@ -271,7 +271,28 @@ class _PostCardState extends State<PostCard> {
                     ),
                   ),
                   IconButton(
-                    onPressed: (() {}),
+                    onPressed: (() {
+                      showDialog(
+                        context: context,
+                        builder: ((context) => SimpleDialog(
+                              title: const Text('Select assignment'),
+                              children: <Widget>[
+                                SimpleDialogOption(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Treasury department'),
+                                ),
+                                SimpleDialogOption(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('State department'),
+                                ),
+                              ],
+                            )),
+                      );
+                    }),
                     icon: const Icon(Icons.webhook_outlined),
                     color: Colors.amber[600],
                   ),
