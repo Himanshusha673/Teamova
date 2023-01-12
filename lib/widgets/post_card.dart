@@ -275,19 +275,35 @@ class _PostCardState extends State<PostCard> {
                       showDialog(
                         context: context,
                         builder: ((context) => SimpleDialog(
-                              title: const Text('Select assignment'),
+                              backgroundColor: primaryColor,
+                              title: Text(
+                                '${widget.snap['teamName']}',
+                                style: const TextStyle(
+                                  fontSize: 22.0,
+                                ),
+                              ),
                               children: <Widget>[
                                 SimpleDialogOption(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Treasury department'),
+                                  child: Text(
+                                    widget.snap['link1'].toString(),
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
                                 ),
                                 SimpleDialogOption(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('State department'),
+                                  child: Text(
+                                    widget.snap['link2'].toString(),
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
                                 ),
                               ],
                             )),
