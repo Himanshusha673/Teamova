@@ -77,9 +77,9 @@ class _PostCardState extends State<PostCard> {
         color: mainColor,
       ),
       margin: EdgeInsets.symmetric(
-        vertical: 8,
+        // vertical: 6,
         horizontal: width * 0.015,
-      ),
+      ).copyWith(top: 8),
       padding: const EdgeInsets.only(
         bottom: 7,
       ),
