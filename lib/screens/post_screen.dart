@@ -302,7 +302,7 @@ class _postState extends State<PostPage> {
                         TextFormField(
                           controller: _link_1_Controller,
                           decoration: const InputDecoration(
-                              labelText: 'Enter 1st Link of Group ',
+                              labelText: 'Enter 1st Social Link Of Your Team',
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       width: 3, color: Colors.black87))
@@ -324,7 +324,7 @@ class _postState extends State<PostPage> {
                         TextFormField(
                           controller: _link_2_Controller,
                           decoration: const InputDecoration(
-                              labelText: 'Enter 2nd link of Group ',
+                              labelText: 'Enter 2nd Social Link Of Your Team',
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       width: 3, color: Colors.black87))),
