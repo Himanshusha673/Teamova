@@ -128,7 +128,6 @@ class _postState extends State<PostPage> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
                   postImage(
                       userProvider.uid,
                       userProvider.name,

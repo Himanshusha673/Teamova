@@ -43,8 +43,10 @@ class FireStoreMethods {
         link2: link2,
         teamName: teamName,
       );
+      print("abb firestore par jaayega");
       // folder(posts)->folder(postId Uniquely byy uuid)->contasins all feilds
       _firestore.collection('posts').doc(postId).set(post.toJson());
+      print("abb firestore par gya");
       res = "success";
     } catch (err) {
       res = err.toString();
