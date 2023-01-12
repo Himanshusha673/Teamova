@@ -30,6 +30,11 @@ class _TeamsPostState extends State<TeamsPost> {
               child: CircularProgressIndicator(),
             );
           }
+          if ((snapshot.data! as dynamic).docs.length == 0) {
+            return Center(
+              child: Text('No post Yet,\n Go back'),
+            );
+          }
 
           return GridView.builder(
             shrinkWrap: true,

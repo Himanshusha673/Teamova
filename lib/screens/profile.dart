@@ -64,8 +64,9 @@ class _ProfilePageState extends State<ProfilePage> {
     // final List<String> list = ["fluttter", "dart"];
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
+        centerTitle: true,
         title: Text(userData['name'].toString()),
+
         // leading: const BackButton(),
         // elevation: 0,
         // backgroundColor: Colors.transparent,
