@@ -281,7 +281,7 @@ class ButtonWidget extends StatelessWidget {
               height: 3,
             ),
             const Text(
-              "Click To View Your Teams",
+              "Click To View Posts",
               style: TextStyle(
                 // color: Colors.grey,
                 fontSize: 11,
