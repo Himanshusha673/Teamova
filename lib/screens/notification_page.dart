@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team_builder/resources/auth_methods.dart';
+import 'package:team_builder/services/auth_methods.dart';
 
 class NotificationPage extends StatefulWidget {
   @override

@@ -1,12 +1,12 @@
 import 'dart:developer';
-import 'dart:io';
+
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:team_builder/models/user_model.dart' as model;
-import 'package:team_builder/resources/storage_methods.dart';
+import 'package:team_builder/services/storage_methods.dart';
 
 // when user authetication completed then storing it to our firebase storage
 class AuthMethods {

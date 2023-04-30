@@ -5,12 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chip_tags/flutter_chip_tags.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:team_builder/screens/profile.dart';
 import 'package:team_builder/utils/colors.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:team_builder/utils/constant.dart';
 
-import '../resources/auth_methods.dart';
+import '../services/auth_methods.dart';
 import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout.dart';
 import '../responsive/web_screen_layout.dart';

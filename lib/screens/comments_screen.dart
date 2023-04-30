@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../models/user_model.dart';
 import '../providers/user_provider.dart';
-import '../resources/firestore_methods.dart';
+import '../services/firestore_methods.dart';
 import '../utils/colors.dart';
 import '../utils/utils.dart';
 import '../widgets/comment_card.dart';

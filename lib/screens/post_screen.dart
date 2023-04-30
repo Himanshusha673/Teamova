@@ -8,7 +8,7 @@ import 'package:snapping_sheet/snapping_sheet.dart';
 
 import '../providers/user_provider.dart';
 import '../models/user_model.dart' as model;
-import '../resources/firestore_methods.dart';
+import '../services/firestore_methods.dart';
 import '../utils/utils.dart';
 
 class PostPage extends StatefulWidget {

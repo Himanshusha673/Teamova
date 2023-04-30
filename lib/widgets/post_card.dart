@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,13 +7,14 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:team_builder/screens/profile.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/user_model.dart';
 import '../providers/user_provider.dart';
-import '../resources/firestore_methods.dart';
+import '../services/firestore_methods.dart';
 import '../screens/comments_screen.dart';
 import '../utils/colors.dart';
-import '../utils/constant.dart';
+
 import '../utils/utils.dart';
 import 'like_animation.dart';
 
@@ -321,7 +324,10 @@ class _PostCardState extends State<PostCard> {
                                     ),
                                     const SizedBox(height: 20.0),
                                     InkWell(
-                                      onTap: () {
+                                      onTap: () async {
+                                        log(widget.snap['link1'].toString());
+
+                                        _launchThisUrl(widget.snap['link1']);
                                         Clipboard.setData(ClipboardData(
                                           text: widget.snap['link1'],
                                         ));
@@ -329,9 +335,11 @@ class _PostCardState extends State<PostCard> {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           const SnackBar(
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             content:
                                                 Text('Copied to clipboard'),
-                                            backgroundColor: Colors.grey,
+                                            backgroundColor: mainColor,
                                           ),
                                         );
                                       },
@@ -359,15 +367,21 @@ class _PostCardState extends State<PostCard> {
                                     const SizedBox(height: 20.0),
                                     InkWell(
                                       onTap: () {
+                                        log(widget.snap['link2'].toString());
+
+                                        _launchThisUrl(widget.snap['link2']);
                                         Clipboard.setData(ClipboardData(
-                                            text: widget.snap['link2']));
+                                          text: widget.snap['link2'],
+                                        ));
                                         Navigator.pop(context);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           const SnackBar(
+                                            duration:
+                                                Duration(milliseconds: 500),
                                             content:
                                                 Text('Copied to clipboard'),
-                                            backgroundColor: Colors.green,
+                                            backgroundColor: mainColor,
                                           ),
                                         );
                                       },
@@ -499,5 +513,12 @@ class _PostCardState extends State<PostCard> {
         ],
       ),
     );
+  }
+
+  Future<void> _launchThisUrl(String url) async {
+    final Uri uri = Uri(scheme: "https", host: url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
   }
 }

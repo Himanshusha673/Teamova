@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:team_builder/resources/auth_methods.dart';
+import 'package:team_builder/screens/chatPage.dart';
+import 'package:team_builder/services/auth_methods.dart';
 import 'package:team_builder/widgets/circularIndiacator.dart';
 import 'package:team_builder/widgets/drawer.dart';
 import '../utils/colors.dart';
@@ -50,7 +51,8 @@ class FeedScreenState extends State<FeedScreen> {
               actions: [
                 IconButton(
                   onPressed: () async {
-                    await AuthMethods().signOut();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ChatPage()));
                   },
                   icon: const Icon(
                     Icons.wechat_outlined,

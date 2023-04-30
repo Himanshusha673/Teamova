@@ -2,15 +2,13 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:team_builder/screens/notification_page.dart';
+import 'package:team_builder/screens/forgot_password.dart';
 import 'package:team_builder/screens/signup.dart';
 import 'package:team_builder/utils/colors.dart';
-import '../resources/auth_methods.dart';
+
+import '../services/auth_methods.dart';
 import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout.dart';
 import '../responsive/web_screen_layout.dart';
@@ -206,20 +204,44 @@ class _logState extends State<LogInPage> {
                                 ),
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: GestureDetector(
-                                child: const Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Text(
-                                    "Forget Password ?", // TODO : Fix feature
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.blue,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: ((context) =>
+                                            ForgotPasswordScreen()),
+                                      ),
+                                    );
+                                  },
+                                  child: GestureDetector(
+                                    child: const Text(
+                                      "Forget Password ?", // TODO : Fix feature
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.blue,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: ((context) => Registration()),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Sign Up',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 10),
                             Row(
@@ -251,39 +273,10 @@ class _logState extends State<LogInPage> {
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 7.0),
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: ((context) =>
-                                                Registration()),
-                                          ),
-                                        );
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0)),
-                                        backgroundColor: Colors.black,
-                                      ),
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(15.0),
-                                        child: Text(
-                                          "REGISTER",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ],
+                            ),
+                            const SizedBox(
+                              height: 20,
                             ),
                             const SizedBox(
                               child: Padding(
@@ -381,7 +374,7 @@ class _logState extends State<LogInPage> {
                     ),
                     Center(
                       child: Padding(
-                        padding: EdgeInsets.all(18.0),
+                        padding: const EdgeInsets.all(18.0),
                         child: FittedBox(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
