@@ -1,32 +1,39 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:team_builder/models/user_model.dart';
+
 import 'package:team_builder/providers/user_provider.dart';
 import 'package:team_builder/utils/colors.dart';
-import '../models/user_model.dart' as model;
+// import '../models/user_model.dart' as model;
 
 import '../resources/auth_methods.dart';
 
-class NavigationDrawer extends StatefulWidget {
-  const NavigationDrawer({super.key});
+class MyDrawer extends StatefulWidget {
+  const MyDrawer({super.key});
 
   @override
-  State<NavigationDrawer> createState() => _NavigationDrawerState();
+  State<MyDrawer> createState() => _MyDrawerState();
 }
 
-class _NavigationDrawerState extends State<NavigationDrawer> {
+class _MyDrawerState extends State<MyDrawer> {
   bool isLoading = false;
   @override
   @override
   Widget build(BuildContext context) {
-    final User _user = Provider.of<UserProvider>(context).getUser;
+    final user = Provider.of<UserProvider>(context).getUser;
+    // log("user.name");
+    // log(user.name);
+    // log(user.email);
+
+    // log(user.photoUrl);
+
     return Drawer(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            buildHeader(context, _user.name, _user.email),
+            buildHeader(context, user.name, user.email, user.photoUrl),
             buildMenuItems(context),
           ],
         ),
@@ -34,8 +41,8 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     );
   }
 
-  Widget buildHeader(BuildContext context, String name, String email) {
-    final model.User userProvider = Provider.of<UserProvider>(context).getUser;
+  Widget buildHeader(
+      BuildContext context, String name, String email, String photoUrl) {
     return Container(
       color: mainColor,
       padding: EdgeInsets.only(
@@ -46,7 +53,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
         children: [
           CircleAvatar(
             radius: 45,
-            backgroundImage: NetworkImage(userProvider.photoUrl),
+            backgroundImage: NetworkImage(photoUrl),
           ),
           const SizedBox(
             height: 12,
@@ -75,9 +82,10 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
         runSpacing: 15,
         children: [
           ListTile(
-            leading: const Icon(
-              Icons.home_outlined,
-              color: mainColor,
+            selected: true,
+            leading: const CircleAvatar(
+              backgroundImage: NetworkImage(
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmmO7Z5y-L4RuYKFxH0b6qFPA1BvnUA6Z_t4bBkpzWh_8mpD34Z-0Qo21dJ0jQpHhmJQU&usqp=CAU'),
             ),
             title: const Text("Home"),
             onTap: () => Navigator.of(context).pushReplacement(
@@ -87,13 +95,34 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
             ),
           ),
           ListTile(
-            leading: const Icon(
-              Icons.person_outlined,
-              color: mainColor,
+            leading: const CircleAvatar(
+              radius: 18,
+              backgroundImage: NetworkImage(
+                  'https://img.freepik.com/free-icon/verification-delivery-list-clipboard-symbol_318-61556.jpg'),
+            ),
+            title: const Text('Tasks'),
+            onTap: () {
+              // TODO: Add tasks page navigation
+            },
+          ),
+          ListTile(
+            leading: const CircleAvatar(
+              radius: 18,
+              backgroundImage: NetworkImage(
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s'),
+            ),
+            title: Text('Team Members'),
+            onTap: () {
+              // TODO: Add team members page navigation
+            },
+          ),
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundImage: NetworkImage(
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTHdD1Zgm522dOopQyqQHigiOBJjiMHlYhhf9FY3A5Jw&s'),
             ),
             title: const Text("Profile"),
             onTap: () {
-              Navigator.pop(context);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const DeleteThisLater(), // Add Function
@@ -101,13 +130,23 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               );
             },
           ),
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundImage: NetworkImage(
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmrFWTQs_rQd9JgmpochyeBFZpq3tixY-w7uycL-wfWg&s'),
+            ),
+            title: Text('Settings'),
+            onTap: () {
+              // TODO: Add settings page navigation
+            },
+          ),
           const Divider(
             color: Colors.black54,
           ),
           ListTile(
-            leading: const Icon(
-              Icons.lock_outlined,
-              color: mainColor,
+            leading: const CircleAvatar(
+              backgroundImage: NetworkImage(
+                  'https://static.vecteezy.com/system/resources/previews/000/574/782/original/vector-logout-sign-icon.jpg'),
             ),
             title: const Text("Log Out"),
             onTap: () async {

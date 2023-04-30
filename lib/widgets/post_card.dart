@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:team_builder/screens/profile.dart';
 
 import '../models/user_model.dart';
 import '../providers/user_provider.dart';
@@ -64,14 +66,24 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context).getUser;
+    final UserModel user = Provider.of<UserProvider>(context).getUser;
     final width = MediaQuery.of(context).size.width;
 
     return Container(
       // boundary needed for web
+
       decoration: BoxDecoration(
         border: Border.all(
           color: mainColor,
+        ),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.black,
+            Colors.black87,
+            Colors.black,
+          ],
         ),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         color: mainColor,
@@ -98,30 +110,41 @@ class _PostCardState extends State<PostCard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 2.0, vertical: 4.0),
-                            child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage: NetworkImage(
-                                widget.snap['profImage'].toString(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => ProfilePage(
+                                uid: widget.snap['uid'],
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              widget.snap['username'].toString(),
-                              style: const TextStyle(
-                                color: primaryColor,
-                                fontSize: 18.0,
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 2.0, vertical: 4.0),
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundImage: NetworkImage(
+                                  widget.snap['profImage'].toString(),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Text(
+                                widget.snap['username'].toString(),
+                                style: const TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -274,42 +297,108 @@ class _PostCardState extends State<PostCard> {
                     onPressed: (() {
                       showDialog(
                         context: context,
-                        builder: ((context) => SimpleDialog(
-                              backgroundColor: primaryColor,
-                              title: Text(
-                                '${widget.snap['teamName']}',
-                                style: const TextStyle(
-                                  fontSize: 22.0,
+                        builder: ((context) => Dialog(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 16.0, horizontal: 20.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${widget.snap['teamName']}',
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: const TextStyle(
+                                        fontSize: 22.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20.0),
+                                    InkWell(
+                                      onTap: () {
+                                        Clipboard.setData(ClipboardData(
+                                          text: widget.snap['link1'],
+                                        ));
+                                        Navigator.pop(context);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content:
+                                                Text('Copied to clipboard'),
+                                            backgroundColor: Colors.grey,
+                                          ),
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.link,
+                                            size: 30.0,
+                                            color: Colors.grey[700],
+                                          ),
+                                          const SizedBox(width: 10.0),
+                                          Text(
+                                            softWrap: false,
+                                            widget.snap['link1'].toString(),
+                                            overflow: TextOverflow.fade,
+                                            maxLines: 1,
+                                            style: const TextStyle(
+                                              fontSize: 18.0,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20.0),
+                                    InkWell(
+                                      onTap: () {
+                                        Clipboard.setData(ClipboardData(
+                                            text: widget.snap['link2']));
+                                        Navigator.pop(context);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content:
+                                                Text('Copied to clipboard'),
+                                            backgroundColor: Colors.green,
+                                          ),
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.link,
+                                            size: 30.0,
+                                            color: Colors.grey[700],
+                                          ),
+                                          const SizedBox(width: 10.0),
+                                          Text(
+                                            softWrap: false,
+                                            widget.snap['link2'].toString(),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            style: const TextStyle(
+                                              fontSize: 18.0,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              children: <Widget>[
-                                SimpleDialogOption(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    widget.snap['link1'].toString(),
-                                    style: const TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                ),
-                                SimpleDialogOption(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    widget.snap['link2'].toString(),
-                                    style: const TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                ),
-                              ],
                             )),
                       );
                     }),
-                    icon: const Icon(Icons.webhook_outlined),
+                    icon: const Icon(Icons.link),
                     color: Colors.amber[600],
                   ),
                 ],
@@ -330,7 +419,6 @@ class _PostCardState extends State<PostCard> {
           //DESCRIPTION AND NUMBER OF COMMENTS
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            color: mainColor,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:team_builder/providers/user_provider.dart';
+
 import 'package:team_builder/screens/tems.dart';
 import 'package:team_builder/utils/colors.dart';
+import 'package:team_builder/widgets/circularIndiacator.dart';
+import 'package:team_builder/widgets/drawer.dart';
 
-import '../models/user_model.dart' as model;
 import '../utils/utils.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -61,16 +61,25 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     // final List<String> list = ["fluttter", "dart"];
     return Scaffold(
+      drawer: MyDrawer(),
       appBar: AppBar(
         centerTitle: true,
-        title: Text(userData['name'].toString()),
+        title: userData['name'] == null
+            ? Container()
+            : Text(userData['name']!.toString()),
 
         // leading: const BackButton(),
         // elevation: 0,
         // backgroundColor: Colors.transparent,
       ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: TeamCircularProgressIndicator(
+                  teamIcon:
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
+                  size: 64.0,
+                  color: Colors.black),
+            )
           : ListView(
               physics: const BouncingScrollPhysics(),
               children: [

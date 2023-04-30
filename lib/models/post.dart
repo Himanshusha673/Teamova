@@ -5,7 +5,7 @@ class Post {
   final String uid;
   final String username;
   // likes to be dynamic
-  final likes;
+  final List likes;
   final String teamName;
   final String link1;
   final String link2;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class User {
+class UserModel {
   final String name;
   final String email;
   final String uid;
@@ -11,7 +11,7 @@ class User {
   final List skills;
   final String objective;
 
-  const User({
+  const UserModel({
     required this.photoUrl,
     required this.name,
     required this.email,
@@ -23,12 +23,12 @@ class User {
     required this.description,
   });
 
-  static User fromSnap(snap) {
+  static UserModel fromSnap(snap) {
     //converting jason from firebase in snap  to User form feilds
     var snapshot = snap.data() as Map<String, dynamic>;
     debugPrint(snapshot.toString());
 
-    return User(
+    return UserModel(
       name: snapshot["name"],
       email: snapshot["email"],
       uid: snapshot["uid"],

@@ -56,7 +56,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
   Widget build(BuildContext context) {
     //because we need only user info in this page so we are using provider
 
-    final User user = Provider.of<UserProvider>(context)
+    final UserModel user = Provider.of<UserProvider>(context)
         .getUser; //getting current user details
 
     return Scaffold(
@@ -75,11 +75,11 @@ class _CommentsScreenState extends State<CommentsScreen> {
             .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+          // if (snapshot.connectionState == ConnectionState.waiting) {
+          //   return const Center(
+          //     child:,
+          //   );
+          // }
 
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
@@ -93,47 +93,71 @@ class _CommentsScreenState extends State<CommentsScreen> {
         },
       ),
       // text input
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          height: kToolbarHeight,
-          margin:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          padding: const EdgeInsets.only(left: 16, right: 8),
-          child: Row(
-            children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://imgs.search.brave.com/2IHibGKlcZaybsBBuxowBltciZqK404EB-xWPw8fKvU/rs:fit:542:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5l/R0hhM0hnSHhJbFRI/bWN2S05EczdBSGFH/ZSZwaWQ9QXBp'),
-                radius: 18,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 8),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              blurRadius: 10,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              children: [
+                Container(
+                  height: 36,
+                  width: 36,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://imgs.search.brave.com/2IHibGKlcZaybsBBuxowBltciZqK404EB-xWPw8fKvU/rs:fit:542:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5l/R0hhM0hnSHhJbFRI/bWN2S05EczdBSGFH/ZSZwaWQ9QXBp'),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
                   child: TextField(
                     controller: commentEditingController,
                     decoration: InputDecoration(
                       hintText: 'Comment as ${user.name}',
-                      border: InputBorder.none,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey.withOpacity(0.1),
                     ),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () => postComment(
-                  user.uid,
-                  user.name,
-                  user.phoneNo,
-                ),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: const Text(
-                    'Post',
-                    style: TextStyle(color: Colors.blue),
+                const SizedBox(width: 16),
+                InkWell(
+                  onTap: () => postComment(
+                    user.uid,
+                    user.name,
+                    user.phoneNo,
+                  ),
+                  child: Container(
+                    height: 36,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: const Text(
+                      'Post',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),

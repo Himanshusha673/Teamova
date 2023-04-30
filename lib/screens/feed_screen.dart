@@ -1,14 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:team_builder/models/user_model.dart' as model;
-
+import 'package:team_builder/resources/auth_methods.dart';
+import 'package:team_builder/widgets/circularIndiacator.dart';
 import 'package:team_builder/widgets/drawer.dart';
-
-import '../models/user_model.dart' as model;
-import '../providers/user_provider.dart';
-
-import '../resources/auth_methods.dart';
 import '../utils/colors.dart';
 import '../utils/constant.dart';
 import '../widgets/post_card.dart';
@@ -51,7 +46,18 @@ class FeedScreenState extends State<FeedScreen> {
       appBar: width > webScreenSize
           ? null
           : AppBar(
-              // centerTitle: true,
+              //centerTitle: true,
+              actions: [
+                IconButton(
+                  onPressed: () async {
+                    await AuthMethods().signOut();
+                  },
+                  icon: const Icon(
+                    Icons.wechat_outlined,
+                    size: 35,
+                  ),
+                )
+              ],
               title: SizedBox(
                 width: width * 0.4,
                 child: Image.asset(
@@ -62,7 +68,7 @@ class FeedScreenState extends State<FeedScreen> {
                 ),
               ),
             ),
-      drawer: const NavigationDrawer(),
+      drawer: const MyDrawer(),
       // body: PostCard(
       //   userName: name,
       //   userImagePath:
@@ -86,12 +92,19 @@ class FeedScreenState extends State<FeedScreen> {
         child: Center(
           //child: Text("hello"),
           child: StreamBuilder(
-            stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection('posts')
+                .orderBy("datePublished", descending: true)
+                .snapshots(),
             builder: (context,
                 AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: TeamCircularProgressIndicator(
+                      teamIcon:
+                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
+                      size: 64.0,
+                      color: Colors.black),
                 );
               }
               return ListView.builder(

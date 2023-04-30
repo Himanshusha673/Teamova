@@ -68,6 +68,11 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
             backgroundColor: mainColor,
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notification',
+            backgroundColor: mainColor,
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
             label: 'Profile',
             backgroundColor: mainColor,

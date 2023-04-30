@@ -112,7 +112,8 @@ class _postState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     // state management
-    final model.User userProvider = Provider.of<UserProvider>(context).getUser;
+    final model.UserModel userProvider =
+        Provider.of<UserProvider>(context).getUser;
 
     return Scaffold(
         appBar: AppBar(

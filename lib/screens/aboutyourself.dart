@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chip_tags/flutter_chip_tags.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,13 +17,15 @@ import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
 
 class Aboutyourself extends StatefulWidget {
-  final String name;
-  final String email;
-  final String password;
-  final String phoneNo;
+  final String? name;
+  final String? email;
+  final String? password;
+  final String? phoneNo;
+  User? user;
 
-  const Aboutyourself(
+  Aboutyourself(
       {Key? key,
+      this.user,
       required this.name,
       required this.email,
       required this.password,
@@ -53,38 +57,56 @@ class _AboutyourselfState extends State<Aboutyourself> {
     setState(() {
       _isLoading = true;
     });
-    // signup user using our authmethodds
-    String res = await AuthMethods().signUpUser(
-      name: widget.name,
-      email: widget.email,
-      password: widget.password,
-      phoneNo: widget.phoneNo,
-      description: _descriptionController.text,
-      isLeader: isLeader,
-      objective: _objectiveController.text,
-      skills: _myList,
-      file: _image!,
-    );
-    // if string returned is sucess, user has been created
-    if (res == "success") {
-      setState(() {
-        _isLoading = false;
-      });
-      // navigate to the home screen
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
+    log("i am in  signup");
+
+    log(widget.password.toString());
+    try {
+      // signup user using our authmethodds
+      String res = widget.password != null
+          //  user != null &&
+          //         user.providerData.any((info) =>
+          //             info.providerId == GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD)
+          ? await AuthMethods().signUpUserWithEmailPassword(
+              name: widget.name ?? "",
+              email: widget.email ?? " ",
+              password: widget.password ?? " ",
+              phoneNo: widget.phoneNo ?? " ",
+              description: _descriptionController.text,
+              isLeader: isLeader,
+              objective: _objectiveController.text,
+              skills: _myList,
+              file: _image!,
+            )
+          : await AuthMethods().signUpUserWithGoogle(
+              description: _descriptionController.text,
+              isLeader: isLeader,
+              objective: _objectiveController.text,
+              skills: _myList,
+              file: _image,
+            );
+      // if string returned is sucess, user has been created
+      if (res == "success") {
+        setState(() {
+          _isLoading = false;
+        });
+        // navigate to the home screen
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
           ),
-        ),
-      );
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-      // show the error
-      showSnackBar(context, res);
+        );
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        // show the error
+        showSnackBar(context, res);
+      }
+    } catch (e) {
+      log(e.toString());
     }
   }
 
@@ -116,7 +138,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
       );
 
   selectImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
+    Uint8List im = await pickImage(ImageSource.camera);
     // set state because we need to display the image we selected on the circle avatar
     setState(() {
       _image = im;
@@ -274,8 +296,9 @@ class _AboutyourselfState extends State<Aboutyourself> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 7.0),
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             signUpUser();
+                            // await AuthMethods().signOut();
                           },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(

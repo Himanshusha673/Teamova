@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:team_builder/screens/profile.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:team_builder/widgets/circularIndiacator.dart';
+import 'package:team_builder/widgets/post_card.dart';
 
 import '../utils/constant.dart';
 
@@ -14,7 +16,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController searchController = TextEditingController();
-  bool isShowUsers = false;
+  bool isShowPosts = false;
   bool isLoading = false;
   @override
   void dispose() {
@@ -24,21 +26,44 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Form(
-          child: TextFormField(
-            controller: searchController,
-            decoration:
-                const InputDecoration(labelText: 'Search for a user...'),
-            onFieldSubmitted: (String _) {
+          child: TextField(
+            onSubmitted: (val) {
               setState(() {
-                isShowUsers = true;
+                isShowPosts = true;
               });
-              print(_);
             },
+            controller: searchController,
+            decoration: InputDecoration(
+              hintText: 'Search for a post...',
+              border: InputBorder.none,
+              prefixIcon: const Icon(Icons.search, color: Colors.grey),
+              suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear, color: Colors.grey),
+                  onPressed: () {
+                    searchController.clear();
+                    setState(() {
+                      isShowPosts = false;
+                    });
+                  }),
+            ),
           ),
+
+          //  TextFormField(
+          //   controller: searchController,
+          //   decoration:
+          //       const InputDecoration(labelText: 'Search for a user...'),
+          //   onFieldSubmitted: (String _) {
+          //     setState(() {
+          //       isShowUsers = true;
+          //     });
+          //     print(_);
+          //   },
+          // ),
         ),
         // actions: [
         //   IconButton(
@@ -53,62 +78,127 @@ class _SearchPageState extends State<SearchPage> {
         //   )
         // ],
       ),
-      body: isShowUsers
-          ? FutureBuilder(
-              future: FirebaseFirestore.instance
-                  // we search a user by their username in fiekds of user
-                  .collection('users')
-                  // where used to search a user name which name is
-                  //eqaul or greater than this search controller textfeild
-                  //which is present in the all the documents
+      body: isShowPosts
+          ?
+          // ? FutureBuilder(
+          //     future: FirebaseFirestore.instance
+          //         // we search a user by their username in fiekds of user
+          //         .collection('users')
+          //         // where used to search a user name which name is
+          //         //eqaul or greater than this search controller textfeild
+          //         //which is present in the all the documents
 
-                  .where("name", isGreaterThanOrEqualTo: searchController.text)
-                  .orderBy("name")
-                  .get(),
-              builder: (context, snapshot) {
-                // if snap shot has no data
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                // means have any data
-                return ListView.builder(
-                  // below line is same as querysnapshot , we can also use it oin our strwemabuilder
-                  itemCount: (snapshot.data! as dynamic)
-                      .docs
-                      .length, // calculating teh length of
-                  //the document whcih specify the given condition of future
-                  itemBuilder: (context, index) {
-                    // below --> how Ui will look like if it matches with username or greater
-                    //than, then we need profile pic and some stuufs to show into our ui
-                    return InkWell(
-                      // after clinking it move onto profile page
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ProfilePage(
-                            uid: (snapshot.data! as dynamic).docs[index]['uid'],
-                          ),
-                        ),
-                      ),
-                      /////////////////////////////
-                      /////ui after search appear
-                      //////////////////////////
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            (snapshot.data! as dynamic).docs[index]['photoUrl'],
-                          ),
-                          radius: 16,
-                        ),
-                        title: Text(
-                          (snapshot.data! as dynamic).docs[index]['name'],
-                        ),
+          //         .where("name", isGreaterThanOrEqualTo: searchController.text)
+          //         .orderBy("name")
+          //         .get(),
+          //     builder: (context, snapshot) {
+          //       // if snap shot has no data
+          //       if (!snapshot.hasData) {
+          //         return const Center(
+          //           child: CircularProgressIndicator(),
+          //         );
+          //       }
+          //       // means have any data
+          //       return ListView.builder(
+          //         // below line is same as querysnapshot , we can also use it oin our strwemabuilder
+          //         itemCount: (snapshot.data! as dynamic)
+          //             .docs
+          //             .length, // calculating teh length of
+          //         //the document whcih specify the given condition of future
+          //         itemBuilder: (context, index) {
+          //           // below --> how Ui will look like if it matches with username or greater
+          //           //than, then we need profile pic and some stuufs to show into our ui
+          //           return InkWell(
+          //             // after clinking it move onto profile page
+          //             onTap: () => Navigator.of(context).push(
+          //               MaterialPageRoute(
+          //                 builder: (context) => ProfilePage(
+          //                   uid: (snapshot.data! as dynamic).docs[index]['uid'],
+          //                 ),
+          //               ),
+          //             ),
+          //             /////////////////////////////
+          //             /////ui after search appear
+          //             //////////////////////////
+          //             child: ListTile(
+          //               leading: CircleAvatar(
+          //                 backgroundImage: NetworkImage(
+          //                   (snapshot.data! as dynamic).docs[index]['photoUrl'],
+          //                 ),
+          //                 radius: 16,
+          //               ),
+          //               title: Text(
+          //                 (snapshot.data! as dynamic).docs[index]['name'],
+          //               ),
+          //             ),
+          //           );
+          //         },
+          //       );
+          //     },
+          //   )
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 18.0),
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('posts')
+                    .where('description',
+                        isGreaterThanOrEqualTo: searchController.text)
+                    .orderBy(
+                      "description",
+                    )
+                    .snapshots(),
+                builder: (context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: TeamCircularProgressIndicator(
+                          teamIcon:
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
+                          size: 64.0,
+                          color: Colors.black),
+                    );
+                  }
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: Text(
+                        "Nothing",
+                        style: TextStyle(color: Colors.black),
                       ),
                     );
-                  },
-                );
-              },
+                  }
+                  return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0, left: 8),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Total ${snapshot.data!.docs.length} Posts are there...",
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (ctx, index) => Container(
+                              margin: EdgeInsets.symmetric(
+                                horizontal:
+                                    width > webScreenSize ? width * 0.3 : 0,
+                                vertical: width > webScreenSize ? 15 : 0,
+                              ),
+                              child: PostCard(
+                                snap: snapshot.data!.docs[index].data(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]);
+                },
+              ),
             )
           : FutureBuilder(
               // future and streams will take he query snapshot<map> type
@@ -119,7 +209,11 @@ class _SearchPageState extends State<SearchPage> {
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: TeamCircularProgressIndicator(
+                        teamIcon:
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
+                        size: 64.0,
+                        color: Colors.black),
                   );
                 }
 
