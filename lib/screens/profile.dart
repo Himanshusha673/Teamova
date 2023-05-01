@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:team_builder/screens/edit_profile_screen.dart';
 
-import 'package:team_builder/screens/tems.dart';
+import 'package:team_builder/screens/myteams.dart';
 import 'package:team_builder/utils/colors.dart';
 import 'package:team_builder/widgets/circularIndiacator.dart';
 import 'package:team_builder/widgets/drawer.dart';
@@ -159,7 +160,7 @@ class ProfileWidget extends StatelessWidget {
           Positioned(
             bottom: 0,
             right: 4,
-            child: buildEditIcon(color),
+            child: buildEditIcon(color, context),
           ),
         ],
       ),
@@ -183,16 +184,32 @@ class ProfileWidget extends StatelessWidget {
     );
   }
 
-  Widget buildEditIcon(Color color) => buildCircle(
+  Widget buildEditIcon(Color color, BuildContext context) => buildCircle(
         color: Colors.white,
         all: 3,
         child: buildCircle(
           color: color,
           all: 8,
-          child: Icon(
-            isEdit ? Icons.add_a_photo : Icons.edit,
-            color: Colors.white,
-            size: 20,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditProfileScreen(
+                    name: 'John Doe',
+                    email: 'johndoe@example.com',
+                    phoneNo: '555-1234',
+                    description:
+                        'A software engineer with 5 years of experience.',
+                  ),
+                ),
+              );
+            },
+            child: Icon(
+              isEdit ? Icons.add_a_photo : Icons.edit,
+              color: Colors.white,
+              size: 20,
+            ),
           ),
         ),
       );

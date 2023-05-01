@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:team_builder/screens/forgot_password.dart';
 import 'package:team_builder/screens/signup.dart';
 import 'package:team_builder/utils/colors.dart';
+import 'package:team_builder/widgets/customDialogBox.dart';
 
 import '../services/auth_methods.dart';
 import '../responsive/mobile_screen_layout.dart';
@@ -77,19 +78,6 @@ class _logState extends State<LogInPage> {
   // }
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> _addUserToFirestore(User user) async {
-    // Create a new user document in Firestore
-    final userRef =
-        FirebaseFirestore.instance.collection('users').doc(user.uid);
-
-    // Set the data for the new user document
-    await userRef.set({
-      'displayName': user.displayName,
-      'email': user.email,
-      'photoURL': user.photoURL,
-    });
-  }
-
   void loginUser() async {
     setState(() {
       _isLoading = true;
@@ -105,6 +93,7 @@ class _logState extends State<LogInPage> {
             ),
           ),
           (route) => false);
+      showCustomDialog(context);
 
       setState(() {
         _isLoading = false;
@@ -221,14 +210,14 @@ class _logState extends State<LogInPage> {
                                       "Forget Password ?", // TODO : Fix feature
                                       style: TextStyle(
                                         fontSize: 16.0,
-                                        color: Colors.blue,
+                                        color: Colors.redAccent,
                                       ),
                                     ),
                                   ),
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(
+                                    Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                         builder: ((context) => Registration()),
                                       ),

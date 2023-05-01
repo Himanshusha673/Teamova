@@ -32,6 +32,7 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   int commentLen = 0;
   bool isLikeAnimating = false;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -72,447 +73,478 @@ class _PostCardState extends State<PostCard> {
     final UserModel user = Provider.of<UserProvider>(context).getUser;
     final width = MediaQuery.of(context).size.width;
 
-    return Container(
-      // boundary needed for web
+    return isLoading
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : Container(
+            // boundary needed for web
 
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: mainColor,
-        ),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.black,
-            Colors.black87,
-            Colors.black,
-          ],
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        color: mainColor,
-      ),
-      margin: EdgeInsets.symmetric(
-        // vertical: 6,
-        horizontal: width * 0.015,
-      ).copyWith(top: 8),
-      padding: const EdgeInsets.only(
-        bottom: 7,
-      ),
-      child: Column(
-        children: [
-          // HEADER SECTION OF THE POST
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-              // color: mainColor,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: mainColor,
+              ),
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.black,
+                  Colors.black87,
+                  Colors.black,
+                ],
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              color: mainColor,
             ),
-            child: Row(
+            margin: EdgeInsets.symmetric(
+              // vertical: 6,
+              horizontal: width * 0.015,
+            ).copyWith(top: 8),
+            padding: const EdgeInsets.only(
+              bottom: 7,
+            ),
+            child: Column(
               children: [
-                Expanded(
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 16.0,
+                  ),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(10),
+                    ),
+                    color: mainColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        blurRadius: 2.0,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => ProfilePage(
-                                uid: widget.snap['uid'],
-                              ),
-                            ),
-                          );
-                        },
-                        child: Row(
+                      CircleAvatar(
+                        radius: 24,
+                        backgroundImage: NetworkImage(
+                          widget.snap['profImage'].toString(),
+                        ),
+                      ),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 2.0, vertical: 4.0),
-                              child: CircleAvatar(
-                                radius: 20,
-                                backgroundImage: NetworkImage(
-                                  widget.snap['profImage'].toString(),
-                                ),
+                            Text(
+                              widget.snap['username'].toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Text(
-                                widget.snap['username'].toString(),
-                                style: const TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                            ),
+                            const SizedBox(height: 4.0),
+                            // Text(
+                            //   '  ${widget.snap['objective'].toString()}',
+                            //   style: const TextStyle(
+                            //     color: Colors.grey,
+                            //     fontSize: 14.0,
+                            //   ),
+                            // ),
                           ],
+                        ),
+                      ),
+                      if (widget.snap['uid'].toString() == user.uid)
+                        IconButton(
+                          onPressed: () {
+                            showDialog(
+                              useRootNavigator: false,
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                  child: ListView(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0,
+                                      horizontal: 16.0,
+                                    ),
+                                    shrinkWrap: true,
+                                    children: [
+                                      const Text(
+                                        'Delete post?',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 16.0),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text(
+                                          'Cancel',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          deletePost(
+                                            widget.snap['postId'].toString(),
+                                          );
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text(
+                                          'Delete',
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons.more_vert_outlined),
+                          color: Colors.grey[400],
+                        ),
+                    ],
+                  ),
+                ),
+
+                // IMAGE SECTION OF THE POST//
+                GestureDetector(
+                  onDoubleTap: () {
+                    //calling when douletapped
+                    FireStoreMethods().likePost(
+                      widget.snap['postId'].toString(),
+                      user.uid,
+                      widget.snap['likes'],
+                    );
+                    setState(() {
+                      isLikeAnimating = true;
+                    });
+                  },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        width: double.infinity,
+                        child: Image.network(
+                          widget.snap['postUrl'].toString(),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      //generaly opacity used for bool changes in widgets with opacity value 1 and 0
+                      AnimatedOpacity(
+                        duration: const Duration(milliseconds: 200),
+                        opacity: isLikeAnimating ? 1 : 0,
+                        child: LikeAnimation(
+                          isAnimating: isLikeAnimating,
+                          duration: const Duration(
+                            milliseconds: 400,
+                          ),
+                          onEnd: () {
+                            setState(() {
+                              isLikeAnimating = false;
+                            });
+                          },
+                          child: Icon(
+                            Icons.favorite,
+                            color: Colors.grey[400],
+                            size: 100,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                if (widget.snap['uid'].toString() == user.uid)
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                        useRootNavigator: false,
-                        context: context,
-                        builder: (context) {
-                          return Dialog(
-                            child: ListView(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
-                                shrinkWrap: true,
-                                children: [
-                                  'Delete',
-                                ]
-                                    .map(
-                                      (e) => InkWell(
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 12, horizontal: 16),
-                                            child: Text(e),
-                                          ),
-                                          onTap: () {
-                                            deletePost(
-                                              widget.snap['postId'].toString(),
-                                            );
-                                            // remove the dialog box
-                                            Navigator.of(context).pop();
-                                          }),
-                                    )
-                                    .toList()),
-                          );
-                        },
-                      );
-                    },
-                    icon: const Icon(Icons.more_vert_outlined),
-                    color: Colors.grey[400],
-                  ),
-              ],
-            ),
-          ),
-          // IMAGE SECTION OF THE POST//
-          GestureDetector(
-            onDoubleTap: () {
-              //calling when douletapped
-              FireStoreMethods().likePost(
-                widget.snap['postId'].toString(),
-                user.uid,
-                widget.snap['likes'],
-              );
-              setState(() {
-                isLikeAnimating = true;
-              });
-            },
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.35,
-                  width: double.infinity,
-                  child: Image.network(
-                    widget.snap['postUrl'].toString(),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                //generaly opacity used for bool changes in widgets with opacity value 1 and 0
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 200),
-                  opacity: isLikeAnimating ? 1 : 0,
-                  child: LikeAnimation(
-                    isAnimating: isLikeAnimating,
-                    duration: const Duration(
-                      milliseconds: 400,
-                    ),
-                    onEnd: () {
-                      setState(() {
-                        isLikeAnimating = false;
-                      });
-                    },
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.grey[400],
-                      size: 100,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // LIKE, COMMENT SECTION OF THE POST
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                children: [
-                  LikeAnimation(
-                    isAnimating: widget.snap['likes'].contains(user.uid),
-                    smallLike: true,
-                    child: IconButton(
-                      color: Colors.grey[400],
-                      icon: widget.snap['likes'].contains(user.uid)
-                          ? const Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            )
-                          : const Icon(
-                              Icons.favorite_border,
-                            ),
-                      onPressed: () => FireStoreMethods().likePost(
-                        widget.snap['postId'].toString(),
-                        user.uid,
-                        widget.snap['likes'],
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    color: Colors.grey[400],
-                    icon: const Icon(
-                      Icons.comment_outlined,
-                    ),
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => CommentsScreen(
-                          postId: widget.snap['postId'].toString(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      widget.snap['teamName'].toString(),
-                      style: const TextStyle(
-                        color: primaryColor,
-                        fontSize: 18.0,
-                        // fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: (() {
-                      showDialog(
-                        context: context,
-                        builder: ((context) => Dialog(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 16.0, horizontal: 20.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${widget.snap['teamName']}',
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      style: const TextStyle(
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20.0),
-                                    InkWell(
-                                      onTap: () async {
-                                        log(widget.snap['link1'].toString());
-
-                                        _launchThisUrl(widget.snap['link1']);
-                                        Clipboard.setData(ClipboardData(
-                                          text: widget.snap['link1'],
-                                        ));
-                                        Navigator.pop(context);
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            duration:
-                                                Duration(milliseconds: 500),
-                                            content:
-                                                Text('Copied to clipboard'),
-                                            backgroundColor: mainColor,
-                                          ),
-                                        );
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.link,
-                                            size: 30.0,
-                                            color: Colors.grey[700],
-                                          ),
-                                          const SizedBox(width: 10.0),
-                                          Text(
-                                            softWrap: false,
-                                            widget.snap['link1'].toString(),
-                                            overflow: TextOverflow.fade,
-                                            maxLines: 1,
-                                            style: const TextStyle(
-                                              fontSize: 18.0,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20.0),
-                                    InkWell(
-                                      onTap: () {
-                                        log(widget.snap['link2'].toString());
-
-                                        _launchThisUrl(widget.snap['link2']);
-                                        Clipboard.setData(ClipboardData(
-                                          text: widget.snap['link2'],
-                                        ));
-                                        Navigator.pop(context);
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            duration:
-                                                Duration(milliseconds: 500),
-                                            content:
-                                                Text('Copied to clipboard'),
-                                            backgroundColor: mainColor,
-                                          ),
-                                        );
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.link,
-                                            size: 30.0,
-                                            color: Colors.grey[700],
-                                          ),
-                                          const SizedBox(width: 10.0),
-                                          Text(
-                                            softWrap: false,
-                                            widget.snap['link2'].toString(),
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            style: const TextStyle(
-                                              fontSize: 18.0,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )),
-                      );
-                    }),
-                    icon: const Icon(Icons.link),
-                    color: Colors.amber[600],
-                  ),
-                ],
-              ),
-              // IconButton(
-              //     icon: const Icon(
-              //       Icons.send,
-              //     ),
-              //     onPressed: () {}),
-              // Expanded(
-              //     child: Align(
-              //   alignment: Alignment.bottomRight,
-              //   child: IconButton(
-              //       icon: const Icon(Icons.bookmark_border), onPressed: () {}),
-              // ))
-            ],
-          ),
-          //DESCRIPTION AND NUMBER OF COMMENTS
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '${widget.snap['likes'].length} likes',
-                  style: TextStyle(
-                    color: Colors.grey[400],
-                  ),
-                ),
-                // DefaultTextStyle(
-                //     style: Theme.of(context)
-                //         .textTheme
-                //         .subtitle2!
-                //         .copyWith(fontWeight: FontWeight.w800),
-                //     child: Text(
-                //       '${widget.snap['likes'].length} likes',
-                //       style: Theme.of(context).textTheme.bodyText2,
-                //     )),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                  ),
-                  child: RichText(
-                    text: TextSpan(
-                      style: const TextStyle(color: primaryColor),
+                // LIKE, COMMENT SECTION OF THE POST
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
                       children: [
-                        TextSpan(
-                          text: widget.snap['username'].toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.0,
+                        LikeAnimation(
+                          isAnimating: widget.snap['likes'].contains(user.uid),
+                          smallLike: true,
+                          child: IconButton(
+                            color: Colors.grey[400],
+                            icon: widget.snap['likes'].contains(user.uid)
+                                ? const Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                  )
+                                : const Icon(
+                                    Icons.favorite_border,
+                                  ),
+                            onPressed: () => FireStoreMethods().likePost(
+                              widget.snap['postId'].toString(),
+                              user.uid,
+                              widget.snap['likes'],
+                            ),
                           ),
                         ),
-                        TextSpan(
-                          text: '   ${widget.snap['description']}',
-                          style: const TextStyle(
-                            fontSize: 15.0,
+                        IconButton(
+                          color: Colors.grey[400],
+                          icon: const Icon(
+                            Icons.comment_outlined,
+                          ),
+                          onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => CommentsScreen(
+                                postId: widget.snap['postId'].toString(),
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ),
-                InkWell(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Text(
-                      'View all $commentLen comments',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[400],
-                      ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            widget.snap['teamName'].toString(),
+                            style: const TextStyle(
+                              color: primaryColor,
+                              fontSize: 18.0,
+                              // fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: (() {
+                            showDialog(
+                              context: context,
+                              builder: ((context) => Dialog(
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 16.0, horizontal: 20.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${widget.snap['teamName']}',
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            style: const TextStyle(
+                                              fontSize: 22.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 20.0),
+                                          InkWell(
+                                            onTap: () async {
+                                              log(widget.snap['link1']
+                                                  .toString());
+
+                                              _launchThisUrl(
+                                                  widget.snap['link1']);
+                                              Clipboard.setData(ClipboardData(
+                                                text: widget.snap['link1'],
+                                              ));
+                                              Navigator.pop(context);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  duration: Duration(
+                                                      milliseconds: 500),
+                                                  content: Text(
+                                                      'Copied to clipboard'),
+                                                  backgroundColor: mainColor,
+                                                ),
+                                              );
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.link,
+                                                  size: 30.0,
+                                                  color: Colors.grey[700],
+                                                ),
+                                                const SizedBox(width: 10.0),
+                                                Text(
+                                                  softWrap: false,
+                                                  widget.snap['link1']
+                                                      .toString(),
+                                                  overflow: TextOverflow.fade,
+                                                  maxLines: 1,
+                                                  style: const TextStyle(
+                                                    fontSize: 18.0,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(height: 20.0),
+                                          InkWell(
+                                            onTap: () {
+                                              log(widget.snap['link2']
+                                                  .toString());
+
+                                              _launchThisUrl(
+                                                  widget.snap['link2']);
+                                              Clipboard.setData(ClipboardData(
+                                                text: widget.snap['link2'],
+                                              ));
+                                              Navigator.pop(context);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  duration: Duration(
+                                                      milliseconds: 500),
+                                                  content: Text(
+                                                      'Copied to clipboard'),
+                                                  backgroundColor: mainColor,
+                                                ),
+                                              );
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.link,
+                                                  size: 30.0,
+                                                  color: Colors.grey[700],
+                                                ),
+                                                const SizedBox(width: 10.0),
+                                                Text(
+                                                  softWrap: false,
+                                                  widget.snap['link2']
+                                                      .toString(),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  style: const TextStyle(
+                                                    fontSize: 18.0,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )),
+                            );
+                          }),
+                          icon: const Icon(Icons.link),
+                          color: Colors.amber[600],
+                        ),
+                      ],
                     ),
-                  ),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => CommentsScreen(
-                        postId: widget.snap['postId'].toString(),
-                      ),
-                    ),
-                  ),
+                    // IconButton(
+                    //     icon: const Icon(
+                    //       Icons.send,
+                    //     ),
+                    //     onPressed: () {}),
+                    // Expanded(
+                    //     child: Align(
+                    //   alignment: Alignment.bottomRight,
+                    //   child: IconButton(
+                    //       icon: const Icon(Icons.bookmark_border), onPressed: () {}),
+                    // ))
+                  ],
                 ),
+                //DESCRIPTION AND NUMBER OF COMMENTS
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Text(
-                    DateFormat.yMMMd()
-                        .format(widget.snap['datePublished'].toDate()),
-                    style: TextStyle(
-                      color: Colors.grey[400],
-                    ),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '${widget.snap['likes'].length} likes',
+                        style: TextStyle(
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      // DefaultTextStyle(
+                      //     style: Theme.of(context)
+                      //         .textTheme
+                      //         .subtitle2!
+                      //         .copyWith(fontWeight: FontWeight.w800),
+                      //     child: Text(
+                      //       '${widget.snap['likes'].length} likes',
+                      //       style: Theme.of(context).textTheme.bodyText2,
+                      //     )),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.only(
+                          top: 8,
+                        ),
+                        child: RichText(
+                          text: TextSpan(
+                            style: const TextStyle(color: primaryColor),
+                            children: [
+                              TextSpan(
+                                text: widget.snap['username'].toString(),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                              TextSpan(
+                                text: '   ${widget.snap['description']}',
+                                style: const TextStyle(
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            'View all $commentLen comments',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                        ),
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => CommentsScreen(
+                              postId: widget.snap['postId'].toString(),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Text(
+                          DateFormat.yMMMd()
+                              .format(widget.snap['datePublished'].toDate()),
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
-          )
-        ],
-      ),
-    );
+          );
   }
 
   Future<void> _launchThisUrl(String url) async {

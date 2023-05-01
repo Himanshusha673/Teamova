@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:team_builder/providers/user_provider.dart';
+import 'package:team_builder/screens/Help&suppout.dart';
+import 'package:team_builder/screens/event_page.dart';
+import 'package:team_builder/screens/leadership_page.dart';
 import 'package:team_builder/screens/login.dart';
 import 'package:team_builder/screens/my_tasks.dart';
+import 'package:team_builder/screens/settingPage.dart';
+import 'package:team_builder/screens/team_members_page.dart';
 import 'package:team_builder/utils/colors.dart';
 // import '../models/user_model.dart' as model;
 
@@ -115,7 +120,22 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             title: const Text('Team Members'),
             onTap: () {
-              // TODO: Add team members page navigation
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AnimatedTeamMembersPage(
+                          members: [
+                            'John Doe',
+                            'Jane Smith',
+                            'Alex Johnson',
+                            'Samantha Lee',
+                            'Michael Brown',
+                            'Emily Davis',
+                            'David Wilson',
+                            'Avery Robinson',
+                          ],
+                        )),
+              );
             },
           ),
           ListTile(
@@ -126,18 +146,30 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             title: const Text('Settings'),
             onTap: () {
-              // TODO: Add settings page navigation
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
             },
           ),
           ListTile(
-            leading: const CircleAvatar(
-              radius: 18,
-              backgroundImage: NetworkImage(
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-iK6pHBC-Q4E4W1Rpz85-XJXcO5C5ntofrKkwyg7Ow&s'),
-            ),
-            title: const Text('Notifications'),
+            leading: Icon(Icons.event),
+            title: Text('Events'),
             onTap: () {
-              // TODO: Add notifications page navigation
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EventPage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.leaderboard),
+            title: Text('Leaderboard'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LeaderboardPage()),
+              );
             },
           ),
           ListTile(
@@ -148,7 +180,10 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             title: const Text('Help & Support'),
             onTap: () {
-              // TODO: Add help and support page navigation
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HelpAndSupportPage()),
+              );
             },
           ),
           const Divider(

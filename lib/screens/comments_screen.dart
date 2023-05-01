@@ -104,60 +104,58 @@ class _CommentsScreenState extends State<CommentsScreen> {
             ),
           ],
         ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                Container(
-                  height: 36,
-                  width: 36,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          'https://imgs.search.brave.com/2IHibGKlcZaybsBBuxowBltciZqK404EB-xWPw8fKvU/rs:fit:542:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5l/R0hhM0hnSHhJbFRI/bWN2S05EczdBSGFH/ZSZwaWQ9QXBp'),
-                    ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            children: [
+              Container(
+                height: 36,
+                width: 36,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage(user.photoUrl),
                   ),
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: TextField(
-                    controller: commentEditingController,
-                    decoration: InputDecoration(
-                      hintText: 'Comment as ${user.name}',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey.withOpacity(0.1),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                InkWell(
-                  onTap: () => postComment(
-                    user.uid,
-                    user.name,
-                    user.phoneNo,
-                  ),
-                  child: Container(
-                    height: 36,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: TextFormField(
+                  onTap: () {},
+                  controller: commentEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Comment as ${user.name}',
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(24),
+                      borderSide: BorderSide.none,
                     ),
-                    child: const Text(
-                      'Post',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    filled: true,
+                    fillColor: Colors.grey.withOpacity(0.1),
                   ),
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(width: 16),
+              InkWell(
+                onTap: () => postComment(
+                  user.uid,
+                  user.name,
+                  user.phoneNo,
+                ),
+                child: Container(
+                  height: 36,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: const Text(
+                    'Post',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

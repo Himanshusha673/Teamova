@@ -117,7 +117,7 @@ class _postState extends State<PostPage> {
 
     return Scaffold(
         appBar: AppBar(
-            title: Text('Share Post'),
+            title: const Text('Share Post'),
             leading: IconButton(
                 onPressed: () {
                   Navigator.push(
@@ -125,7 +125,7 @@ class _postState extends State<PostPage> {
                     MaterialPageRoute(builder: (context) => const FeedScreen()),
                   );
                 },
-                icon: Icon(Icons.arrow_back)),
+                icon: const Icon(Icons.arrow_back)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -152,219 +152,307 @@ class _postState extends State<PostPage> {
         body: !isLoading
             ? SnappingSheet(
                 grabbingHeight: 75,
-                // TODO: Add your grabbing widget here,
                 grabbing: GrabbingWidget(),
-                /////////////////
-                // Part forSnipingSheet
-                /////////////////////
                 sheetBelow: SnappingSheetContent(
-                    draggable: true,
-                    // childScrollController: listViewController,
-                    child: Container(
+                  draggable: true,
+                  child: Container(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
-                      child: ListView(
-                        children: [
-                          Container(
-                            height: 50,
-                            color: Colors.white,
-                            child: GestureDetector(
-                              onTap: () async {
-                                Uint8List file =
-                                    await pickImage(ImageSource.camera);
-                                setState(() {
-                                  _file = file;
-                                });
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.camera,
-                                    size: 40,
-                                  ),
-                                  SizedBox(width: 20),
-                                  const Text(
-                                    "Capture a Image",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24),
-                                  ),
-                                ],
-                              ),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                    ),
+                    child: ListView(
+                      padding: const EdgeInsets.all(20),
+                      children: [
+                        const SizedBox(height: 20),
+                        GestureDetector(
+                          onTap: () async {
+                            Uint8List file =
+                                await pickImage(ImageSource.camera);
+                            setState(() {
+                              _file = file;
+                            });
+                          },
+                          child: Container(
+                            height: 60,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey[100],
                             ),
-                          ),
-                          Divider(thickness: 1, color: Colors.grey),
-                          Container(
-                            height: 50,
-                            color: Colors.white,
-                            child: GestureDetector(
-                              onTap: () async {
-                                Uint8List file =
-                                    await pickImage(ImageSource.gallery);
-                                setState(() {
-                                  _file = file;
-                                });
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.image,
-                                    size: 40,
-                                  ),
-                                  SizedBox(width: 20),
-                                  const Text(
-                                    "Take Picture from Gallery",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 12,
-                          ),
-                          Center(
-                            child: Stack(
+                            child: Row(
                               children: [
-                                _file != null
-                                    ? CircleAvatar(
-                                        radius: 64,
-                                        backgroundImage: MemoryImage(_file!),
-                                        backgroundColor: Colors.white,
-                                      )
-                                    : Container(),
-                                _file != null
-                                    ? Positioned(
-                                        top: -8,
-                                        left: 80,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _file = null;
-                                            });
-                                          },
-                                          icon: buildEditIcon(mainColor),
-                                          // const Icon(Icons.add_a_photo),
-                                        ),
-                                      )
-                                    : Container()
+                                const SizedBox(width: 20),
+                                const Icon(Icons.camera_alt,
+                                    size: 35, color: Colors.black),
+                                const SizedBox(width: 20),
+                                const Text(
+                                  'Capture a Image',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                    )),
+                        ),
+                        const SizedBox(height: 20),
+                        GestureDetector(
+                          onTap: () async {
+                            Uint8List file =
+                                await pickImage(ImageSource.gallery);
+                            setState(() {
+                              _file = file;
+                            });
+                          },
+                          child: Container(
+                            height: 60,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey[100],
+                            ),
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 20),
+                                const Icon(Icons.photo_library,
+                                    size: 35, color: Colors.black),
+                                const SizedBox(width: 20),
+                                const Text(
+                                  'Select from Gallery',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Center(
+                          child: Stack(
+                            children: [
+                              _file != null
+                                  ? CircleAvatar(
+                                      radius: 70,
+                                      backgroundImage: MemoryImage(_file!),
+                                    )
+                                  : Container(),
+                              _file != null
+                                  ? Positioned(
+                                      top: -10,
+                                      left: 85,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _file = null;
+                                          });
+                                        },
+                                        icon: const Icon(Icons.edit,
+                                            size: 40, color: Colors.black),
+                                      ),
+                                    )
+                                  : Container()
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
 
                 ///////////////////////////////
                 // below code is for outside part-body of snippingSheet
                 ///////////////////////////////
                 ////////////////////////
                 child: Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 28,
+                            backgroundImage:
+                                NetworkImage(userProvider.photoUrl),
+                          ),
+                          const SizedBox(width: 16),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              CircleAvatar(
-                                radius: 18,
-                                backgroundImage:
-                                    NetworkImage(userProvider.photoUrl),
-
-                                //radius: 20,
+                              Text(
+                                userProvider.name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20,
+                                ),
                               ),
-                              const SizedBox(width: 15),
-                              Text(userProvider.name,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold))
-                            ]),
-                        TextFormField(
-                          controller: _teamName,
-                          decoration: const InputDecoration(
-                              labelText: 'Enter Team Name ',
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: 3, color: Colors.black87))),
-                          // use the validator to return an error string (or null) based on the input text
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Can\'t be empty';
-                            }
-                            if (text.length < 4) {
-                              return 'Too short';
-                            }
-                            return null;
-                          },
-                          // update the state variable when the text changes
-                        ),
-                        TextFormField(
-                          controller: _link_1_Controller,
-                          decoration: const InputDecoration(
-                              labelText: 'Enter 1st Social Link Of Your Team',
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: 3, color: Colors.black87))
-
-                              ///prefixIcon: Icon(Icons.)
+                              const SizedBox(height: 4),
+                              Text(
+                                '${userProvider.objective} ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                ),
                               ),
-                          // use the validator to return an error string (or null) based on the input text
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Can\'t be empty';
-                            }
-                            if (text.length < 4) {
-                              return 'Too short';
-                            }
-                            return null;
-                          },
-                          // update the state variable when the text changes
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      const Text(
+                        'Team Name',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
                         ),
-                        TextFormField(
-                          controller: _link_2_Controller,
-                          decoration: const InputDecoration(
-                              labelText: 'Enter 2nd Social Link Of Your Team',
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: 3, color: Colors.black87))),
-                          // use the validator to return an error string (or null) based on the input text
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Can\'t be empty';
-                            }
-                            if (text.length < 4) {
-                              return 'Too short';
-                            }
-                            return null;
-                          },
-                          // update the state variable when the text changes
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: _teamName,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter team name',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.grey),
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.blue),
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
                         ),
-                        SizedBox(height: 10),
-                        TextFormField(
-                          maxLines: 8,
-                          controller: _descriptionController,
-                          decoration: const InputDecoration(
-                              labelText: 'Enter description ',
-                              hintText: 'Enter description ',
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: 3, color: Colors.black87))),
-                          // use the validator to return an error string (or null) based on the input text
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Can\'t be empty';
-                            }
-                            if (text.length < 4) {
-                              return 'Too short';
-                            }
-                            return null;
-                          },
-                          // update the state variable when the text changes
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Team name is required';
+                          }
+                          if (text.length < 4) {
+                            return 'Team name must be at least 4 characters';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Social Media Links',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
                         ),
-                      ]),
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: _link_1_Controller,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter social media link 1',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.grey),
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.blue),
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                        ),
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Social media link 1 is required';
+                          }
+                          if (text.length < 4) {
+                            return 'Social media link 1 must be at least 4 characters';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: _link_2_Controller,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter social media link 2',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.grey),
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.blue),
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                        ),
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Can\'t be empty';
+                          }
+                          if (text.length < 4) {
+                            return 'Too short';
+                          }
+                          return null;
+                        },
+                      ),
+
+                      // Description text field
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        maxLines: 8,
+                        controller: _descriptionController,
+                        decoration: InputDecoration(
+                          labelText: 'Description',
+                          labelStyle: const TextStyle(color: Colors.grey),
+                          hintText: 'Describe your team and what you do',
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(color: Colors.blue),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(color: Colors.red),
+                          ),
+                          errorStyle: const TextStyle(fontSize: 12),
+                          errorMaxLines: 2,
+                        ),
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Can\'t be empty';
+                          }
+                          if (text.length < 4) {
+                            return 'Too short';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
                 ))
-            : Center(
+            : const Center(
                 child: CircularProgressIndicator(),
               ));
   }
@@ -376,7 +464,7 @@ class GrabbingWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         boxShadow: [
           BoxShadow(blurRadius: 25, color: Colors.black.withOpacity(0.2)),
         ],
@@ -385,7 +473,7 @@ class GrabbingWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: const EdgeInsets.only(top: 20),
             width: 100,
             height: 7,
             decoration: BoxDecoration(
@@ -396,7 +484,7 @@ class GrabbingWidget extends StatelessWidget {
           Container(
             color: Colors.grey[200],
             height: 2,
-            margin: EdgeInsets.all(15).copyWith(top: 0, bottom: 0),
+            margin: const EdgeInsets.all(15).copyWith(top: 0, bottom: 0),
           )
         ],
       ),

@@ -39,6 +39,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
+                'Please enter your registered email address to reset your password. we will sent a Link to your email to change your password',
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              const Text(
                 'Enter your email to reset your password',
                 style: TextStyle(fontSize: 18.0),
               ),

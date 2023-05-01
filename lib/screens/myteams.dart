@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:team_builder/widgets/post_card.dart';
 
 class TeamsPost extends StatefulWidget {
   final uid;
@@ -31,27 +32,20 @@ class _TeamsPostState extends State<TeamsPost> {
             );
           }
           if ((snapshot.data! as dynamic).docs.length == 0) {
-            return Center(
+            return const Center(
               child: Text('No post Yet,\n Go back'),
             );
           }
 
-          return GridView.builder(
+          return ListView.builder(
             shrinkWrap: true,
             itemCount: (snapshot.data! as dynamic).docs.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1,
-            ),
             itemBuilder: (context, index) {
               DocumentSnapshot snap = (snapshot.data! as dynamic).docs[index];
 
-              return Container(
-                child: Image(
-                  image: NetworkImage(snap['postUrl']),
-                  fit: BoxFit.cover,
+              return Expanded(
+                child: PostCard(
+                  snap: snap.data(),
                 ),
               );
             },
