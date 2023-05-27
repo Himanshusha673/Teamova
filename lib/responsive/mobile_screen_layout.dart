@@ -45,7 +45,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         children: homeScreenItems,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.shifting,
         backgroundColor: mainColor,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,

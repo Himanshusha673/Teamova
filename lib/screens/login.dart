@@ -181,6 +181,7 @@ class _logState extends State<LogInPage> {
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: TextField(
+                                obscureText: true,
                                 controller: _passwordController,
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.fingerprint_outlined),
@@ -216,7 +217,8 @@ class _logState extends State<LogInPage> {
                                   onPressed: () {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                        builder: ((context) => const Registration()),
+                                        builder: ((context) =>
+                                            const Registration()),
                                       ),
                                     );
                                   },
