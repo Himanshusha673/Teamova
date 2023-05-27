@@ -1,11 +1,8 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:team_builder/screens/forgot_password.dart';
 import 'package:team_builder/screens/signup.dart';
 import 'package:team_builder/widgets/customDialogBox.dart';
+import 'package:team_builder/widgets/signin.dart';
 
 import '../services/auth_methods.dart';
 import '../responsive/mobile_screen_layout.dart';
@@ -13,7 +10,6 @@ import '../responsive/responsive_layout.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
 import '../widgets/circularIndiacator.dart';
-import 'package:sign_button/sign_button.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -27,7 +23,6 @@ class LogState extends State<LogInPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoading = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void loginUser() async {
     setState(() {
@@ -240,42 +235,10 @@ class LogState extends State<LogInPage> {
                               ],
                             ),
                             const SizedBox(
-                              height: 20,
-                            ),
-                            const SizedBox(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 15.0),
-                                child: Center(
-                                  child: Text(
-                                    "OR",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              height: 30,
                             ),
                             Center(
-                              child: SignInButton(
-                                buttonType: ButtonType.google,
-                                buttonSize: ButtonSize.large,
-                                onPressed: () async {
-                                  User? user = _auth.currentUser;
-                                  if (user == null) {
-                                    // User is not signed in, start the sign-in process
-                                    OAuthCredential credential =
-                                        await AuthMethods().signInWithGoogle();
-                                    UserCredential userCredential = await _auth
-                                        .signInWithCredential(credential);
-
-                                    log(credential.toString());
-                                    user = userCredential.user;
-
-                                    log(user.toString());
-                                  }
-                                }, // !TODO : Google sign in
-                              ),
+                              child: SignIn(),
                             ),
                           ],
                         ),
@@ -284,23 +247,21 @@ class LogState extends State<LogInPage> {
                     const Center(
                       child: Padding(
                         padding: EdgeInsets.all(18.0),
-                        child: FittedBox(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.copyright,
-                                color: Colors.red,
-                                size: 16.0,
-                              ),
-                              SizedBox(width: 4.0),
-                              Text(
-                                ' 2023 Teamova. All rights reserved.',
-                                style: TextStyle(fontSize: 14),
-                                softWrap: true,
-                              ),
-                            ],
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.copyright,
+                              color: Colors.red,
+                              size: 16.0,
+                            ),
+                            SizedBox(width: 4.0),
+                            Text(
+                              '2023 Teamova. All rights reserved.',
+                              style: TextStyle(fontSize: 14),
+                              softWrap: true,
+                            ),
+                          ],
                         ),
                       ),
                     ),

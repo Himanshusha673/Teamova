@@ -246,6 +246,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.9"
+  flutter_signin_button:
+    dependency: "direct main"
+    description:
+      name: flutter_signin_button
+      sha256: a063ecc5d5308377e103c9c3a89084abf15fca4440636233af6a13abacd5dcae
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   flutter_staggered_grid_view:
     dependency: "direct main"
     description:
@@ -284,10 +292,10 @@ packages:
     dependency: "direct main"
     description:
       name: font_awesome_flutter
-      sha256: "959ef4add147753f990b4a7c6cccb746d5792dbdc81b1cde99e62e7edb31b206"
+      sha256: "1f93e5799f0e6c882819e8393a05c6ca5226010f289190f2242ec19f3f0fdba5"
       url: "https://pub.dev"
     source: hosted
-    version: "10.4.0"
+    version: "9.2.0"
   google_fonts:
     dependency: "direct main"
     description:
@@ -360,6 +368,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  icons_plus:
+    dependency: "direct main"
+    description:
+      name: icons_plus
+      sha256: "6a7cb265471e59dc74b7b89f7e4d2ab3e716b2d91ba1e7a15fe7df61d01fc9e3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -596,10 +612,10 @@ packages:
     dependency: "direct main"
     description:
       name: sign_button
-      sha256: "11ea0a70dd78f5f2eddde7fa7655821fa802224eb4f0e3def51574a57364122a"
+      sha256: "896a23fd956bed66330ac19251e0f25c0dad4fe04f8bdde7e51bb2f73c198397"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.4"
   sky_engine:
     dependency: transitive
     description: flutter
