@@ -19,8 +19,8 @@ import '../utils/utils.dart';
 import 'like_animation.dart';
 
 class PostCard extends StatefulWidget {
-  final snap;
-  const PostCard({
+  dynamic? snap;
+  PostCard({
     Key? key,
     required this.snap,
   }) : super(key: key);
@@ -123,97 +123,106 @@ class _PostCardState extends State<PostCard> {
                       ),
                     ],
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 24,
-                        backgroundImage: NetworkImage(
-                          widget.snap['profImage'].toString(),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => ProfilePage(
+                          uid: widget.snap['uid'],
                         ),
-                      ),
-                      const SizedBox(width: 16.0),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.snap['username'].toString(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
+                      ));
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 24,
+                          backgroundImage: NetworkImage(
+                            widget.snap['profImage'].toString(),
+                          ),
+                        ),
+                        const SizedBox(width: 16.0),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.snap['username'].toString(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 4.0),
-                            // Text(
-                            //   '  ${widget.snap['objective'].toString()}',
-                            //   style: const TextStyle(
-                            //     color: Colors.grey,
-                            //     fontSize: 14.0,
-                            //   ),
-                            // ),
-                          ],
+                              const SizedBox(height: 4.0),
+                              // Text(
+                              //   '  ${widget.snap['objective'].toString()}',
+                              //   style: const TextStyle(
+                              //     color: Colors.grey,
+                              //     fontSize: 14.0,
+                              //   ),
+                              // ),
+                            ],
+                          ),
                         ),
-                      ),
-                      if (widget.snap['uid'].toString() == user.uid)
-                        IconButton(
-                          onPressed: () {
-                            showDialog(
-                              useRootNavigator: false,
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                  child: ListView(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0,
-                                      horizontal: 16.0,
+                        if (widget.snap['uid'].toString() == user.uid)
+                          IconButton(
+                            onPressed: () {
+                              showDialog(
+                                useRootNavigator: false,
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: ListView(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 16.0,
+                                        horizontal: 16.0,
+                                      ),
+                                      shrinkWrap: true,
+                                      children: [
+                                        const Text(
+                                          'Delete post?',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16.0),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                            'Cancel',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            deletePost(
+                                              widget.snap['postId'].toString(),
+                                            );
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                            'Delete',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    shrinkWrap: true,
-                                    children: [
-                                      const Text(
-                                        'Delete post?',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18.0,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 16.0),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text(
-                                          'Cancel',
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          deletePost(
-                                            widget.snap['postId'].toString(),
-                                          );
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text(
-                                          'Delete',
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          icon: const Icon(Icons.more_vert_outlined),
-                          color: Colors.grey[400],
-                        ),
-                    ],
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(Icons.more_vert_outlined),
+                            color: Colors.grey[400],
+                          ),
+                      ],
+                    ),
                   ),
                 ),
 

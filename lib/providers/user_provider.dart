@@ -9,12 +9,30 @@ class UserProvider with ChangeNotifier {
   UserModel? _user;
   final AuthMethods _authMethods = AuthMethods();
 
-  UserModel get getUser => _user!;
-
   Future<void> refreshUser() async {
-    UserModel user = await _authMethods.getUserDetails();
-    _user = user;
+    try {
+      UserModel userDetails = await _authMethods.getUserDetails();
+
+      _user = userDetails;
+    } catch (e) {
+      log(e.toString());
+    }
 
     notifyListeners();
   }
+
+  UserModel get getUser =>
+      _user ??
+      const UserModel(
+          photoUrl: "",
+          name: "random",
+          email: "test@gmail.com",
+          uid: "uid",
+          phoneNo: "no number",
+          skills: [],
+          isLeader: true,
+          objective: "",
+          description: "");
 }
+
+final userDetails = UserProvider();
