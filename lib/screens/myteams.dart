@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:team_builder/widgets/post_card.dart';
 
 class TeamsPost extends StatefulWidget {
   final uid;
-  TeamsPost({required this.uid, super.key});
+  const TeamsPost({required this.uid, super.key});
 
   @override
   State<TeamsPost> createState() => _TeamsPostState();
@@ -17,7 +15,7 @@ class _TeamsPostState extends State<TeamsPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Posts'),
+        title: const Text('Posts'),
         centerTitle: true,
       ),
       body: FutureBuilder(

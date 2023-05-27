@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     // final List<String> list = ["fluttter", "dart"];
     return Scaffold(
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       appBar: AppBar(
         centerTitle: true,
         title: userData['name'] == null
@@ -195,7 +195,7 @@ class ProfileWidget extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditProfileScreen(
+                  builder: (context) => const EditProfileScreen(
                     name: 'John Doe',
                     email: 'johndoe@example.com',
                     phoneNo: '555-1234',

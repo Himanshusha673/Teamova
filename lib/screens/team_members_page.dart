@@ -39,12 +39,12 @@ class _AnimatedTeamMembersPageState extends State<AnimatedTeamMembersPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Team Members'),
+        title: const Text('Team Members'),
       ),
       body: GridView.builder(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         itemCount: widget.members.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 16.0,
           mainAxisSpacing: 16.0,
@@ -60,7 +60,7 @@ class _AnimatedTeamMembersPageState extends State<AnimatedTeamMembersPage>
               child: Center(
                 child: Text(
                   widget.members[index],
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
                   ),

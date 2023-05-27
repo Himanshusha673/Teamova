@@ -27,11 +27,11 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   // }
 
   addData() async {
-    UserProvider _userProvider = Provider.of<UserProvider>(
+    UserProvider userProvider = Provider.of<UserProvider>(
       context,
     );
     // this is another line
-    await _userProvider.refreshUser();
+    await userProvider.refreshUser();
   }
 
   bool _dataAdded = false;

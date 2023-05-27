@@ -148,27 +148,27 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingsScreen()),
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
               );
             },
           ),
           ListTile(
-            leading: Icon(Icons.event),
-            title: Text('Events'),
+            leading: const Icon(Icons.event),
+            title: const Text('Events'),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => EventPage()),
+                MaterialPageRoute(builder: (context) => const EventPage()),
               );
             },
           ),
           ListTile(
-            leading: Icon(Icons.leaderboard),
-            title: Text('Leaderboard'),
+            leading: const Icon(Icons.leaderboard),
+            title: const Text('Leaderboard'),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LeaderboardPage()),
+                MaterialPageRoute(builder: (context) => const LeaderboardPage()),
               );
             },
           ),
@@ -182,7 +182,7 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HelpAndSupportPage()),
+                MaterialPageRoute(builder: (context) => const HelpAndSupportPage()),
               );
             },
           ),
@@ -208,10 +208,10 @@ class _MyDrawerState extends State<MyDrawer> {
                         color: Colors.black,
                       ),
                     ),
-                    content: Column(
+                    content: const Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           'Are you sure you want to log out?',
                           style: TextStyle(

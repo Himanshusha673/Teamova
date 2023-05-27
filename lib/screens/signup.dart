@@ -4,7 +4,7 @@ import 'package:team_builder/screens/aboutyourself.dart';
 import 'package:team_builder/screens/login.dart';
 
 class Registration extends StatefulWidget {
-  Registration({Key? key}) : super(key: key);
+  const Registration({Key? key}) : super(key: key);
 
   @override
   State<Registration> createState() => _RegistrationState();
@@ -19,7 +19,7 @@ class _RegistrationState extends State<Registration> {
   final TextEditingController _passwordConfirmController =
       TextEditingController();
 
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   @override
   void dispose() {
@@ -35,11 +35,11 @@ class _RegistrationState extends State<Registration> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: _isLoading
-          ? Center(
-              child: Container(
+          ? const Center(
+              child: SizedBox(
                 height: 10,
                 width: 10,
-                child: const CircularProgressIndicator(),
+                child: CircularProgressIndicator(),
               ),
             )
           : SingleChildScrollView(
@@ -300,32 +300,36 @@ class _RegistrationState extends State<Registration> {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(value!))
+    if (!regex.hasMatch(value!)) {
       return 'Enter Valid Email';
-    else
+    } else {
       return null;
+    }
   }
 
   String? validatemobile(String? value) {
 // Indian Mobile number are of 10 digit only
-    if (value!.length != 10)
+    if (value!.length != 10) {
       return 'Mobile Number must be of 10 digit';
-    else
+    } else {
       return null;
+    }
   }
 
   String? validatename(String? value) {
-    if (value!.length < 3)
+    if (value!.length < 3) {
       return 'Name must be more than 2 charater';
-    else
+    } else {
       return null;
+    }
   }
 
   String? validatepassword(String? value) {
-    if (value!.length < 6)
+    if (value!.length < 6) {
       return 'Password must be more than 6 charater';
-    else
+    } else {
       return null;
+    }
   }
 
   String? validateconfirmpassword(String? value) {
@@ -336,5 +340,6 @@ class _RegistrationState extends State<Registration> {
     if (_passwordController.text != _passwordConfirmController.text) {
       return "Password does not match";
     }
+    return null;
   }
 }

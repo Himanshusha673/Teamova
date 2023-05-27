@@ -1,12 +1,10 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:team_builder/screens/forgot_password.dart';
 import 'package:team_builder/screens/signup.dart';
-import 'package:team_builder/utils/colors.dart';
 import 'package:team_builder/widgets/customDialogBox.dart';
 
 import '../services/auth_methods.dart';
@@ -15,7 +13,6 @@ import '../responsive/responsive_layout.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
 import '../widgets/circularIndiacator.dart';
-import 'aboutyourself.dart';
 import 'package:sign_button/sign_button.dart';
 
 class LogInPage extends StatefulWidget {
@@ -26,8 +23,8 @@ class LogInPage extends StatefulWidget {
 }
 
 class _logState extends State<LogInPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoading = false;
   // void _googleSignIn() async {
@@ -111,11 +108,11 @@ class _logState extends State<LogInPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: _isLoading
-          ? Center(
-              child: Container(
+          ? const Center(
+              child: SizedBox(
                 height: 10,
                 width: 10,
-                child: const TeamCircularProgressIndicator(
+                child: TeamCircularProgressIndicator(
                     teamIcon:
                         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
                     size: 64.0,
@@ -201,7 +198,7 @@ class _logState extends State<LogInPage> {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: ((context) =>
-                                            ForgotPasswordScreen()),
+                                            const ForgotPasswordScreen()),
                                       ),
                                     );
                                   },
@@ -219,7 +216,7 @@ class _logState extends State<LogInPage> {
                                   onPressed: () {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                        builder: ((context) => Registration()),
+                                        builder: ((context) => const Registration()),
                                       ),
                                     );
                                   },
@@ -361,13 +358,13 @@ class _logState extends State<LogInPage> {
                         ),
                       ),
                     ),
-                    Center(
+                    const Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(18.0),
+                        padding: EdgeInsets.all(18.0),
                         child: FittedBox(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Icon(Icons.copyright,
                                   color: Colors.red, size: 16.0),
                               SizedBox(width: 4.0),

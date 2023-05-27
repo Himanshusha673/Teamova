@@ -106,6 +106,8 @@
 import 'package:flutter/material.dart';
 
 class NotificationPage extends StatelessWidget {
+  const NotificationPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,7 +136,7 @@ class NotificationPage extends StatelessWidget {
                       backgroundImage: AssetImage('Images/TeamovaLogo.png'),
                     ),
                     const SizedBox(width: 16),
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -145,12 +147,12 @@ class NotificationPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8),
                           Text(
                             'You have been invited to join a new team',
                             style: TextStyle(fontSize: 14),
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8),
                           Text(
                             '2 days ago',
                             style: TextStyle(fontSize: 12),
@@ -169,7 +171,7 @@ class NotificationPage extends StatelessWidget {
                       child: Center(
                         child: Text(
                           index % 2 == 0 ? 'Accepted' : 'Pending',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

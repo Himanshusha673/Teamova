@@ -19,7 +19,7 @@ import '../utils/utils.dart';
 import 'like_animation.dart';
 
 class PostCard extends StatefulWidget {
-  dynamic? snap;
+  dynamic snap;
   PostCard({
     Key? key,
     required this.snap,
@@ -107,7 +107,7 @@ class _PostCardState extends State<PostCard> {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
+                    vertical: 8.0,
                     horizontal: 16.0,
                   ),
                   decoration: const BoxDecoration(

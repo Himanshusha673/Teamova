@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
+  const ChatPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chats'),
+        title: const Text('Chats'),
       ),
       body: ListView.builder(
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               backgroundImage: NetworkImage(
                   'https://images.unsplash.com/photo-1520813792257-6a9f6d5f14af'),
             ),
-            title: Text('John Doe'),
-            subtitle: Text('Hey, what\'s up?'),
+            title: const Text('John Doe'),
+            subtitle: const Text('Hey, what\'s up?'),
             trailing: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Text('10:30 AM'),
+                const Text('10:30 AM'),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
                     color: Colors.green,
                   ),
-                  padding: EdgeInsets.all(5.0),
-                  child: Text(
+                  padding: const EdgeInsets.all(5.0),
+                  child: const Text(
                     '3',
                     style: TextStyle(
                       color: Colors.white,
@@ -40,7 +42,7 @@ class ChatPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ChatDetail()),
+                MaterialPageRoute(builder: (context) => const ChatDetail()),
               );
             },
           );
@@ -48,18 +50,20 @@ class ChatPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.chat),
+        child: const Icon(Icons.chat),
       ),
     );
   }
 }
 
 class ChatDetail extends StatelessWidget {
+  const ChatDetail({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('John Doe'),
+        title: const Text('John Doe'),
       ),
       body: Column(
         children: <Widget>[
@@ -68,7 +72,7 @@ class ChatDetail extends StatelessWidget {
               reverse: true,
               itemCount: 20,
               itemBuilder: (BuildContext context, int index) {
-                return ListTile(
+                return const ListTile(
                   title: Text('Hey, what\'s up?'),
                   subtitle: Text('10:30 AM'),
                   trailing: CircleAvatar(
@@ -80,7 +84,7 @@ class ChatDetail extends StatelessWidget {
             ),
           ),
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 top: BorderSide(
                   color: Colors.grey,
@@ -89,7 +93,7 @@ class ChatDetail extends StatelessWidget {
               ),
             ),
             child: ListTile(
-              title: TextField(
+              title: const TextField(
                 decoration: InputDecoration(
                   hintText: 'Type your message',
                   border: InputBorder.none,
@@ -97,7 +101,7 @@ class ChatDetail extends StatelessWidget {
               ),
               trailing: IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.send),
+                icon: const Icon(Icons.send),
               ),
             ),
           ),

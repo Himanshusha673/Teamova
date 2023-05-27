@@ -4,8 +4,8 @@ class CustomDialog extends StatelessWidget {
   final String title, description, buttonText;
   final Image image;
 
-  CustomDialog(
-      {required this.title,
+  const CustomDialog(
+      {super.key, required this.title,
       required this.description,
       required this.buttonText,
       required this.image});

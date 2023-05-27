@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:team_builder/screens/chatPage.dart';
-import 'package:team_builder/services/auth_methods.dart';
 import 'package:team_builder/widgets/circularIndiacator.dart';
 import 'package:team_builder/widgets/drawer.dart';
 import '../utils/colors.dart';
@@ -52,7 +51,7 @@ class FeedScreenState extends State<FeedScreen> {
                 IconButton(
                   onPressed: () async {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ChatPage()));
+                        MaterialPageRoute(builder: (context) => const ChatPage()));
                   },
                   icon: const Icon(
                     Icons.wechat_outlined,
@@ -117,7 +116,7 @@ class FeedScreenState extends State<FeedScreen> {
                     vertical: width > webScreenSize ? 15 : 0,
                   ),
                   child: PostCard(
-                    snap: snapshot.data?.docs[index].data() ?? Text("no data"),
+                    snap: snapshot.data?.docs[index].data() ?? const Text("no data"),
                   ),
                 ),
               );

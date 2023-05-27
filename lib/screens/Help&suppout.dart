@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
 class HelpAndSupportPage extends StatelessWidget {
+  const HelpAndSupportPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Help & Support'),
+        title: const Text('Help & Support'),
       ),
       body: Container(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
+        padding: const EdgeInsets.all(20.0),
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
               'Contact Us',
               style: TextStyle(
