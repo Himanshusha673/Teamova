@@ -19,68 +19,25 @@ class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
 
   @override
-  State<LogInPage> createState() => _logState();
+  State<LogInPage> createState() => LogState();
 }
 
-class _logState extends State<LogInPage> {
+class LogState extends State<LogInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoading = false;
-  // void _googleSignIn() async {
-  //   try {
-  //     final googleSignIn = GoogleSignIn();
-  //     final signInAccount = await googleSignIn.signIn();
-
-  //     final googleAccountAuthentication = await signInAccount!.authentication;
-
-  //     final credential = GoogleAuthProvider.credential(
-  //         accessToken: googleAccountAuthentication.accessToken,
-  //         idToken: googleAccountAuthentication.idToken);
-
-  //     await FirebaseAuth.instance.signInWithCredential(credential);
-
-  //     if (FirebaseAuth.instance.currentUser != null) {
-  //       Navigator.of(context).pushAndRemoveUntil(
-  //           MaterialPageRoute(
-  //             builder: (context) => const ResponsiveLayout(
-  //               mobileScreenLayout: MobileScreenLayout(),
-  //               webScreenLayout: WebScreenLayout(),
-  //             ),
-  //           ),
-  //           (route) => false);
-  //       print('Google Authentication Successful');
-  //       print('${FirebaseAuth.instance.currentUser!.displayName} signed in.');
-  //       // setState(() {
-  //       //   isLoggedIn = true;
-  //       //   name = FirebaseAuth.instance.currentUser!.displayName;
-  //       // });
-  //     } else {
-  //       print('Unable to sign in');
-  //     }
-  //   } catch (e) {
-  //     log(e.toString());
-  //   }
-  // }
-  //  Future<void> _updateUserData(User user) async {
-  //   // Get a reference to the users collection in Firestore
-  //   final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
-
-  //   // Update the user's data in Firestore
-  //   return userRef.set({
-  //     'name': user.displayName,
-  //     'email': user.email,
-  //     'photoURL': user.photoURL,
-  //   });
-  // }
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void loginUser() async {
     setState(() {
       _isLoading = true;
     });
+
     String res = await AuthMethods().loginUser(
-        email: _emailController.text, password: _passwordController.text);
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
     if (res == 'success') {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
@@ -144,8 +101,6 @@ class _logState extends State<LogInPage> {
                                 radius: 55,
                                 backgroundColor: Colors.transparent,
                                 child: SizedBox(
-                                  // width: MediaQuery.of(context).size.width,
-                                  // height: MediaQuery.of(context).size.height,
                                   child: ClipOval(
                                     child: Image.asset(
                                       "images/TeamovaLogo.png",
@@ -203,30 +158,19 @@ class _logState extends State<LogInPage> {
                                       ),
                                     );
                                   },
-                                  child: GestureDetector(
-                                    child: const Text(
-                                      "Forget Password ?", // TODO : Fix feature
+                                  child: const Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 5.0,
+                                      horizontal: 8.0,
+                                    ),
+                                    child: Text(
+                                      "Forgot Password ?",
                                       style: TextStyle(
                                         fontSize: 16.0,
-                                        color: Colors.redAccent,
+                                        color:
+                                            Color.fromARGB(255, 42, 143, 250),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: ((context) =>
-                                            const Registration()),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Sign Up',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ],
@@ -252,6 +196,38 @@ class _logState extends State<LogInPage> {
                                         padding: EdgeInsets.all(15.0),
                                         child: Text(
                                           "LOGIN",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 7.0),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: ((context) =>
+                                                const Registration()),
+                                          ),
+                                        );
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        backgroundColor: Colors.black,
+                                      ),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(15.0),
+                                        child: Text(
+                                          "SIGN UP",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 18,
@@ -293,66 +269,11 @@ class _logState extends State<LogInPage> {
                                     UserCredential userCredential = await _auth
                                         .signInWithCredential(credential);
 
-                                    // UserCredential userCredential =
-                                    //     await _auth.signInWithCustomToken(
-                                    //         credential.token.toString());
                                     log(credential.toString());
                                     user = userCredential.user;
 
                                     log(user.toString());
                                   }
-                                  // try {
-                                  //   User? user = _auth.currentUser;
-                                  //   if (user == null) {
-                                  //     // User is not signed in, start the sign-in process
-                                  //     UserCredential userCredential =
-                                  //         await AuthMethods()
-                                  //             .signInWithGoogle();
-                                  //     user = userCredential.user;
-                                  //   }
-                                  //   log(user.toString());
-
-                                  //   print(
-                                  //       'User signed in: ${user!.displayName}');
-
-                                  //   // Check if the user's data exists in Firestore
-                                  //   bool userExists =
-                                  //       await _checkIfUserExists(user.uid);
-                                  //   if (userExists) {
-                                  //     Navigator.of(context).pushAndRemoveUntil(
-                                  //         MaterialPageRoute(
-                                  //           builder: (context) =>
-                                  //               const ResponsiveLayout(
-                                  //             mobileScreenLayout:
-                                  //                 MobileScreenLayout(),
-                                  //             webScreenLayout:
-                                  //                 WebScreenLayout(),
-                                  //           ),
-                                  //         ),
-                                  //         (route) => false);
-
-                                  //     print(
-                                  //         'User data exists in Firestore, logging in...');
-                                  //   } else {
-                                  //     Navigator.of(context)
-                                  //         .pushReplacement(MaterialPageRoute(
-                                  //       builder: (context) => Aboutyourself(
-                                  //         email: _emailController.text,
-                                  //         password: _passwordController.text,
-                                  //         name: user!.displayName,
-                                  //         phoneNo: '',
-                                  //       ),
-                                  //     ));
-
-                                  //     print(
-                                  //         'User data does not exist in Firestore, creating account...');
-
-                                  //     // Add the new user to Firestore
-                                  //     // await _addUserToFirestore(user);
-                                  //   }
-                                  // } catch (e) {
-                                  //   print('Sign-in error: $e');
-                                  // }
                                 }, // !TODO : Google sign in
                               ),
                             ),
@@ -367,8 +288,11 @@ class _logState extends State<LogInPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.copyright,
-                                  color: Colors.red, size: 16.0),
+                              Icon(
+                                Icons.copyright,
+                                color: Colors.red,
+                                size: 16.0,
+                              ),
                               SizedBox(width: 4.0),
                               Text(
                                 ' 2023 Teamova. All rights reserved.',
