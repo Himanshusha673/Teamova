@@ -58,7 +58,7 @@ class SignIn extends StatelessWidget {
                     width: 10.0,
                   ),
                   Text(
-                    "Google Sign In",
+                    "Continue With Google",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
