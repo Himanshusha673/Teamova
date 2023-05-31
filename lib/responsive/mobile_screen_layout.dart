@@ -45,7 +45,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         children: homeScreenItems,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
+        type: BottomNavigationBarType.fixed,
         backgroundColor: mainColor,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
@@ -69,7 +69,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
-            label: 'Notification',
+            label: 'Alerts',
             backgroundColor: mainColor,
           ),
           BottomNavigationBarItem(
