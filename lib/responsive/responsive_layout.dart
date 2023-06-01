@@ -20,21 +20,21 @@ class ResponsiveLayout extends StatefulWidget {
 }
 
 class _ResponsiveLayoutState extends State<ResponsiveLayout> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   addData();
+  // }
+
   addData() async {
     UserProvider userProvider = Provider.of<UserProvider>(context);
     await userProvider.refreshUser();
   }
 
-  bool _dataAdded = false;
-
   @override
   void didChangeDependencies() {
+    addData();
     super.didChangeDependencies();
-
-    if (!_dataAdded) {
-      addData();
-      _dataAdded = true;
-    }
   }
 
   DateTime? _lastPressed;

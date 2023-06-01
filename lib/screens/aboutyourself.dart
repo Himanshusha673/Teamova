@@ -137,7 +137,7 @@ class _AboutyourselfState extends State<Aboutyourself> {
       );
 
   selectImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
+    Uint8List im = await pickImage(ImageSource.camera);
     // set state because we need to display the image we selected on the circle avatar
     setState(() {
       _image = im;

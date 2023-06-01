@@ -44,8 +44,7 @@ class AuthMethods {
           name.isNotEmpty ||
           phoneNo.isNotEmpty ||
           skills.isNotEmpty ||
-          objective.isNotEmpty ||
-          file.isNotEmpty) {
+          objective.isNotEmpty) {
         if (password == null) {}
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: email,

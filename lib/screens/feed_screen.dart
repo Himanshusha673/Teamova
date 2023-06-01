@@ -26,7 +26,7 @@ class FeedScreenState extends State<FeedScreen> {
   void getUserDetais() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance
         .collection('users')
-        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
 
     setState(() {
@@ -99,8 +99,7 @@ class FeedScreenState extends State<FeedScreen> {
                     vertical: width > webScreenSize ? 15 : 0,
                   ),
                   child: PostCard(
-                    snap: snapshot.data?.docs[index].data() ??
-                        const Text("no data"),
+                    snap: snapshot.data!.docs[index].data(),
                   ),
                 ),
               );

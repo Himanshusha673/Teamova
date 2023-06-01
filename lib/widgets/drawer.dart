@@ -29,7 +29,7 @@ class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).getUser;
-    log(userDetails.getUser.name);
+    // log("user.name");
     // log(user.name);
     // log(user.email);
 
