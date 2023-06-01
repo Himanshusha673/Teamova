@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LeaderboardPage extends StatefulWidget {
+  const LeaderboardPage({super.key});
+
   @override
   _LeaderboardPageState createState() => _LeaderboardPageState();
 }
@@ -22,7 +24,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
     )..repeat();
   }
 
@@ -36,24 +38,24 @@ class _LeaderboardPageState extends State<LeaderboardPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Leaderboard'),
+        title: const Text('Leaderboard'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: TypewriterAnimatedTextKit(
-              text: ['Leaderboard'],
-              textStyle: TextStyle(
+              text: const ['Leaderboard'],
+              textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 32.0,
               ),
-              speed: Duration(milliseconds: 200),
+              speed: const Duration(milliseconds: 200),
             ),
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           Expanded(
             child: ListView.builder(
               itemCount: _users.length,
@@ -78,7 +80,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                           child: Center(
                             child: Text(
                               '$rank',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.0,
                                 color: Colors.white,
@@ -87,11 +89,11 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                           ),
                         ),
                       ),
-                      SizedBox(width: 16.0),
+                      const SizedBox(width: 16.0),
                       Expanded(
                         child: Text(
                           user,
-                          style: TextStyle(fontSize: 18.0),
+                          style: const TextStyle(fontSize: 18.0),
                         ),
                       ),
                     ],

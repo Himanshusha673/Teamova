@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:team_builder/models/user_model.dart' as model;
 import 'package:team_builder/providers/user_provider.dart';
 import 'package:team_builder/widgets/circularIndiacator.dart';
-import 'package:team_builder/widgets/popUp.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final String name;
@@ -14,8 +13,8 @@ class EditProfileScreen extends StatefulWidget {
   final String phoneNo;
   final String description;
 
-  EditProfileScreen(
-      {required this.name,
+  const EditProfileScreen(
+      {super.key, required this.name,
       required this.email,
       required this.phoneNo,
       required this.description});

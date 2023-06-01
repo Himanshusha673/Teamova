@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:team_builder/screens/feed_screen.dart';
-import 'package:team_builder/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -152,7 +151,7 @@ class _postState extends State<PostPage> {
         body: !isLoading
             ? SnappingSheet(
                 grabbingHeight: 75,
-                grabbing: GrabbingWidget(),
+                grabbing: const GrabbingWidget(),
                 sheetBelow: SnappingSheetContent(
                   draggable: true,
                   child: Container(
@@ -181,13 +180,13 @@ class _postState extends State<PostPage> {
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.grey[100],
                             ),
-                            child: Row(
+                            child: const Row(
                               children: [
-                                const SizedBox(width: 20),
-                                const Icon(Icons.camera_alt,
+                                SizedBox(width: 20),
+                                Icon(Icons.camera_alt,
                                     size: 35, color: Colors.black),
-                                const SizedBox(width: 20),
-                                const Text(
+                                SizedBox(width: 20),
+                                Text(
                                   'Capture a Image',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -214,13 +213,13 @@ class _postState extends State<PostPage> {
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.grey[100],
                             ),
-                            child: Row(
+                            child: const Row(
                               children: [
-                                const SizedBox(width: 20),
-                                const Icon(Icons.photo_library,
+                                SizedBox(width: 20),
+                                Icon(Icons.photo_library,
                                     size: 35, color: Colors.black),
-                                const SizedBox(width: 20),
-                                const Text(
+                                SizedBox(width: 20),
+                                Text(
                                   'Select from Gallery',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -307,7 +306,7 @@ class _postState extends State<PostPage> {
                               const SizedBox(height: 4),
                               Text(
                                 '${userProvider.objective} ',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 16,
                                   color: Colors.grey,
@@ -459,6 +458,8 @@ class _postState extends State<PostPage> {
 }
 
 class GrabbingWidget extends StatelessWidget {
+  const GrabbingWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

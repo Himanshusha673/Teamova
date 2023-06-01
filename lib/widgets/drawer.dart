@@ -88,7 +88,6 @@ class _MyDrawerState extends State<MyDrawer> {
       child: Wrap(
         runSpacing: 15,
         children: [
-          //  'https://img.freepik.com/free-icon/verification-delivery-list-clipboard-symbol_318-61556.jpg'
           ListTile(
             leading: FadeInImage(
               placeholder: const AssetImage('assets/images/No-DP2.png'),
@@ -108,7 +107,8 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => const MyTasksPage()),
+                  builder: (BuildContext context) => const MyTasksPage(),
+                ),
               );
             },
           ),
@@ -148,27 +148,28 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingsScreen()),
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
               );
             },
           ),
           ListTile(
-            leading: Icon(Icons.event),
-            title: Text('Events'),
+            leading: const Icon(Icons.event),
+            title: const Text('Events'),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => EventPage()),
+                MaterialPageRoute(builder: (context) => const EventPage()),
               );
             },
           ),
           ListTile(
-            leading: Icon(Icons.leaderboard),
-            title: Text('Leaderboard'),
+            leading: const Icon(Icons.leaderboard),
+            title: const Text('Leaderboard'),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LeaderboardPage()),
+                MaterialPageRoute(
+                    builder: (context) => const LeaderboardPage()),
               );
             },
           ),
@@ -182,7 +183,8 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HelpAndSupportPage()),
+                MaterialPageRoute(
+                    builder: (context) => const HelpAndSupportPage()),
               );
             },
           ),
@@ -208,10 +210,10 @@ class _MyDrawerState extends State<MyDrawer> {
                         color: Colors.black,
                       ),
                     ),
-                    content: Column(
+                    content: const Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           'Are you sure you want to log out?',
                           style: TextStyle(

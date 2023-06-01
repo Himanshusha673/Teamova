@@ -124,6 +124,8 @@ import 'package:flutter/material.dart';
 //   }
 // }
 class EventPage extends StatefulWidget {
+  const EventPage({super.key});
+
   @override
   _EventPageState createState() => _EventPageState();
 }
@@ -233,7 +235,7 @@ class _EventPageState extends State<EventPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CreateEventPage()));
+              MaterialPageRoute(builder: (context) => const CreateEventPage()));
         },
         child: const Icon(Icons.add),
       ),
@@ -318,6 +320,8 @@ class EventDetailsPage extends StatelessWidget {
 }
 
 class CreateEventPage extends StatefulWidget {
+  const CreateEventPage({super.key});
+
   @override
   _CreateEventPageState createState() => _CreateEventPageState();
 }

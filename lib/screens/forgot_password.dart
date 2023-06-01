@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
+
   @override
   _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
 }
@@ -30,24 +32,22 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       appBar: AppBar(
         title: const Text('Forgot Password'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(26.0),
-        child: Form(
-          key: _formKey,
+      body: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Please enter your registered email address to reset your password. we will sent a Link to your email to change your password',
-                textAlign: TextAlign.center,
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Enter your registered email address',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                  ),
+                ),
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'Enter your email to reset your password',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 25.0),
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -58,18 +58,58 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   return null;
                 },
                 decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.person_outline_outlined),
                   labelText: 'Email',
-                  hintText: 'Enter your email',
+                  hintText: 'Email',
+                  border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _resetPassword();
-                  }
-                },
-                child: const Text('Reset Password'),
+              const SizedBox(height: 25.0),
+              const Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.info_outlined,
+                      size: 25.0,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "You will receive a link on your registered email address to reset your password",
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 25.0),
+              Container(
+                height: 50.0,
+                padding: const EdgeInsets.symmetric(horizontal: 7.0),
+                child: Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _resetPassword();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      backgroundColor: Colors.black,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Text(
+                        "RESET PASSWORD",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(height: 16.0),
               Text(

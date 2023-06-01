@@ -1,13 +1,8 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:team_builder/screens/forgot_password.dart';
 import 'package:team_builder/screens/signup.dart';
-import 'package:team_builder/utils/colors.dart';
 import 'package:team_builder/widgets/customDialogBox.dart';
+import 'package:team_builder/widgets/signin.dart';
 
 import '../services/auth_methods.dart';
 import '../responsive/mobile_screen_layout.dart';
@@ -15,75 +10,29 @@ import '../responsive/responsive_layout.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
 import '../widgets/circularIndiacator.dart';
-import 'aboutyourself.dart';
-import 'package:sign_button/sign_button.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
 
   @override
-  State<LogInPage> createState() => _logState();
+  State<LogInPage> createState() => LogState();
 }
 
-class _logState extends State<LogInPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+class LogState extends State<LogInPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoading = false;
-  // void _googleSignIn() async {
-  //   try {
-  //     final googleSignIn = GoogleSignIn();
-  //     final signInAccount = await googleSignIn.signIn();
-
-  //     final googleAccountAuthentication = await signInAccount!.authentication;
-
-  //     final credential = GoogleAuthProvider.credential(
-  //         accessToken: googleAccountAuthentication.accessToken,
-  //         idToken: googleAccountAuthentication.idToken);
-
-  //     await FirebaseAuth.instance.signInWithCredential(credential);
-
-  //     if (FirebaseAuth.instance.currentUser != null) {
-  //       Navigator.of(context).pushAndRemoveUntil(
-  //           MaterialPageRoute(
-  //             builder: (context) => const ResponsiveLayout(
-  //               mobileScreenLayout: MobileScreenLayout(),
-  //               webScreenLayout: WebScreenLayout(),
-  //             ),
-  //           ),
-  //           (route) => false);
-  //       print('Google Authentication Successful');
-  //       print('${FirebaseAuth.instance.currentUser!.displayName} signed in.');
-  //       // setState(() {
-  //       //   isLoggedIn = true;
-  //       //   name = FirebaseAuth.instance.currentUser!.displayName;
-  //       // });
-  //     } else {
-  //       print('Unable to sign in');
-  //     }
-  //   } catch (e) {
-  //     log(e.toString());
-  //   }
-  // }
-  //  Future<void> _updateUserData(User user) async {
-  //   // Get a reference to the users collection in Firestore
-  //   final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
-
-  //   // Update the user's data in Firestore
-  //   return userRef.set({
-  //     'name': user.displayName,
-  //     'email': user.email,
-  //     'photoURL': user.photoURL,
-  //   });
-  // }
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void loginUser() async {
     setState(() {
       _isLoading = true;
     });
+
     String res = await AuthMethods().loginUser(
-        email: _emailController.text, password: _passwordController.text);
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
     if (res == 'success') {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
@@ -111,11 +60,11 @@ class _logState extends State<LogInPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: _isLoading
-          ? Center(
-              child: Container(
+          ? const Center(
+              child: SizedBox(
                 height: 10,
                 width: 10,
-                child: const TeamCircularProgressIndicator(
+                child: TeamCircularProgressIndicator(
                     teamIcon:
                         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
                     size: 64.0,
@@ -147,8 +96,6 @@ class _logState extends State<LogInPage> {
                                 radius: 55,
                                 backgroundColor: Colors.transparent,
                                 child: SizedBox(
-                                  // width: MediaQuery.of(context).size.width,
-                                  // height: MediaQuery.of(context).size.height,
                                   child: ClipOval(
                                     child: Image.asset(
                                       "images/TeamovaLogo.png",
@@ -184,6 +131,7 @@ class _logState extends State<LogInPage> {
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: TextField(
+                                obscureText: true,
                                 controller: _passwordController,
                                 decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.fingerprint_outlined),
@@ -201,33 +149,23 @@ class _logState extends State<LogInPage> {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: ((context) =>
-                                            ForgotPasswordScreen()),
+                                            const ForgotPasswordScreen()),
                                       ),
                                     );
                                   },
-                                  child: GestureDetector(
-                                    child: const Text(
-                                      "Forget Password ?", // TODO : Fix feature
+                                  child: const Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 5.0,
+                                      horizontal: 8.0,
+                                    ),
+                                    child: Text(
+                                      "Forgot Password ?",
                                       style: TextStyle(
                                         fontSize: 16.0,
-                                        color: Colors.redAccent,
+                                        color:
+                                            Color.fromARGB(255, 42, 143, 250),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: ((context) => Registration()),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Sign Up',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ],
@@ -262,122 +200,68 @@ class _logState extends State<LogInPage> {
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const SizedBox(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 15.0),
-                                child: Center(
-                                  child: Text(
-                                    "OR",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 7.0),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: ((context) =>
+                                                const Registration()),
+                                          ),
+                                        );
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        backgroundColor: Colors.black,
+                                      ),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(15.0),
+                                        child: Text(
+                                          "SIGN UP",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 30,
                             ),
                             Center(
-                              child: SignInButton(
-                                buttonType: ButtonType.google,
-                                buttonSize: ButtonSize.large,
-                                onPressed: () async {
-                                  User? user = _auth.currentUser;
-                                  if (user == null) {
-                                    // User is not signed in, start the sign-in process
-                                    OAuthCredential credential =
-                                        await AuthMethods().signInWithGoogle();
-                                    UserCredential userCredential = await _auth
-                                        .signInWithCredential(credential);
-
-                                    // UserCredential userCredential =
-                                    //     await _auth.signInWithCustomToken(
-                                    //         credential.token.toString());
-                                    log(credential.toString());
-                                    user = userCredential.user;
-
-                                    log(user.toString());
-                                  }
-                                  // try {
-                                  //   User? user = _auth.currentUser;
-                                  //   if (user == null) {
-                                  //     // User is not signed in, start the sign-in process
-                                  //     UserCredential userCredential =
-                                  //         await AuthMethods()
-                                  //             .signInWithGoogle();
-                                  //     user = userCredential.user;
-                                  //   }
-                                  //   log(user.toString());
-
-                                  //   print(
-                                  //       'User signed in: ${user!.displayName}');
-
-                                  //   // Check if the user's data exists in Firestore
-                                  //   bool userExists =
-                                  //       await _checkIfUserExists(user.uid);
-                                  //   if (userExists) {
-                                  //     Navigator.of(context).pushAndRemoveUntil(
-                                  //         MaterialPageRoute(
-                                  //           builder: (context) =>
-                                  //               const ResponsiveLayout(
-                                  //             mobileScreenLayout:
-                                  //                 MobileScreenLayout(),
-                                  //             webScreenLayout:
-                                  //                 WebScreenLayout(),
-                                  //           ),
-                                  //         ),
-                                  //         (route) => false);
-
-                                  //     print(
-                                  //         'User data exists in Firestore, logging in...');
-                                  //   } else {
-                                  //     Navigator.of(context)
-                                  //         .pushReplacement(MaterialPageRoute(
-                                  //       builder: (context) => Aboutyourself(
-                                  //         email: _emailController.text,
-                                  //         password: _passwordController.text,
-                                  //         name: user!.displayName,
-                                  //         phoneNo: '',
-                                  //       ),
-                                  //     ));
-
-                                  //     print(
-                                  //         'User data does not exist in Firestore, creating account...');
-
-                                  //     // Add the new user to Firestore
-                                  //     // await _addUserToFirestore(user);
-                                  //   }
-                                  // } catch (e) {
-                                  //   print('Sign-in error: $e');
-                                  // }
-                                }, // !TODO : Google sign in
-                              ),
+                              child: SignIn(),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Center(
+                    const Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: FittedBox(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(Icons.copyright,
-                                  color: Colors.red, size: 16.0),
-                              SizedBox(width: 4.0),
-                              Text(
-                                ' 2023 Teamova. All rights reserved.',
-                                style: TextStyle(fontSize: 14),
-                                softWrap: true,
-                              ),
-                            ],
-                          ),
+                        padding: EdgeInsets.all(18.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.copyright,
+                              color: Colors.red,
+                              size: 16.0,
+                            ),
+                            SizedBox(width: 4.0),
+                            Text(
+                              '2023 Teamova. All rights reserved.',
+                              style: TextStyle(fontSize: 14),
+                              softWrap: true,
+                            ),
+                          ],
                         ),
                       ),
                     ),
