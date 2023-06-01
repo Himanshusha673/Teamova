@@ -88,7 +88,6 @@ class _MyDrawerState extends State<MyDrawer> {
       child: Wrap(
         runSpacing: 15,
         children: [
-          //  'https://img.freepik.com/free-icon/verification-delivery-list-clipboard-symbol_318-61556.jpg'
           ListTile(
             leading: FadeInImage(
               placeholder: const AssetImage('assets/images/No-DP2.png'),
@@ -108,7 +107,8 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => const MyTasksPage()),
+                  builder: (BuildContext context) => const MyTasksPage(),
+                ),
               );
             },
           ),
@@ -168,7 +168,8 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LeaderboardPage()),
+                MaterialPageRoute(
+                    builder: (context) => const LeaderboardPage()),
               );
             },
           ),
@@ -182,7 +183,8 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const HelpAndSupportPage()),
+                MaterialPageRoute(
+                    builder: (context) => const HelpAndSupportPage()),
               );
             },
           ),
