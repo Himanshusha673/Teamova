@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:team_builder/utils/colors.dart';
 
 class CommentCard extends StatelessWidget {
   final snap;
@@ -29,25 +30,33 @@ class CommentCard extends StatelessWidget {
                       spellOut: true,
                       children: [
                         TextSpan(
-                            text: snap.data()['name'],
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black)),
-                        const TextSpan(
-                            text: '-',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black45)),
-                        TextSpan(
-                            text: ' ${snap.data()['text']}',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
+                          text: snap.data()['name'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
+                        ),
+                        // const TextSpan(
+                        //     text: '-',
+                        //     style: TextStyle(
+                        //         fontWeight: FontWeight.bold,
+                        //         color: Colors.black45)),
                       ],
                     ),
                   ),
+                  const SizedBox(height: 5),
+                  RichText(
+                    text: TextSpan(
+                      text: snap.data()['text'],
+                      style: TextStyle(
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade900,
+                      ),
+                    ),
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 4),
+                    padding: const EdgeInsets.only(top: 8),
                     child: Text(
                       DateFormat.yMMMd().format(
                         snap.data()['datePublished'].toDate(),
@@ -65,8 +74,9 @@ class CommentCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             child: const Icon(
-              Icons.favorite,
-              size: 16,
+              Icons.thumb_up_alt_outlined,
+              color: mainColor,
+              size: 25,
             ),
           )
         ],

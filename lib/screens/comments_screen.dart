@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:team_builder/main.dart';
 
 import '../models/user_model.dart';
 import '../providers/user_provider.dart';
@@ -61,7 +62,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: mainColor,
         title: const Text(
           'Comments',
         ),
@@ -94,8 +95,9 @@ class _CommentsScreenState extends State<CommentsScreen> {
       ),
       // text input
       bottomNavigationBar: Container(
+        // color: mainColor,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: mainColor,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
@@ -105,7 +107,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
           child: Row(
             children: [
               Container(
@@ -124,13 +126,16 @@ class _CommentsScreenState extends State<CommentsScreen> {
                   onTap: () {},
                   controller: commentEditingController,
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 15,
+                    ).copyWith(left: 10),
                     hintText: 'Comment as ${user.name}',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(24),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.grey.withOpacity(0.1),
+                    fillColor: Colors.white,
                   ),
                 ),
               ),
@@ -146,12 +151,16 @@ class _CommentsScreenState extends State<CommentsScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: const Text(
                     'Post',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
