@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -88,20 +87,25 @@ class _MyDrawerState extends State<MyDrawer> {
         runSpacing: 15,
         children: [
           ListTile(
-            leading: FadeInImage(
-              placeholder: const AssetImage('assets/images/No-DP2.png'),
-              image: const NetworkImage(
-                  'https://img.freepik.com/free-icon/verification-delivery-list-clipboard-symbol_318-61556.jpg'),
-              imageErrorBuilder: (context, error, stackTrace) {
-                return const CircleAvatar(
-                  child: Icon(Icons.error),
-                );
-              },
-              fadeInDuration: const Duration(milliseconds: 300),
-              fit: BoxFit.cover,
-              width: 50,
-              height: 50,
+            leading: const Icon(
+              Icons.task_alt_outlined,
+              color: Colors.black,
+              size: 35.0,
             ),
+            // FadeInImage(
+            //   placeholder: const AssetImage('assets/images/No-DP2.png'),
+            //   image: const NetworkImage(
+            //       'https://img.freepik.com/free-icon/verification-delivery-list-clipboard-symbol_318-61556.jpg'),
+            //   imageErrorBuilder: (context, error, stackTrace) {
+            //     return const CircleAvatar(
+            //       child: Icon(Icons.error),
+            //     );
+            //   },
+            //   fadeInDuration: const Duration(milliseconds: 300),
+            //   fit: BoxFit.cover,
+            //   width: 50,
+            //   height: 50,
+            // ),
             title: const Text('Tasks'),
             onTap: () {
               Navigator.of(context).push(
@@ -112,11 +116,16 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
-            leading: const CircleAvatar(
-              radius: 18,
-              backgroundImage: NetworkImage(
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s'),
+            leading: const Icon(
+              Icons.groups_2_outlined,
+              color: Colors.black,
+              size: 35.0,
             ),
+            // const CircleAvatar(
+            //   radius: 18,
+            //   backgroundImage: NetworkImage(
+            //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s'),
+            // ),
             title: const Text('Team Members'),
             onTap: () {
               Navigator.push(
@@ -138,11 +147,16 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
-            leading: const CircleAvatar(
-              radius: 18,
-              backgroundImage: NetworkImage(
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmrFWTQs_rQd9JgmpochyeBFZpq3tixY-w7uycL-wfWg&s'),
+            leading: const Icon(
+              Icons.settings_outlined,
+              color: Colors.black,
+              size: 35.0,
             ),
+            // const CircleAvatar(
+            //   radius: 18,
+            //   backgroundImage: NetworkImage(
+            //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmrFWTQs_rQd9JgmpochyeBFZpq3tixY-w7uycL-wfWg&s'),
+            // ),
             title: const Text('Settings'),
             onTap: () {
               Navigator.push(
@@ -152,7 +166,11 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.event),
+            leading: const Icon(
+              Icons.event_outlined,
+              color: Colors.black,
+              size: 35.0,
+            ),
             title: const Text('Events'),
             onTap: () {
               Navigator.push(
@@ -162,7 +180,11 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.leaderboard),
+            leading: const Icon(
+              Icons.leaderboard_outlined,
+              color: Colors.black,
+              size: 35.0,
+            ),
             title: const Text('Leaderboard'),
             onTap: () {
               Navigator.push(
@@ -173,11 +195,16 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
-            leading: const CircleAvatar(
-              radius: 18,
-              backgroundImage: NetworkImage(
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAQQSeSiPKfbkruJb9XyKdC5bn5j04Y87C5w&usqp=CAU'),
+            leading: const Icon(
+              Icons.support_agent_outlined,
+              color: Colors.black,
+              size: 35.0,
             ),
+            // const CircleAvatar(
+            //   radius: 18,
+            //   backgroundImage: NetworkImage(
+            //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAQQSeSiPKfbkruJb9XyKdC5bn5j04Y87C5w&usqp=CAU'),
+            // ),
             title: const Text('Help & Support'),
             onTap: () {
               Navigator.push(
@@ -191,10 +218,15 @@ class _MyDrawerState extends State<MyDrawer> {
             color: Colors.black54,
           ),
           ListTile(
-            leading: const CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://static.vecteezy.com/system/resources/previews/000/574/782/original/vector-logout-sign-icon.jpg'),
+            leading: const Icon(
+              Icons.logout_outlined,
+              color: Colors.black,
+              size: 35.0,
             ),
+            // const CircleAvatar(
+            //   backgroundImage: NetworkImage(
+            //       'https://static.vecteezy.com/system/resources/previews/000/574/782/original/vector-logout-sign-icon.jpg'),
+            // ),
             title: const Text("Log Out"),
             onTap: () async {
               showDialog(
