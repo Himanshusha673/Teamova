@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:team_builder/screens/profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/user_model.dart';

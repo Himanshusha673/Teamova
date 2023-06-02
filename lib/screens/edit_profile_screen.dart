@@ -45,14 +45,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           padding: const EdgeInsets.all(16.0),
           child: ListView(
             children: [
-              Container(
+              SizedBox(
                 width: 120.0,
                 height: 120.0,
                 child: GestureDetector(
                   onTap: () {
                     // Code to update profile photo
                   },
-                  child: CircleAvatar(
+                  child: const CircleAvatar(
                     backgroundImage: NetworkImage(
                         "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png"),
                     radius: 60.0,
