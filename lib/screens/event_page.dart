@@ -237,6 +237,7 @@ class _EventPageState extends State<EventPage> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const CreateEventPage()));
         },
+        backgroundColor: Colors.black,
         child: const Icon(Icons.add),
       ),
     );
