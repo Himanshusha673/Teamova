@@ -360,6 +360,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  icons_plus:
+    dependency: "direct main"
+    description:
+      name: icons_plus
+      sha256: "6a7cb265471e59dc74b7b89f7e4d2ab3e716b2d91ba1e7a15fe7df61d01fc9e3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   image_picker:
     dependency: "direct main"
     description:
