@@ -195,7 +195,6 @@ class AuthMethods {
             info.providerId == GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD)) {
       GoogleSignIn googleSignIn = GoogleSignIn();
       await googleSignIn.disconnect();
-      await _auth.signOut();
     } else {
       await _auth.signOut();
     }
