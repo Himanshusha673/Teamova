@@ -211,7 +211,14 @@ class _SearchPageState extends State<SearchPage> {
                   .get(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return const Center(
+                  return
+                      // Center(
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(10.0),
+                      //     child: Image.asset('images/nothing_here.png'),
+                      //   ),
+                      // );
+                      const Center(
                     child: TeamCircularProgressIndicator(
                         teamIcon:
                             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
