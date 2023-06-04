@@ -381,21 +381,22 @@ class _PostCardState extends State<PostCard> {
                                             },
                                             child: Row(
                                               children: [
-                                                Icon(
+                                                const Icon(
                                                   Icons.link,
                                                   size: 30.0,
-                                                  color: Colors.grey[700],
+                                                  color: Colors.black,
                                                 ),
                                                 const SizedBox(width: 10.0),
-                                                Text(
-                                                  softWrap: false,
-                                                  widget.snap['link1']
-                                                      .toString(),
-                                                  overflow: TextOverflow.fade,
-                                                  maxLines: 1,
-                                                  style: const TextStyle(
-                                                    fontSize: 18.0,
-                                                    color: Colors.black,
+                                                Flexible(
+                                                  child: Text(
+                                                    widget.snap['link1']
+                                                        .toString(),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontSize: 18.0,
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -426,22 +427,22 @@ class _PostCardState extends State<PostCard> {
                                             },
                                             child: Row(
                                               children: [
-                                                Icon(
+                                                const Icon(
                                                   Icons.link,
                                                   size: 30.0,
-                                                  color: Colors.grey[700],
+                                                  color: Colors.black,
                                                 ),
                                                 const SizedBox(width: 10.0),
-                                                Text(
-                                                  softWrap: false,
-                                                  widget.snap['link2']
-                                                      .toString(),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  style: const TextStyle(
-                                                    fontSize: 18.0,
-                                                    color: Colors.black,
+                                                Flexible(
+                                                  child: Text(
+                                                    widget.snap['link2']
+                                                        .toString(),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontSize: 18.0,
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
                                                 ),
                                               ],
