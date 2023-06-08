@@ -12,7 +12,6 @@ import 'package:team_builder/responsive/web_screen_layout.dart';
 import 'package:team_builder/screens/aboutyourself.dart';
 import 'package:team_builder/screens/login.dart';
 import 'package:team_builder/utils/colors.dart';
-import 'package:team_builder/widgets/customDialogBox.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

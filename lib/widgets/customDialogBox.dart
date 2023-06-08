@@ -22,11 +22,11 @@ class CustomDialog extends StatelessWidget {
     );
   }
 
-  contentBox(context) {
+  Widget contentBox(context) {
     return Stack(
       children: <Widget>[
         Container(
-          padding: const EdgeInsets.only(top: 40),
+          padding: const EdgeInsets.only(top: 60),
           margin: const EdgeInsets.only(top: 60),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
@@ -58,6 +58,14 @@ class CustomDialog extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomRight,
                 child: TextButton(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(
+                        vertical: 25.0,
+                        horizontal: 20.0,
+                      ),
+                    ),
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -71,7 +79,7 @@ class CustomDialog extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 0,
+          top: 20,
           left: 0,
           right: 0,
           child: CircleAvatar(
@@ -94,9 +102,9 @@ showCustomDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return CustomDialog(
-        title: "Welcome!",
-        description: "You have successfully logged in.",
-        buttonText: "OK",
+        title: "Welcome",
+        description: "Log In Successful",
+        buttonText: "Continue",
         image: Image.asset(
           "images/TeamovaLogo.png",
           fit: BoxFit.cover,

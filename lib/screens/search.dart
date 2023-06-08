@@ -29,8 +29,25 @@ class _SearchPageState extends State<SearchPage> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Form(
+        leading: const Icon(Icons.search, color: Colors.white),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.clear, color: Colors.white),
+            onPressed: () {
+              searchController.clear();
+              setState(
+                () {
+                  isShowPosts = false;
+                },
+              );
+            },
+          ),
+        ],
+        backgroundColor: Colors.black,
+        toolbarHeight: 70,
+        titleSpacing: 0,
+        title: SizedBox(
+          height: 45,
           child: TextField(
             onSubmitted: (val) {
               setState(() {
@@ -39,31 +56,17 @@ class _SearchPageState extends State<SearchPage> {
             },
             controller: searchController,
             decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
               hintText: 'Search for a post...',
-              border: InputBorder.none,
-              prefixIcon: const Icon(Icons.search, color: Colors.grey),
-              suffixIcon: IconButton(
-                  icon: const Icon(Icons.clear, color: Colors.grey),
-                  onPressed: () {
-                    searchController.clear();
-                    setState(() {
-                      isShowPosts = false;
-                    });
-                  }),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 5,
+              ),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
             ),
           ),
-
-          //  TextFormField(
-          //   controller: searchController,
-          //   decoration:
-          //       const InputDecoration(labelText: 'Search for a user...'),
-          //   onFieldSubmitted: (String _) {
-          //     setState(() {
-          //       isShowUsers = true;
-          //     });
-          //     print(_);
-          //   },
-          // ),
         ),
         // actions: [
         //   IconButton(
@@ -208,7 +211,14 @@ class _SearchPageState extends State<SearchPage> {
                   .get(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return const Center(
+                  return
+                      // Center(
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(10.0),
+                      //     child: Image.asset('images/nothing_here.png'),
+                      //   ),
+                      // );
+                      const Center(
                     child: TeamCircularProgressIndicator(
                         teamIcon:
                             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
