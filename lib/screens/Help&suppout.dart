@@ -11,9 +11,9 @@ class HelpAndSupportPage extends StatelessWidget {
       ),
       body: Container(
         padding: const EdgeInsets.all(20.0),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: const [
             Text(
               'Contact Us',
               style: TextStyle(

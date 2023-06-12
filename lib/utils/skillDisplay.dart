@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 // flutter pub add flutter_chip_tags
 
-
 class SkillDisplay extends StatefulWidget {
   const SkillDisplay({Key? key, this.title}) : super(key: key);
   final String? title;
@@ -15,16 +14,13 @@ class SkillDisplayState extends State<SkillDisplay> {
   // List<String> _myListCustom = [];
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            //Default use space to seprate
-           
-          ],
-        ),
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          //Default use space to seprate
+        ],
       ),
     );
   }

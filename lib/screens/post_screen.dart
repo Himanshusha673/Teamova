@@ -180,7 +180,7 @@ class _postState extends State<PostPage> {
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.grey[100],
                             ),
-                            child: const Row(
+                            child: Row(
                               children: [
                                 SizedBox(width: 20),
                                 Icon(Icons.camera_alt,
@@ -213,8 +213,8 @@ class _postState extends State<PostPage> {
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.grey[100],
                             ),
-                            child: const Row(
-                              children: [
+                            child: Row(
+                              children: const [
                                 SizedBox(width: 20),
                                 Icon(Icons.photo_library,
                                     size: 35, color: Colors.black),

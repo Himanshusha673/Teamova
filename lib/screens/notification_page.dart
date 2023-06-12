@@ -136,7 +136,7 @@ class NotificationPage extends StatelessWidget {
                       backgroundImage: AssetImage('Images/TeamovaLogo.png'),
                     ),
                     const SizedBox(width: 16),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

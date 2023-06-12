@@ -45,11 +45,11 @@ class SignIn extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.0)),
               backgroundColor: Colors.black,
             ),
-            child: const Padding(
+            child: Padding(
               padding: EdgeInsets.all(15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Icon(
                     size: 30.0,
                     BoxIcons.bxl_google,

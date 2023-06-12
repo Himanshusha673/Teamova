@@ -65,8 +65,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
               ),
               const SizedBox(height: 25.0),
-              const Row(
-                children: [
+              Row(
+                children: const [
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Icon(

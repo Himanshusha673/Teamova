@@ -241,10 +241,10 @@ class _MyDrawerState extends State<MyDrawer> {
                         color: Colors.black,
                       ),
                     ),
-                    content: const Column(
+                    content: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           'Are you sure you want to log out?',
                           style: TextStyle(

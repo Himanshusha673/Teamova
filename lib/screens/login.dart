@@ -244,12 +244,12 @@ class LogState extends State<LogInPage> {
                         ),
                       ),
                     ),
-                    const Center(
+                    Center(
                       child: Padding(
                         padding: EdgeInsets.all(18.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Icon(
                               Icons.copyright,
                               color: Colors.red,
