@@ -175,7 +175,7 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const EventPage()),
+                MaterialPageRoute(builder: (context) => EventPage()),
               );
             },
           ),
@@ -189,8 +189,7 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const LeaderboardPage()),
+                MaterialPageRoute(builder: (context) => LeaderboardPage()),
               );
             },
           ),
@@ -301,14 +300,5 @@ class _MyDrawerState extends State<MyDrawer> {
         ],
       ),
     );
-  }
-}
-
-class DeleteThisLater extends StatelessWidget {
-  const DeleteThisLater({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
