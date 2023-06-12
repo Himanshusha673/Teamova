@@ -28,7 +28,7 @@ class CustomDialog extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
-          padding: const EdgeInsets.only(top: 40),
+          padding: const EdgeInsets.only(top: 60),
           margin: const EdgeInsets.only(top: 60),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,

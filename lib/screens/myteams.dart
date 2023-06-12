@@ -30,8 +30,11 @@ class _TeamsPostState extends State<TeamsPost> {
             );
           }
           if ((snapshot.data! as dynamic).docs.length == 0) {
-            return const Center(
-              child: Text('No post Yet,\n Go back'),
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.asset('images/nothing_here.png'),
+              ),
             );
           }
 
