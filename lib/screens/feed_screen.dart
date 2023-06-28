@@ -46,20 +46,20 @@ class FeedScreenState extends State<FeedScreen> {
       appBar: width > webScreenSize
           ? null
           : AppBar(
-              //centerTitle: true,
+              centerTitle: true,
               actions: [
-                IconButton(
-                  onPressed: () async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ChatPage()));
-                  },
-                  icon: const Icon(
-                    Icons.wechat_outlined,
-                    size: 35,
-                  ),
-                )
+                // IconButton(
+                //   onPressed: () async {
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => const ChatPage()));
+                //   },
+                //   icon: const Icon(
+                //     Icons.wechat_outlined,
+                //     size: 35,
+                //   ),
+                // )
               ],
               title: SizedBox(
                 width: width * 0.4,

@@ -6,7 +6,6 @@ import 'package:team_builder/screens/edit_profile_screen.dart';
 import 'package:team_builder/screens/myteams.dart';
 import 'package:team_builder/utils/colors.dart';
 import 'package:team_builder/widgets/circularIndiacator.dart';
-import 'package:team_builder/widgets/drawer.dart';
 
 import '../utils/utils.dart';
 
@@ -62,8 +61,15 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     // final List<String> list = ["fluttter", "dart"];
     return Scaffold(
-      drawer: const MyDrawer(),
       appBar: AppBar(
+        leading: FirebaseAuth.instance.currentUser?.uid != widget.uid
+            ? IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back))
+            : const SizedBox(),
+
         centerTitle: true,
         title: userData['name'] == null
             ? Container()
@@ -195,7 +201,7 @@ class ProfileWidget extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const EditProfileScreen(
+                  builder: (context) => EditProfileScreen(
                     name: 'John Doe',
                     email: 'johndoe@example.com',
                     phoneNo: '555-1234',

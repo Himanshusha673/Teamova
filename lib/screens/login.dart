@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:team_builder/screens/forgot_password.dart';
 import 'package:team_builder/screens/signup.dart';
@@ -10,7 +12,6 @@ import '../responsive/responsive_layout.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
 import '../widgets/circularIndiacator.dart';
-import '../widgets/signin.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -24,55 +25,8 @@ class LogState extends State<LogInPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoading = false;
-  // void _googleSignIn() async {
-  //   try {
-  //     final googleSignIn = GoogleSignIn();
-  //     final signInAccount = await googleSignIn.signIn();
 
-  //     final googleAccountAuthentication = await signInAccount!.authentication;
-
-  //     final credential = GoogleAuthProvider.credential(
-  //         accessToken: googleAccountAuthentication.accessToken,
-  //         idToken: googleAccountAuthentication.idToken);
-
-  //     await FirebaseAuth.instance.signInWithCredential(credential);
-
-  //     if (FirebaseAuth.instance.currentUser != null) {
-  //       Navigator.of(context).pushAndRemoveUntil(
-  //           MaterialPageRoute(
-  //             builder: (context) => const ResponsiveLayout(
-  //               mobileScreenLayout: MobileScreenLayout(),
-  //               webScreenLayout: WebScreenLayout(),
-  //             ),
-  //           ),
-  //           (route) => false);
-  //       print('Google Authentication Successful');
-  //       print('${FirebaseAuth.instance.currentUser!.displayName} signed in.');
-  //       // setState(() {
-  //       //   isLoggedIn = true;
-  //       //   name = FirebaseAuth.instance.currentUser!.displayName;
-  //       // });
-  //     } else {
-  //       print('Unable to sign in');
-  //     }
-  //   } catch (e) {
-  //     log(e.toString());
-  //   }
-  // }
-  //  Future<void> _updateUserData(User user) async {
-  //   // Get a reference to the users collection in Firestore
-  //   final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
-
-  //   // Update the user's data in Firestore
-  //   return userRef.set({
-  //     'name': user.displayName,
-  //     'email': user.email,
-  //     'photoURL': user.photoURL,
-  //   });
-  // }
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  void loginUser() async {
+  void loginUser(BuildContext context) async {
     setState(() {
       _isLoading = true;
     });
@@ -82,19 +36,32 @@ class LogState extends State<LogInPage> {
       password: _passwordController.text,
     );
     if (res == 'success') {
-      Navigator.of(context).pushAndRemoveUntil(
+      final completer = Completer();
+
+      Future<void> navigateAndShowDialog() async {
+        Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => const ResponsiveLayout(
               mobileScreenLayout: MobileScreenLayout(),
               webScreenLayout: WebScreenLayout(),
             ),
           ),
-          (route) => false);
-      showCustomDialog(context);
+          (route) => false,
+        );
 
-      setState(() {
-        _isLoading = false;
-      });
+        await Future.delayed(Duration(
+            milliseconds: 300)); // Optional delay for smoother transition
+
+        showCustomDialog(context);
+
+        setState(() {
+          _isLoading = false;
+        });
+
+        completer.complete();
+      }
+
+      await navigateAndShowDialog();
     } else {
       setState(() {
         _isLoading = false;
@@ -227,7 +194,7 @@ class LogState extends State<LogInPage> {
                                         horizontal: 7.0),
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        loginUser();
+                                        loginUser(context);
                                       },
                                       style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
@@ -257,7 +224,7 @@ class LogState extends State<LogInPage> {
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                             builder: ((context) =>
-                                                const Registration()),
+                                                Registration()),
                                           ),
                                         );
                                       },

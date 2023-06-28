@@ -187,15 +187,32 @@ class AuthMethods {
   }
 
   Future<void> signOut() async {
-    log("calling sinout");
-    final User? user = FirebaseAuth.instance.currentUser;
-    if (user != null &&
-        user.providerData.any((info) =>
-            info.providerId == GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD)) {
-      GoogleSignIn googleSignIn = GoogleSignIn();
-      await googleSignIn.disconnect();
-    } else {
-      await _auth.signOut();
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final googleSignInProvider = GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD;
+        final hasGoogleProvider = user.providerData.any(
+          (info) => info.providerId == googleSignInProvider,
+        );
+
+        if (hasGoogleProvider) {
+          await signOutWithGoogle();
+        } else {
+          await signOutWithFirebase();
+        }
+      }
+    } catch (e, stackTrace) {
+      print('Error during sign-out: $e');
+      print('Stack trace: $stackTrace');
     }
+  }
+
+  Future<void> signOutWithGoogle() async {
+    final googleSignIn = GoogleSignIn();
+    await googleSignIn.disconnect();
+  }
+
+  Future<void> signOutWithFirebase() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:team_builder/screens/profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/user_model.dart';
@@ -18,7 +19,7 @@ import '../utils/utils.dart';
 import 'like_animation.dart';
 
 class PostCard extends StatefulWidget {
-  final snap;
+  final dynamic? snap;
   const PostCard({
     Key? key,
     required this.snap,
@@ -106,7 +107,7 @@ class _PostCardState extends State<PostCard> {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
+                    vertical: 10.0,
                     horizontal: 16.0,
                   ),
                   decoration: const BoxDecoration(
@@ -122,97 +123,106 @@ class _PostCardState extends State<PostCard> {
                       ),
                     ],
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 24,
-                        backgroundImage: NetworkImage(
-                          widget.snap['profImage'].toString(),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ProfilePage(
+                          uid: widget.snap['uid'],
                         ),
-                      ),
-                      const SizedBox(width: 16.0),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.snap['username'].toString(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w500,
+                      ));
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 24,
+                          backgroundImage: NetworkImage(
+                            widget.snap['profImage'].toString(),
+                          ),
+                        ),
+                        const SizedBox(width: 16.0),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.snap['username'].toString(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 4.0),
-                            // Text(
-                            //   '  ${widget.snap['objective'].toString()}',
-                            //   style: const TextStyle(
-                            //     color: Colors.grey,
-                            //     fontSize: 14.0,
-                            //   ),
-                            // ),
-                          ],
+                              const SizedBox(height: 4.0),
+                              // Text(
+                              //   '  ${widget.snap['objective'].toString()}',
+                              //   style: const TextStyle(
+                              //     color: Colors.grey,
+                              //     fontSize: 14.0,
+                              //   ),
+                              // ),
+                            ],
+                          ),
                         ),
-                      ),
-                      if (widget.snap['uid'].toString() == user.uid)
-                        IconButton(
-                          onPressed: () {
-                            showDialog(
-                              useRootNavigator: false,
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                  child: ListView(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0,
-                                      horizontal: 16.0,
+                        if (widget.snap['uid'].toString() == user.uid)
+                          IconButton(
+                            onPressed: () {
+                              showDialog(
+                                useRootNavigator: false,
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: ListView(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 16.0,
+                                        horizontal: 16.0,
+                                      ),
+                                      shrinkWrap: true,
+                                      children: [
+                                        const Text(
+                                          'Delete post?',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16.0),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                            'Cancel',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            deletePost(
+                                              widget.snap['postId'].toString(),
+                                            );
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                            'Delete',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    shrinkWrap: true,
-                                    children: [
-                                      const Text(
-                                        'Delete post?',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18.0,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 16.0),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text(
-                                          'Cancel',
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          deletePost(
-                                            widget.snap['postId'].toString(),
-                                          );
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text(
-                                          'Delete',
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          icon: const Icon(Icons.more_vert_outlined),
-                          color: Colors.grey[400],
-                        ),
-                    ],
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(Icons.more_vert_outlined),
+                            color: Colors.grey[400],
+                          ),
+                      ],
+                    ),
                   ),
                 ),
 
@@ -449,6 +459,17 @@ class _PostCardState extends State<PostCard> {
                         ),
                       ],
                     ),
+                    // IconButton(
+                    //     icon: const Icon(
+                    //       Icons.send,
+                    //     ),
+                    //     onPressed: () {}),
+                    // Expanded(
+                    //     child: Align(
+                    //   alignment: Alignment.bottomRight,
+                    //   child: IconButton(
+                    //       icon: const Icon(Icons.bookmark_border), onPressed: () {}),
+                    // ))
                   ],
                 ),
                 //DESCRIPTION AND NUMBER OF COMMENTS
@@ -537,9 +558,19 @@ class _PostCardState extends State<PostCard> {
   }
 
   Future<void> _launchThisUrl(String url) async {
-    final Uri uri = Uri(scheme: "https", host: url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $url');
+    if (url.startsWith('https://') || url.startsWith('http://')) {
+      final Uri uri = Uri.parse(url);
+      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+        throw Exception('Could not launch $url');
+      }
+      await launch(url);
+    } else if (url.startsWith('instagram')) {
+      final Uri uri = Uri.parse(url);
+      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+        throw Exception('Could not launch $url');
+      }
+    } else {
+      throw Exception('Unsupported URL format: $url');
     }
   }
 }
