@@ -9,6 +9,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout.dart';
 import '../responsive/web_screen_layout.dart';
+import '../widgets/circularIndiacator.dart';
+import '../widgets/customDialogBox.dart';
 import 'aboutyourself.dart';
 import 'login.dart';
 
@@ -48,7 +50,13 @@ class MainScreen extends StatelessWidget {
 
                   if (snap.connectionState == ConnectionState.waiting) {
                     return const Scaffold(
-                      body: Center(child: CircularProgressIndicator()),
+                      body: Center(
+                        child: TeamCircularProgressIndicator(
+                            teamIcon:
+                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
+                            size: 64.0,
+                            color: Colors.black),
+                      ),
                     );
                   } else if (snap.hasData && snap.data == true) {
                     return const ResponsiveLayout(
@@ -74,7 +82,11 @@ class MainScreen extends StatelessWidget {
           }
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: TeamCircularProgressIndicator(
+                teamIcon:
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
+                size: 64.0,
+                color: Colors.black),
           );
         }
 

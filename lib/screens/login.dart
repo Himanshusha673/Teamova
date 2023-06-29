@@ -49,7 +49,7 @@ class LogState extends State<LogInPage> {
           (route) => false,
         );
 
-        await Future.delayed(Duration(
+        await Future.delayed(const Duration(
             milliseconds: 300)); // Optional delay for smoother transition
 
         showCustomDialog(context);
@@ -224,7 +224,7 @@ class LogState extends State<LogInPage> {
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                             builder: ((context) =>
-                                                Registration()),
+                                                const Registration()),
                                           ),
                                         );
                                       },

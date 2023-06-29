@@ -188,6 +188,7 @@ class AuthMethods {
 
   Future<void> signOut() async {
     try {
+      await FirebaseAuth.instance.signOut();
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         final googleSignInProvider = GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD;

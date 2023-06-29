@@ -16,6 +16,7 @@ import '../screens/comments_screen.dart';
 import '../utils/colors.dart';
 
 import '../utils/utils.dart';
+import 'circularIndiacator.dart';
 import 'like_animation.dart';
 
 class PostCard extends StatefulWidget {
@@ -218,8 +219,8 @@ class _PostCardState extends State<PostCard> {
                                 },
                               );
                             },
-                            icon: const Icon(Icons.more_vert_outlined),
-                            color: Colors.grey[400],
+                            icon: const Icon(Icons.delete_forever_outlined),
+                            color: Colors.red,
                           ),
                       ],
                     ),
@@ -248,8 +249,24 @@ class _PostCardState extends State<PostCard> {
                         child: Image.network(
                           widget.snap['postUrl'].toString(),
                           fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            } else {
+                              return const Center(
+                                child: TeamCircularProgressIndicator(
+                                    teamIcon:
+                                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&shttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYAXUsI9H_YUIMdooaoGA_oBUoZbdY19XFPcrUWnV62w&s',
+                                    size: 64.0,
+                                    color: Colors.black),
+                              );
+                            }
+                          },
                         ),
+                        // You can add any other overlay widgets here if needed.
                       ),
+
                       //generaly opacity used for bool changes in widgets with opacity value 1 and 0
                       AnimatedOpacity(
                         duration: const Duration(milliseconds: 200),
